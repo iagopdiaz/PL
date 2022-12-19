@@ -15,6 +15,9 @@ compile:
 	gcc -o $(FUENTE) lex.yy.c $(FUENTE).tab.c -$(LIB) -ly
 
 run:
+	./$(FUENTE) < $(PRUEBA) 
+
+out:
 	./$(FUENTE) < $(PRUEBA) > salida.c
 
 run2:
@@ -22,3 +25,4 @@ run2:
 
 clean:
 	rm $(FUENTE) lex.yy.c $(FUENTE).tab.c $(FUENTE).tab.h
+
