@@ -1,5 +1,5 @@
 FUENTE = final
-PRUEBA = ej.txt
+PRUEBA = ejemplo.txt
 LIB = lfl
 
 all: compile run
@@ -15,11 +15,10 @@ compile:
 	gcc -o $(FUENTE) lex.yy.c $(FUENTE).tab.c -$(LIB) -ly
 
 run:
-	./$(FUENTE) < $(PRUEBA)
+	./$(FUENTE) < $(PRUEBA) > salida.c
 
 run2:
 	./$(FUENTE) $(PRUEBA)
 
 clean:
 	rm $(FUENTE) lex.yy.c $(FUENTE).tab.c $(FUENTE).tab.h
-

@@ -108,14 +108,14 @@ enum yysymbol_kind_t
   YYSYMBOL_YYEOF = 0,                      /* "end of file"  */
   YYSYMBOL_YYerror = 1,                    /* error  */
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
-  YYSYMBOL_CABECERA = 3,                   /* CABECERA  */
-  YYSYMBOL_ABRIRTAG = 4,                   /* ABRIRTAG  */
-  YYSYMBOL_CERRARTAG = 5,                  /* CERRARTAG  */
-  YYSYMBOL_TEXTO = 6,                      /* TEXTO  */
+  YYSYMBOL_VARIABLE = 3,                   /* VARIABLE  */
+  YYSYMBOL_VNUMERO = 4,                    /* VNUMERO  */
+  YYSYMBOL_VSTRING = 5,                    /* VSTRING  */
+  YYSYMBOL_PALABRA = 6,                    /* PALABRA  */
   YYSYMBOL_YYACCEPT = 7,                   /* $accept  */
   YYSYMBOL_S = 8,                          /* S  */
-  YYSYMBOL_tag = 9,                        /* tag  */
-  YYSYMBOL_contenido = 10                  /* contenido  */
+  YYSYMBOL_funcion = 9,                    /* funcion  */
+  YYSYMBOL_contvar = 10                    /* contvar  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -441,18 +441,18 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  5
+#define YYFINAL  6
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   8
+#define YYLAST   5
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  7
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  6
+#define YYNRULES  4
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  11
+#define YYNSTATES  8
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   261
@@ -502,7 +502,7 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    22,    22,    25,    33,    34,    35
+       0,    22,    22,    25,    29
 };
 #endif
 
@@ -518,8 +518,8 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "\"end of file\"", "error", "\"invalid token\"", "CABECERA", "ABRIRTAG",
-  "CERRARTAG", "TEXTO", "$accept", "S", "tag", "contenido", YY_NULLPTR
+  "\"end of file\"", "error", "\"invalid token\"", "VARIABLE", "VNUMERO",
+  "VSTRING", "PALABRA", "$accept", "S", "funcion", "contvar", YY_NULLPTR
 };
 
 static const char *
@@ -543,8 +543,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       0,     4,     1,    -2,    -4,    -4,    -4,    -4,     2,    -4,
-      -4
+      -3,    -2,     1,    -4,    -1,    -4,    -4,    -4
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -552,20 +551,19 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     0,     0,     2,     1,     6,     5,     0,     3,
-       4
+       0,     0,     0,     2,     0,     3,     1,     4
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -4,    -4,    -3,    -4
+      -4,    -4,    -4,    -4
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     2,     4,     8
+       0,     2,     3,     5
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -573,32 +571,31 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       7,     5,     3,     1,     6,    10,     3,     9,     3
+       1,     6,     4,     0,     0,     7
 };
 
 static const yytype_int8 yycheck[] =
 {
-       3,     0,     4,     3,     6,     8,     4,     5,     4
+       3,     0,     4,    -1,    -1,     6
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,     8,     4,     9,     0,     6,     9,    10,     5,
-       9
+       0,     3,     8,     9,     4,    10,     0,     6
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,     7,     8,     9,    10,    10,    10
+       0,     7,     8,     9,    10
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     2,     3,     2,     1,     1
+       0,     2,     1,     2,     2
 };
 
 
@@ -1061,25 +1058,29 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2: /* S: CABECERA tag  */
+  case 2: /* S: funcion  */
 #line 22 "final.y"
-                 {printf("Sintaxis XML Correcta.\n");}
-#line 1068 "final.tab.c"
+            {}
+#line 1065 "final.tab.c"
     break;
 
-  case 3: /* tag: ABRIRTAG contenido CERRARTAG  */
+  case 3: /* funcion: VARIABLE contvar  */
 #line 25 "final.y"
-                                   {if(strcmp((yyvsp[-2].string)+1,(yyvsp[0].string)+2) != 0){
-			sprintf(error, "Encontrado: </%s . Se esperaba: </%s ", (yyvsp[0].string)+2, (yyvsp[-2].string)+1); 
-			yyerror(error);
-			YYABORT;
-		}
-	}
-#line 1079 "final.tab.c"
+                           {printf("%s \n",(yyvsp[0].string));}
+#line 1071 "final.tab.c"
+    break;
+
+  case 4: /* contvar: VNUMERO PALABRA  */
+#line 29 "final.y"
+                          {char  aux[20] ="";
+				strcat(aux,"int ");
+				strcat(aux,(yyvsp[0].string));
+				(yyval.string) = aux;}
+#line 1080 "final.tab.c"
     break;
 
 
-#line 1083 "final.tab.c"
+#line 1084 "final.tab.c"
 
       default: break;
     }
@@ -1272,7 +1273,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 38 "final.y"
+#line 36 "final.y"
 
 int main(int argc, char *argv[]) {
 extern FILE *yyin;
@@ -1296,7 +1297,7 @@ extern FILE *yyin;
 	return 0;
 }
 void yyerror (char const *message) {
-  fprintf (stderr,"Sintaxis XML incorrecta. Error en línea %d: %s\n", yylineno, message);
+  fprintf (stderr,"Sintaxis Pseudocodigo incorrecta. Error en línea %d: %s\n", yylineno, message);
     return;
 }
 

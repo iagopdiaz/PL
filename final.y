@@ -11,28 +11,26 @@ char error[500];
 	char * string;
 }
 
-%token <string> CABECERA
-%token <string> ABRIRTAG
-%token <string> CERRARTAG
-%token <string> TEXTO
-%type <string> tag contenido
+%token <string> VARIABLE
+%token <string> VNUMERO
+%token <string> VSTRING
+%token <string> PALABRA
+%type <string> funcion contvar
 %start S
 %%
 
-S : CABECERA tag {printf("Sintaxis XML Correcta.\n");} 
+S : funcion {} 
 	;
 		
-tag : ABRIRTAG contenido CERRARTAG {if(strcmp($1+1,$3+2) != 0){
-			sprintf(error, "Encontrado: </%s . Se esperaba: </%s ", $3+2, $1+1); 
-			yyerror(error);
-			YYABORT;
-		}
-	}
+funcion : VARIABLE contvar {printf("%s \n",$2);}
+	  //|IF contif
 	;
 
-contenido : contenido tag
-	   | tag
-	   | TEXTO
+contvar : VNUMERO PALABRA {char  aux[20] ="";
+				strcat(aux,"int ");
+				strcat(aux,$2);
+				$$ = aux;}
+	  //|VSTRING PALABRA 
 	   ;
 	   
 %%
@@ -58,7 +56,7 @@ extern FILE *yyin;
 	return 0;
 }
 void yyerror (char const *message) {
-  fprintf (stderr,"Sintaxis XML incorrecta. Error en línea %d: %s\n", yylineno, message);
+  fprintf (stderr,"Sintaxis Pseudocodigo incorrecta. Error en línea %d: %s\n", yylineno, message);
     return;
 }
 

@@ -1,0 +1,2 @@
+VAR: a 
+int a 

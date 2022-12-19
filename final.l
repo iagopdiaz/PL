@@ -58,17 +58,15 @@ funcion "funcion"
 
 
 /*Palabras para variables*/
-palabra [^ \n\t/{var}{bucle}{if}{math}]+[A-Za-z]+
+palabra [A-Za-z_]+
 
 %%
 {espacios} {}
 {numero} {printf("numero: %s \n",strdup(yytext));}
 
-{variable} {printf("FUNCION: %s \n",strdup(yytext));}
-{tipo_var} {/*no haría falta, poner como no terminal en bison*/}
-{memoria_var} {/*no haría falta, poner como no terminal en bison*/}
-{v_numero} {printf("int: %s \n",strdup(yytext));}
-{v_letras} {printf("char: %s \n",strdup(yytext));}
+{variable} {yylval.string = strdup(yytext); return VARIABLE;}
+{v_numero} {yylval.string = strdup(yytext); return VNUMERO;}
+{v_letras} {yylval.string = strdup(yytext); return VSTRING;}
 {v_matriz} {printf("array: %s \n",strdup(yytext));}
 {v_estatica} {printf("static: %s \n",strdup(yytext));}
 {v_dinamica} {printf("dinamic: %s \n",strdup(yytext));}
@@ -98,6 +96,7 @@ palabra [^ \n\t/{var}{bucle}{if}{math}]+[A-Za-z]+
 {m_raiz} {printf("sqrt(x,y): %s \n",strdup(yytext));}
 {m_igual} {printf("=: %s \n",strdup(yytext));}
 
-palabra {printf("VAR: %s \n",strdup(yytext));}
+{palabra} {printf("VAR: %s \n",strdup(yytext));
+	yylval.string = strdup(yytext); return PALABRA;}
 . {};
 %%
