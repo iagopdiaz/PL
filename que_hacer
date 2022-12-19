@@ -5,9 +5,16 @@ bucle 1 10
 o
 bucle 10
 
-si b mayor a sumar c mas d en a 
+si b mayor a sumar c mas d en a sino restar a menos d en c
+
 if (b>a){
 	a = c + d
 }
+else{
+	c = a - d
+}
 
 funcion 
+
+a == b --> a igual que b
+a = b --> a igual b
