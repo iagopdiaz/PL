@@ -4,6 +4,11 @@ LIB = lfl
 
 all: compile run
 
+flex:
+	flex $(FUENTE).l
+	gcc -o $(FUENTE) lex.yy.c -lfl
+	./$(FUENTE) < $(PRUEBA)
+	
 compile:
 	flex $(FUENTE).l
 	bison -o $(FUENTE).tab.c $(FUENTE).y -yd
