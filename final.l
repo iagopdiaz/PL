@@ -64,40 +64,40 @@ palabra [^ \n\t/{var}{bucle}{if}{math}]+[A-Za-z]+
 {espacios} {}
 {numero} {printf("numero: %s \n",strdup(yytext));}
 
-{variable} {}
+{variable} {printf("FUNCION: %s \n",strdup(yytext));}
 {tipo_var} {/*no haría falta, poner como no terminal en bison*/}
 {memoria_var} {/*no haría falta, poner como no terminal en bison*/}
-{v_numero} {}
-{v_letras} {}
-{v_matriz} {}
-{v_estatica} {}
-{v_dinamica} {}
+{v_numero} {printf("int: %s \n",strdup(yytext));}
+{v_letras} {printf("char: %s \n",strdup(yytext));}
+{v_matriz} {printf("array: %s \n",strdup(yytext));}
+{v_estatica} {printf("static: %s \n",strdup(yytext));}
+{v_dinamica} {printf("dinamic: %s \n",strdup(yytext));}
 
-{bucle} {}
+{bucle} {printf("for: %s \n",strdup(yytext));}
 
-{else} {}
-{si} {}
+{else} {printf("FUNCION: %s \n",strdup(yytext));}
+{si} {printf("FUNCION: %s \n",strdup(yytext));}
 {comparador} {/*no haría falta, poner como no terminal en bison*/}
-{c_mayorigual} {}
-{c_menorigual} {}
-{c_mayor} {}
-{c_menor} {}
-{c_igual} {}
-{c_distinto} {}
-{c_and} {}
-{c_or} {}
+{c_mayorigual} {printf(">=: %s \n",strdup(yytext));}
+{c_menorigual} {printf(">=: %s \n",strdup(yytext));}
+{c_mayor} {printf(">: %s \n",strdup(yytext));}
+{c_menor} {printf("<: %s \n",strdup(yytext));}
+{c_igual} {printf("==: %s \n",strdup(yytext));}
+{c_distinto} {printf("!=: %s \n",strdup(yytext));}
+{c_and} {printf("and: %s \n",strdup(yytext));}
+{c_or} {printf("or: %s \n",strdup(yytext));}
 
 {math} {/*no haría falta, poner como no terminal en bison*/}
-{m_en} {}
-{m_suma} {}
-{m_resta} {}
-{m_multiplicacion} {}
-{m_division} {}
-{m_exponente} {}
-{m_raizcuadrada} {}
-{m_raiz} {}
-{m_igual} {}
+{m_en} {printf("=: %s \n",strdup(yytext));}
+{m_suma} {printf("+: %s \n",strdup(yytext));}
+{m_resta} {printf("-: %s \n",strdup(yytext));}
+{m_multiplicacion} {printf("*: %s \n",strdup(yytext));}
+{m_division} {printf("/: %s \n",strdup(yytext));}
+{m_exponente} {printf("^: %s \n",strdup(yytext));}
+{m_raizcuadrada} {printf("sqrt(x): %s \n",strdup(yytext));}
+{m_raiz} {printf("sqrt(x,y): %s \n",strdup(yytext));}
+{m_igual} {printf("=: %s \n",strdup(yytext));}
 
-palabra {}
+palabra {printf("VAR: %s \n",strdup(yytext));}
 . {};
 %%
