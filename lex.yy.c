@@ -934,7 +934,7 @@ YY_RULE_SETUP
 case 3:
 YY_RULE_SETUP
 #line 67 "final.l"
-{}
+{printf("FUNCION: %s \n",strdup(yytext));}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
@@ -949,42 +949,42 @@ YY_RULE_SETUP
 case 6:
 YY_RULE_SETUP
 #line 70 "final.l"
-{}
+{printf("int: %s \n",strdup(yytext));}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 71 "final.l"
-{}
+{printf("char: %s \n",strdup(yytext));}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 72 "final.l"
-{}
+{printf("array: %s \n",strdup(yytext));}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 73 "final.l"
-{}
+{printf("static: %s \n",strdup(yytext));}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 74 "final.l"
-{}
+{printf("dinamic: %s \n",strdup(yytext));}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 76 "final.l"
-{}
+{printf("for: %s \n",strdup(yytext));}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 78 "final.l"
-{}
+{printf("FUNCION: %s \n",strdup(yytext));}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 79 "final.l"
-{}
+{printf("FUNCION: %s \n",strdup(yytext));}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
@@ -994,42 +994,42 @@ YY_RULE_SETUP
 case 15:
 YY_RULE_SETUP
 #line 81 "final.l"
-{}
+{printf(">=: %s \n",strdup(yytext));}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 82 "final.l"
-{}
+{printf(">=: %s \n",strdup(yytext));}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 83 "final.l"
-{}
+{printf(">: %s \n",strdup(yytext));}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 84 "final.l"
-{}
+{printf("<: %s \n",strdup(yytext));}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 85 "final.l"
-{}
+{printf("==: %s \n",strdup(yytext));}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 86 "final.l"
-{}
+{printf("!=: %s \n",strdup(yytext));}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 87 "final.l"
-{}
+{printf("and: %s \n",strdup(yytext));}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 88 "final.l"
-{}
+{printf("or: %s \n",strdup(yytext));}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
@@ -1039,52 +1039,52 @@ YY_RULE_SETUP
 case 24:
 YY_RULE_SETUP
 #line 91 "final.l"
-{}
+{printf("=: %s \n",strdup(yytext));}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 92 "final.l"
-{}
+{printf("+: %s \n",strdup(yytext));}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 93 "final.l"
-{}
+{printf("-: %s \n",strdup(yytext));}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 94 "final.l"
-{}
+{printf("*: %s \n",strdup(yytext));}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 95 "final.l"
-{}
+{printf("/: %s \n",strdup(yytext));}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 96 "final.l"
-{}
+{printf("^: %s \n",strdup(yytext));}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 97 "final.l"
-{}
+{printf("sqrt(x): %s \n",strdup(yytext));}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 98 "final.l"
-{}
+{printf("sqrt(x,y): %s \n",strdup(yytext));}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 99 "final.l"
-{}
+{printf("=: %s \n",strdup(yytext));}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 101 "final.l"
-{}
+{printf("VAR: %s \n",strdup(yytext));}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP

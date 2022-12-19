@@ -1,3 +1,12 @@
-1 2 3 44 5342324
+3 44 53423
+
+a aux b auxvar
+
+variable dinamica numero letras matriz 
+
+si a mayor o igual menor igual que b y o distinto 
+
+en sumar restar multiplicar dividir elevar raiz cuadrada raiz igual
+
 
 
