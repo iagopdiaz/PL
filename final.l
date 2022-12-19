@@ -9,11 +9,14 @@ numero [0-9]+
 
 //Hacer una variable | "variable numero a"
 //Por defecto estaticas salvo que se indique "variable" "dinamica"
-var {variable}{numero}{letras}{matriz}{dinamica}
+var {variable}{tipo_var}{memoria_var}
 variable "variable"
+tipo_var {numero}{letras}{matriz}
+memoria_var {estatica}{dinamica}
 v_numero "numero"
 v_letras "letras"
 v_matriz "matriz"
+estatica "estatica"
 dinamica "dinamica"
 
 //Hacer un bucle | "bucle 5 10" va de 5 a 10 | "bucle 10" va de 0 a 10
