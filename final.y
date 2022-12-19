@@ -15,7 +15,8 @@ char error[500];
 %token <string> VNUMERO
 %token <string> VSTRING
 %token <string> PALABRA
-%type <string> funcion contvar
+%token <string> VDINAMICA
+%type <string> funcion contvar crearvar
 %start S
 %%
 
@@ -26,12 +27,16 @@ funcion : VARIABLE contvar {printf("%s \n",$2);}
 	  //|IF contif
 	;
 
-contvar : VNUMERO PALABRA {char  aux[20] ="";
+contvar : VDINAMICA crearvar {$$ = $2}
+  	  |crearvar {$$ = $1}
+	;
+	
+crearavar: VNUMERO PALABRA {char  aux[20] ="";
 				strcat(aux,"int ");
 				strcat(aux,$2);
 				$$ = aux;}
-	  //|VSTRING PALABRA 
-	   ;
+	  |VSTRING PALABRA 
+	  ;
 	   
 %%
 int main(int argc, char *argv[]) {

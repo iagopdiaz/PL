@@ -69,7 +69,7 @@ palabra [A-Za-z_]+
 {v_letras} {yylval.string = strdup(yytext); return VSTRING;}
 {v_matriz} {printf("array: %s \n",strdup(yytext));}
 {v_estatica} {printf("static: %s \n",strdup(yytext));}
-{v_dinamica} {printf("dinamic: %s \n",strdup(yytext));}
+{v_dinamica} {yylval.string = strdup(yytext); return VDINAMICA;}
 
 {bucle} {printf("for: %s \n",strdup(yytext));}
 
