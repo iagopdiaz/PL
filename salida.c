@@ -1,2 +1,0 @@
-VAR: a 
-int a 

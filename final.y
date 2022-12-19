@@ -39,7 +39,9 @@ extern FILE *yyin;
 
 	switch (argc) {
 		case 1: yyin=stdin;
+			printf("#include <stdio.h>\n#include <math.h>\n\nint main() {\n\n");
 			yyparse();
+			printf("\n}\n");
 			break;
 		case 2: yyin = fopen(argv[1], "r");
 			if (yyin == NULL) {
