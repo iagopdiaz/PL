@@ -9,6 +9,7 @@ numero [0-9]+
 
 //Hacer una variable | "variable numero a"
 //Por defecto estaticas salvo que se indique "variable" "dinamica"
+var {variable}{numero}{letras}{matriz}{dinamica}
 variable "variable"
 v_numero "numero"
 v_letras "letras"
