@@ -1,0 +1,13 @@
+variable numero a
+uso de malloc
+
+bucle 1 10
+o
+bucle 10
+
+si b mayor a sumar c mas d en a 
+if (b>a){
+	a = c + d
+}
+
+funcion 
