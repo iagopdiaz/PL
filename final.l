@@ -11,13 +11,13 @@ numero [0-9]+
 //Por defecto estaticas salvo que se indique "variable" "dinamica"
 var {variable}{tipo_var}{memoria_var}
 variable "variable"
-tipo_var {numero}{letras}{matriz}
-memoria_var {estatica}{dinamica}
+tipo_var {v_numero}{v_letras}{v_matriz}
+memoria_var {v_estatica}{v_dinamica}
 v_numero "numero"
 v_letras "letras"
 v_matriz "matriz"
-estatica "estatica"
-dinamica "dinamica"
+v_estatica "estatica"
+v_dinamica "dinamica"
 
 //Hacer un bucle | "bucle 5 10" va de 5 a 10 | "bucle 10" va de 0 a 10
 bucle "bucle"
@@ -47,10 +47,21 @@ funcion "funcion"
 
 
 //Palabras para variables 
-palabra [^ \n\t/{bucle}{variable}{numero}{letras}{matriz}]+[A-Za-z]+
+palabra [^ \n\t/{var}]+[A-Za-z]+
 
 %%
 {espacios} {}
+{numero} {}
+
+{variable} {}
+{tipo_var} {}
+{memoria_var} {}
+{v_numero} {}
+{v_letras} {}
+{v_matriz} {}
+{v_estatica} {}
+{v_dinamica} {}
+
 
 . {};
 %%
