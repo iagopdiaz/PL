@@ -116,43 +116,37 @@ contif : comprecursivo contenido CLOSEIF {
 					strcat(aux, $2);
 					strcat(aux, "\t};\n");
 					$$ = aux;
-					}/*
-		| PALABRA comparador PALABRA contenido ELSE contenido CLOSEIF {
+					}
+		| comprecursivo contenido ELSE contenido CLOSEIF {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
 					strcpy(aux, "\tif");
 					strcat(aux, "(");
 					strcat(aux, $1);
-					strcat(aux, $2);
-					strcat(aux, $3);
 					strcat(aux, ")");
 					strcat(aux, "{\n");
-					strcat(aux, $4);
+					strcat(aux, $2);
 					strcat(aux, "\n\t} else {\n\t\t");
-					strcat(aux, $6);
+					strcat(aux, $4);
 					strcat(aux, "\t};\n");
 					$$ = aux;
 					}
-	| PALABRA comparador PALABRA contenido ELSEIF PALABRA comparador PALABRA contenido CLOSEIF {
+	| comprecursivo contenido ELSEIF comprecursivo contenido CLOSEIF {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
 					strcpy(aux, "\tif");
 					strcat(aux, "(");
 					strcat(aux, $1);
-					strcat(aux, $2);
-					strcat(aux, $3);
 					strcat(aux, ")");
 					strcat(aux, "{\n\t\t");
-					strcat(aux, $4);
+					strcat(aux, $2);
 					strcat(aux, "\n\t} else if(");
-					strcat(aux, $6);
-					strcat(aux, $7);
-					strcat(aux, $8);
+					strcat(aux, $4);
 					strcat(aux, ") {\n\t\t");
-					strcat(aux, $9);
+					strcat(aux, $5);
 					strcat(aux, "\t};\n");
 					$$ = aux;
-					};*/
+					};
 	
 	;
 
@@ -165,6 +159,20 @@ comprecursivo: comprecursivo AND comprecursivo{
 					strcat(auxcont, $3);
 					$$ = auxcont;}
 	       |comprecursivo OR comprecursivo{
+					char * auxcont;
+					auxcont= (char*)malloc ( 200*sizeof(char) );
+					strcpy(auxcont, $1);
+					strcat(auxcont, " || ");
+					strcat(auxcont, $3);
+					$$ = auxcont;}
+	       |comprecursivo AND PALABRA{
+					char * auxcont;
+					auxcont= (char*)malloc ( 200*sizeof(char) );
+					strcpy(auxcont, $1);
+					strcat(auxcont, " && ");
+					strcat(auxcont, $3);
+					$$ = auxcont;}
+	       |comprecursivo OR PALABRA{
 					char * auxcont;
 					auxcont= (char*)malloc ( 200*sizeof(char) );
 					strcpy(auxcont, $1);
