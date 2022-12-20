@@ -20,19 +20,68 @@ char error[500];
 
 %token <string> NUMERO
 %token <string> PALABRA
-%type <string> funcion dimensionvar contvar numarrayvar crearvar comparador contif
+%type <string> funcion dimensionvar contvar numarrayvar crearvar comparador contif recursivo contenido
 %start S
 %%
 
-S : funcion {} 
+S : recursivo {printf($1);} 
 	;
+
+recursivo : recursivo funcion {char * aux;
+				aux = (char*)malloc ( 100*sizeof(char) );
+				strcpy(aux, $1);
+				strcat(aux, $2);
+				$$ = aux;
+				}
+	     |funcion  {	
+	     
+				$$ = $1;
+				}
+	;
+
 		
-funcion : VARIABLE dimensionvar {printf("\n");}
-	     | IF contif
+funcion :  VARIABLE dimensionvar {$$ = $2;}
+     	     |  IF contif {$$ = $2;}
 	;
 
-
-contif : PALABRA comparador PALABRA funcion {printf("\tif(%s%s%s){\n\t};",$1,$2,$3);}
+//Funciones Contenido de alguna otra funcion recursiva(if, for,while), indicar cuando parar con algo STOP
+contenido :  VARIABLE dimensionvar {	char * auxcont;
+					auxcont= (char*)malloc ( 200*sizeof(char) );
+					strcpy(auxcont, $2);
+					$$ = auxcont;
+					}
+	
+     	     |  IF contif {$$ = $2;}
+     	     |contenido VARIABLE dimensionvar {
+     	     				char * auxcont;
+					auxcont= (char*)malloc ( 200*sizeof(char) );
+					strcpy(auxcont, $1);
+					strcat(auxcont, "\n\t\t");
+					strcat(auxcont, $3);
+					$$ = auxcont;}
+     	     | contenido IF contif {
+     	     				char * auxcont;
+					auxcont = (char*)malloc ( 200*sizeof(char) );
+					strcpy(auxcont, $1);
+					strcat(auxcont, "\t\n");
+					strcat(auxcont, $3);
+					$$ = auxcont;}
+	;
+	
+contif : PALABRA comparador PALABRA contenido /*STOP*/ {
+					char * aux;
+					aux = (char*)malloc ( 500*sizeof(char) );
+					strcpy(aux, "\tif");
+					strcat(aux, "(");
+					strcat(aux, $1);
+					strcat(aux, $2);
+					strcat(aux, $3);
+					strcat(aux, ")");
+					strcat(aux, "{\n\t\t");
+					strcat(aux, $4);
+					strcat(aux, "$\n\t};");
+					$$ = aux;
+					}
 		| PALABRA comparador PALABRA ELSE {printf("\tif(%s%s%s){\n\t%s} else {\n\t};",$1,$2,$3,$4);}
 		| PALABRA comparador PALABRA ELSE IF  
 	;
@@ -48,30 +97,42 @@ comparador:  MAYOR {$$=">";}
 		   | MENORIGUAL {$$="<=";}
 	;
 
-dimensionvar: contvar{}
+dimensionvar: contvar {		char * aux;
+					aux = (char*)malloc ( 100*sizeof(char) );
+					strcpy(aux, $1);
+					$$ = aux;}
 	       |VARRAY contvar numarrayvar{
-					printf("%s",$3);
+					char * aux;
+					aux = (char*)malloc ( 200*sizeof(char) );
+					strcpy(aux, $2);
+					strcat(aux, " ");
+					strcat(aux, $3);
+					strcat(aux, ";");
+					$$ = aux;
 	       			}
 ;
 
 contvar : VDINAMICA crearvar PALABRA{
-				char aux[100];
-				strcpy(aux, $2);
-				strcat(aux, "* ");
-				strcat(aux, $3);
-				printf("%s ",aux);
+				char * auxvar;
+				auxvar = (char*)malloc ( 100*sizeof(char) );
+				strcpy(auxvar, $2);
+				strcat(auxvar, "* ");
+				strcat(auxvar, $3);
+				$$ = auxvar;
 				}
   	  |crearvar PALABRA{
-  	  			char aux[100];
-				strcpy(aux, $1);
-				strcat(aux, $2);
-				printf("%s ",aux);
+  	  			char * auxvar;
+				auxvar = (char*)malloc ( 100*sizeof(char) );
+				strcpy(auxvar, $1);
+				strcat(auxvar, $2);
+				$$ = auxvar;
 				}
 	  |VESTATICA crearvar PALABRA{
-  	  			char aux[100];
-				strcpy(aux, $1);
-				strcat(aux, $2);
-				printf("%s ",aux);
+  	  			char * auxvar;
+				auxvar = (char*)malloc ( 100*sizeof(char) );
+				strcpy(auxvar, $1);
+				strcat(auxvar, $2);
+				$$ = auxvar;
 				}
 	;
 	
@@ -80,19 +141,23 @@ crearvar:  VNUMERO {$$ = "int ";}
 	  ;
 	  
 numarrayvar: numarrayvar NUMERO {
-				char aux[100];
-				strcpy(aux, $1);
-				strcat(aux, "[");
-				strcat(aux, $2);
-				strcat(aux, "]");
-				$$ = aux;
+				char * auxnum;
+				auxnum = (char*)malloc ( 100*sizeof(char) );
+				auxnum[0] = '[';
+				strcpy(auxnum, $1);
+				strcat(auxnum, "[");
+				strcat(auxnum, $2);
+				strcat(auxnum, "]");
+				$$ = auxnum;
 				}
 				
 	     |NUMERO {
-	     			char aux[100] = "[";
-				strcat(aux, $1);
-				strcat(aux, "]");
-				$$ = aux;
+	     			char * auxnum;
+				auxnum = (char*)malloc ( 100*sizeof(char) );
+				auxnum[0] = '[';
+				strcat(auxnum, $1);
+				strcat(auxnum, "]");
+				$$ = auxnum;
 				}
 	  ;	
 	   

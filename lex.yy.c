@@ -952,12 +952,12 @@ YY_RULE_SETUP
 case 10:
 YY_RULE_SETUP
 #line 76 "final.l"
-{printf("ELSE: %s \n",strdup(yytext)); return ELSE;}
+{ return ELSE;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 77 "final.l"
-{printf("si: %s \n",strdup(yytext)); return IF;}
+{ return IF;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
@@ -967,42 +967,42 @@ YY_RULE_SETUP
 case 13:
 YY_RULE_SETUP
 #line 79 "final.l"
-{printf(">=: %s \n",strdup(yytext)); return MAYORIGUAL;}
+{return MAYORIGUAL;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 80 "final.l"
-{printf(">=: %s \n",strdup(yytext)); return MENORIGUAL;}
+{return MENORIGUAL;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 81 "final.l"
-{printf(">: %s \n",strdup(yytext)); return MAYOR;}
+{return MAYOR;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 82 "final.l"
-{printf("<: %s \n",strdup(yytext)); return MENOR;}
+{return MENOR;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 83 "final.l"
-{printf("==: %s \n",strdup(yytext)); return IGUAL;}
+{return IGUAL;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 84 "final.l"
-{printf("!=: %s \n",strdup(yytext)); return DISTINTO;}
+{return DISTINTO;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 85 "final.l"
-{printf("and: %s \n",strdup(yytext)); return AND;}
+{return AND;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 86 "final.l"
-{printf("or: %s \n",strdup(yytext)); return OR;}
+{return OR;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
@@ -1057,20 +1057,19 @@ YY_RULE_SETUP
 case 31:
 YY_RULE_SETUP
 #line 99 "final.l"
-{printf("VAR: %s \n",strdup(yytext));
-	yylval.string = strdup(yytext); return PALABRA;}
+{yylval.string = strdup(yytext); return PALABRA;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 101 "final.l"
+#line 100 "final.l"
 {};
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 102 "final.l"
+#line 101 "final.l"
 ECHO;
 	YY_BREAK
-#line 1074 "lex.yy.c"
+#line 1073 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2087,6 +2086,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 102 "final.l"
+#line 101 "final.l"
 
 

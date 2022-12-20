@@ -73,17 +73,17 @@ palabra [A-Za-z_]+
 
 {bucle} {printf("for: %s \n",strdup(yytext));}
 
-{else} {printf("ELSE: %s \n",strdup(yytext)); return ELSE;}
-{si} {printf("si: %s \n",strdup(yytext)); return IF;}
+{else} { return ELSE;}
+{si} { return IF;}
 {comparador} {/*no haría falta, poner como no terminal en bison*/}
-{c_mayorigual} {printf(">=: %s \n",strdup(yytext)); return MAYORIGUAL;}
-{c_menorigual} {printf(">=: %s \n",strdup(yytext)); return MENORIGUAL;}
-{c_mayor} {printf(">: %s \n",strdup(yytext)); return MAYOR;}
-{c_menor} {printf("<: %s \n",strdup(yytext)); return MENOR;}
-{c_igual} {printf("==: %s \n",strdup(yytext)); return IGUAL;}
-{c_distinto} {printf("!=: %s \n",strdup(yytext)); return DISTINTO;}
-{c_and} {printf("and: %s \n",strdup(yytext)); return AND;}
-{c_or} {printf("or: %s \n",strdup(yytext)); return OR;}
+{c_mayorigual} {return MAYORIGUAL;}
+{c_menorigual} {return MENORIGUAL;}
+{c_mayor} {return MAYOR;}
+{c_menor} {return MENOR;}
+{c_igual} {return IGUAL;}
+{c_distinto} {return DISTINTO;}
+{c_and} {return AND;}
+{c_or} {return OR;}
 
 {math} {/*no haría falta, poner como no terminal en bison*/}
 {m_en} {printf("=: %s \n",strdup(yytext));}
@@ -96,7 +96,6 @@ palabra [A-Za-z_]+
 {m_raiz} {printf("sqrt(x,y): %s \n",strdup(yytext));}
 {m_igual} {printf("=: %s \n",strdup(yytext));}
 
-{palabra} {printf("VAR: %s \n",strdup(yytext));
-	yylval.string = strdup(yytext); return PALABRA;}
+{palabra} {yylval.string = strdup(yytext); return PALABRA;}
 . {};
 %%
