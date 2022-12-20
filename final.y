@@ -24,7 +24,7 @@ char error[500];
 %start S
 %%
 
-S : recursivo {printf($1);} 
+S : recursivo {printf("%s",$1);} 
 	;
 
 recursivo : recursivo funcion {char * aux;
@@ -79,7 +79,7 @@ contif : PALABRA comparador PALABRA contenido /*STOP*/ {
 					strcat(aux, ")");
 					strcat(aux, "{\n\t\t");
 					strcat(aux, $4);
-					strcat(aux, "$\n\t};");
+					strcat(aux, "\n\t};");
 					$$ = aux;
 					}
 		| PALABRA comparador PALABRA ELSE {printf("\tif(%s%s%s){\n\t%s} else {\n\t};",$1,$2,$3,$4);}
@@ -100,6 +100,7 @@ comparador:  MAYOR {$$=">";}
 dimensionvar: contvar {		char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
 					strcpy(aux, $1);
+					strcat(aux, ";");
 					$$ = aux;}
 	       |VARRAY contvar numarrayvar{
 					char * aux;

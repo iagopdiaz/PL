@@ -526,8 +526,8 @@ static const yytype_uint8 yyrline[] =
 {
        0,    27,    27,    30,    36,    43,    44,    48,    54,    55,
       62,    71,    85,    86,    90,    91,    92,    93,    94,    95,
-      96,    97,   100,   104,   115,   123,   130,   139,   140,   143,
-     154
+      96,    97,   100,   105,   116,   124,   131,   140,   141,   144,
+     155
 };
 #endif
 
@@ -1117,7 +1117,7 @@ yyreduce:
     {
   case 2: /* S: recursivo  */
 #line 27 "final.y"
-              {printf((yyvsp[0].string));}
+              {printf("%s",(yyvsp[0].string));}
 #line 1122 "final.tab.c"
     break;
 
@@ -1206,7 +1206,7 @@ yyreduce:
 					strcat(aux, ")");
 					strcat(aux, "{\n\t\t");
 					strcat(aux, (yyvsp[0].string));
-					strcat(aux, "$\n\t};");
+					strcat(aux, "\n\t};");
 					(yyval.string) = aux;
 					}
 #line 1213 "final.tab.c"
@@ -1271,12 +1271,13 @@ yyreduce:
                       {		char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
 					strcpy(aux, (yyvsp[0].string));
+					strcat(aux, ";");
 					(yyval.string) = aux;}
-#line 1276 "final.tab.c"
+#line 1277 "final.tab.c"
     break;
 
   case 23: /* dimensionvar: VARRAY contvar numarrayvar  */
-#line 104 "final.y"
+#line 105 "final.y"
                                           {
 					char * aux;
 					aux = (char*)malloc ( 200*sizeof(char) );
@@ -1286,11 +1287,11 @@ yyreduce:
 					strcat(aux, ";");
 					(yyval.string) = aux;
 	       			}
-#line 1290 "final.tab.c"
+#line 1291 "final.tab.c"
     break;
 
   case 24: /* contvar: VDINAMICA crearvar PALABRA  */
-#line 115 "final.y"
+#line 116 "final.y"
                                     {
 				char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
@@ -1299,11 +1300,11 @@ yyreduce:
 				strcat(auxvar, (yyvsp[0].string));
 				(yyval.string) = auxvar;
 				}
-#line 1303 "final.tab.c"
+#line 1304 "final.tab.c"
     break;
 
   case 25: /* contvar: crearvar PALABRA  */
-#line 123 "final.y"
+#line 124 "final.y"
                            {
   	  			char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
@@ -1311,11 +1312,11 @@ yyreduce:
 				strcat(auxvar, (yyvsp[0].string));
 				(yyval.string) = auxvar;
 				}
-#line 1315 "final.tab.c"
+#line 1316 "final.tab.c"
     break;
 
   case 26: /* contvar: VESTATICA crearvar PALABRA  */
-#line 130 "final.y"
+#line 131 "final.y"
                                      {
   	  			char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
@@ -1323,23 +1324,23 @@ yyreduce:
 				strcat(auxvar, (yyvsp[-1].string));
 				(yyval.string) = auxvar;
 				}
-#line 1327 "final.tab.c"
+#line 1328 "final.tab.c"
     break;
 
   case 27: /* crearvar: VNUMERO  */
-#line 139 "final.y"
+#line 140 "final.y"
                    {(yyval.string) = "int ";}
-#line 1333 "final.tab.c"
+#line 1334 "final.tab.c"
     break;
 
   case 28: /* crearvar: VSTRING  */
-#line 140 "final.y"
+#line 141 "final.y"
                            {(yyval.string) = "char ";}
-#line 1339 "final.tab.c"
+#line 1340 "final.tab.c"
     break;
 
   case 29: /* numarrayvar: numarrayvar NUMERO  */
-#line 143 "final.y"
+#line 144 "final.y"
                                 {
 				char * auxnum;
 				auxnum = (char*)malloc ( 100*sizeof(char) );
@@ -1350,11 +1351,11 @@ yyreduce:
 				strcat(auxnum, "]");
 				(yyval.string) = auxnum;
 				}
-#line 1354 "final.tab.c"
+#line 1355 "final.tab.c"
     break;
 
   case 30: /* numarrayvar: NUMERO  */
-#line 154 "final.y"
+#line 155 "final.y"
                      {
 	     			char * auxnum;
 				auxnum = (char*)malloc ( 100*sizeof(char) );
@@ -1363,11 +1364,11 @@ yyreduce:
 				strcat(auxnum, "]");
 				(yyval.string) = auxnum;
 				}
-#line 1367 "final.tab.c"
+#line 1368 "final.tab.c"
     break;
 
 
-#line 1371 "final.tab.c"
+#line 1372 "final.tab.c"
 
       default: break;
     }
@@ -1560,7 +1561,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 164 "final.y"
+#line 165 "final.y"
 
 int main(int argc, char *argv[]) {
 extern FILE *yyin;
