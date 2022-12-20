@@ -15,20 +15,37 @@ char error[500];
 %token <string> VNUMERO
 %token <string> VSTRING
 %token <string> VARRAY
-%token <string> VESTATICA
-%token <string> VDINAMICA
+%token <string> VESTATICA ELSE IF
+%token <string> VDINAMICA MAYOR MENOR IGUAL DISTINTO MAYORIGUAL MENORIGUAL AND OR
 
 %token <string> NUMERO
 %token <string> PALABRA
-%type <string> funcion dimensionvar contvar numarrayvar crearvar
+%type <string> funcion dimensionvar contvar numarrayvar crearvar comparador contif
 %start S
 %%
 
 S : funcion {} 
 	;
 		
-funcion : VARIABLE dimensionvar {}
-	  //|IF contif
+funcion : VARIABLE dimensionvar {printf("\n");}
+	     | IF contif
+	;
+
+
+contif : PALABRA comparador PALABRA funcion {printf("\tif(%s%s%s){\n\t};",$1,$2,$3);}
+		| PALABRA comparador PALABRA ELSE {printf("\tif(%s%s%s){\n\t%s} else {\n\t};",$1,$2,$3,$4);}
+		| PALABRA comparador PALABRA ELSE IF  
+	;
+
+
+comparador:  MAYOR {$$=">";}
+		   | MENOR {$$="<";}
+		   | IGUAL {$$="==";}
+		   | DISTINTO {$$="!=";}
+		   | AND {$$="&&";}
+		   | OR {$$="||";}
+		   | MAYORIGUAL {$$=">=";}
+		   | MENORIGUAL {$$="<=";}
 	;
 
 dimensionvar: contvar{}
@@ -58,8 +75,8 @@ contvar : VDINAMICA crearvar PALABRA{
 				}
 	;
 	
-crearvar: VNUMERO {$$ = "int ";}
-	  |VSTRING {$$ = "char ";}
+crearvar:  VNUMERO {$$ = "int ";}
+	  	 | VSTRING {$$ = "char ";}
 	  ;
 	  
 numarrayvar: numarrayvar NUMERO {

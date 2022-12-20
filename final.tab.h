@@ -59,9 +59,19 @@ extern int yydebug;
     VSTRING = 260,                 /* VSTRING  */
     VARRAY = 261,                  /* VARRAY  */
     VESTATICA = 262,               /* VESTATICA  */
-    VDINAMICA = 263,               /* VDINAMICA  */
-    NUMERO = 264,                  /* NUMERO  */
-    PALABRA = 265                  /* PALABRA  */
+    ELSE = 263,                    /* ELSE  */
+    IF = 264,                      /* IF  */
+    VDINAMICA = 265,               /* VDINAMICA  */
+    MAYOR = 266,                   /* MAYOR  */
+    MENOR = 267,                   /* MENOR  */
+    IGUAL = 268,                   /* IGUAL  */
+    DISTINTO = 269,                /* DISTINTO  */
+    MAYORIGUAL = 270,              /* MAYORIGUAL  */
+    MENORIGUAL = 271,              /* MENORIGUAL  */
+    AND = 272,                     /* AND  */
+    OR = 273,                      /* OR  */
+    NUMERO = 274,                  /* NUMERO  */
+    PALABRA = 275                  /* PALABRA  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -75,9 +85,19 @@ extern int yydebug;
 #define VSTRING 260
 #define VARRAY 261
 #define VESTATICA 262
-#define VDINAMICA 263
-#define NUMERO 264
-#define PALABRA 265
+#define ELSE 263
+#define IF 264
+#define VDINAMICA 265
+#define MAYOR 266
+#define MENOR 267
+#define IGUAL 268
+#define DISTINTO 269
+#define MAYORIGUAL 270
+#define MENORIGUAL 271
+#define AND 272
+#define OR 273
+#define NUMERO 274
+#define PALABRA 275
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -87,7 +107,7 @@ union YYSTYPE
 
 	char * string;
 
-#line 91 "final.tab.h"
+#line 111 "final.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
