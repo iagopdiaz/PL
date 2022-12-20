@@ -4,6 +4,8 @@
 %}
 %option yylineno
 espacios [ \n\t]+
+closeIf "finif"
+
 
 numero [0-9]+
 
@@ -62,6 +64,7 @@ palabra [A-Za-z_]+
 
 %%
 {espacios} {}
+{closeIf} {printf("close %s \n",strdup(yytext)); return CLOSEIF;}
 {numero} {yylval.string = strdup(yytext); return NUMERO;}
 
 {variable} {return VARIABLE;}

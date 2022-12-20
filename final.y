@@ -16,7 +16,7 @@ char error[500];
 %token <string> VSTRING
 %token <string> VARRAY
 %token <string> VESTATICA ELSE IF
-%token <string> VDINAMICA MAYOR MENOR IGUAL DISTINTO MAYORIGUAL MENORIGUAL AND OR
+%token <string> VDINAMICA MAYOR MENOR IGUAL DISTINTO MAYORIGUAL MENORIGUAL AND OR CLOSEIF
 
 %token <string> NUMERO
 %token <string> PALABRA
@@ -68,7 +68,7 @@ contenido :  VARIABLE dimensionvar {	char * auxcont;
 					$$ = auxcont;}
 	;
 	
-contif : PALABRA comparador PALABRA contenido /*STOP*/ {
+contif : PALABRA comparador PALABRA contenido CLOSEIF {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
 					strcpy(aux, "\tif");
@@ -82,8 +82,25 @@ contif : PALABRA comparador PALABRA contenido /*STOP*/ {
 					strcat(aux, "\n\t};");
 					$$ = aux;
 					}
-		| PALABRA comparador PALABRA ELSE {printf("\tif(%s%s%s){\n\t%s} else {\n\t};",$1,$2,$3,$4);}
-		| PALABRA comparador PALABRA ELSE IF  
+		| PALABRA comparador PALABRA contenido ELSE contenido CLOSEIF {
+					char * aux;
+					aux = (char*)malloc ( 500*sizeof(char) );
+					strcpy(aux, "\tif");
+					strcat(aux, "(");
+					strcat(aux, $1);
+					strcat(aux, $2);
+					strcat(aux, $3);
+					strcat(aux, ")");
+					strcat(aux, "{\n\t\t");
+					strcat(aux, $4);
+					strcat(aux, "\n\t} else {\n\t\t");
+					strcat(aux, $6);
+					strcat(aux, "\n\t};");
+					$$ = aux;
+
+
+			}
+		| PALABRA comparador PALABRA ELSE IF contif
 	;
 
 
