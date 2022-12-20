@@ -14,13 +14,13 @@ char error[500];
 %token <string> VARIABLE
 %token <string> VNUMERO
 %token <string> VSTRING
-%token <string> VARRAY
+%token <string> VARRAY SUMA RESTA MULT DIV EXPONT RAIZ IGUALM EN DE
 %token <string> VESTATICA ELSE IF
 %token <string> VDINAMICA MAYOR MENOR IGUAL DISTINTO MAYORIGUAL MENORIGUAL AND OR CLOSEIF ELSEIF
 
 %token <string> NUMERO
 %token <string> PALABRA
-%type <string> funcion dimensionvar contvar numarrayvar crearvar comparador contif recursivo contenido
+%type <string> funcion dimensionvar contvar numarrayvar crearvar comparador contif recursivo contenido contmat operador
 %start S
 %%
 
@@ -40,8 +40,9 @@ recursivo : recursivo funcion {char * aux;
 	;
 
 		
-funcion :  VARIABLE dimensionvar {$$ = $2;}
-     	     |  IF contif {$$ = $2;}
+funcion :     VARIABLE dimensionvar {$$ = $2;}
+     		| IF contif {$$ = $2;}
+			| contmat {$$ = $1;}
 	;
 
 //Funciones Contenido de alguna otra funcion recursiva(if, for,while), indicar cuando parar con algo STOP
@@ -196,6 +197,90 @@ numarrayvar: numarrayvar NUMERO {
 				$$ = auxnum;
 				}
 	  ;	
+
+//a mas b en aux   //se guarda en aux -> aux = a + b
+//a mas b // se guarda en a  -> a += b
+contmat : PALABRA operador PALABRA {
+					char * aux;
+					aux = (char*)malloc ( 500*sizeof(char) );
+					strcpy(aux, "\t");
+					if(strcmp($2, "pow")==0 || strcmp($2, "sqrt")==0){	
+						strcat(aux, $2);
+						strcat(aux, "(");
+						strcat(aux, $1);
+						strcat(aux, ",");
+						strcat(aux, $3);
+						strcat(aux, ");\n");
+					} else {
+						strcat(aux, $1);
+						strcat(aux, $2);
+						strcat(aux, $3);
+						strcat(aux, ";\n");
+					}
+					$$ = aux;
+				};
+		
+		| operador PALABRA DE PALABRA {
+					char * aux;
+					aux = (char*)malloc ( 500*sizeof(char) );
+					strcpy(aux, "\t");
+					/*strcat(aux, $1);
+					strcat(aux, " = ");*/
+					strcat(aux, $1);
+					strcat(aux, "(");
+					strcat(aux, $2);
+					strcat(aux, ",");
+					strcat(aux, $4);
+					strcat(aux, ");\n");
+					$$ = aux;
+				};
+		| operador PALABRA DE PALABRA EN PALABRA {
+					char * aux;
+					aux = (char*)malloc ( 500*sizeof(char) );
+					strcpy(aux, "\t");
+					strcat(aux, $6);
+					strcat(aux, " = ");
+					strcat(aux, $1);
+					strcat(aux, "(");
+					strcat(aux, $2);
+					strcat(aux, ",");
+					strcat(aux, $4);
+					strcat(aux, ");\n");
+					$$ = aux;
+				};
+		| operador DE PALABRA {
+					char * aux;
+					aux = (char*)malloc ( 500*sizeof(char) );
+					strcpy(aux, "\t");
+					strcat(aux, $1);
+					strcat(aux, "(");
+					strcat(aux, $3);
+					strcat(aux, ");\n");
+					$$ = aux;
+				};
+		| operador DE PALABRA EN PALABRA {
+					char * aux;
+					aux = (char*)malloc ( 500*sizeof(char) );
+					strcpy(aux, "\t");
+					strcat(aux, $5);
+					strcat(aux, " = ");
+					strcat(aux, $1);
+					strcat(aux, "(");
+					strcat(aux, $3);
+					strcat(aux, ");\n");
+					$$ = aux;
+				};
+
+operador:	 SUMA {$$="+";}
+		   | RESTA {$$="-";}
+		   | MULT {$$="*";}
+		   | DIV {$$="/";}
+		   | IGUALM {$$="=";}
+		   | EXPONT {$$="pow";}
+		   | RAIZ {$$="sqrt";}
+	;
+
+
 	   
 %%
 int main(int argc, char *argv[]) {

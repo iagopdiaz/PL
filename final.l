@@ -40,19 +40,15 @@ c_distinto "distinto"
 c_and "y"
 c_or "o"
 
-
-/*Funciones matematicas | "sumar a mas b en c"
-Ir por la rama sumar | a,mas y b llegan como palabra pero solo usamos $0 y $2 asi no usamos "mas"
-Por si se quiere guardar en alguna variable "en" si no guarda en la 1a*/
-math {m_en}{m_suma}{m_resta}{m_multiplicacion}{m_division}{m_exponente}{m_raizcuadrada}{m_raiz}{m_igual}
-m_en "en" 
-m_suma "sumar"
-m_resta "restar"
-m_multiplicacion "multiplicar"
-m_division "dividir"
-m_exponente "elevar"
-m_raizcuadrada "raiz cuadrada"
-m_raiz "raiz"
+/*Funciones matemáticas*/
+m_en "en"
+m_de "de"
+m_suma "mas"
+m_resta "menos"
+m_multiplicacion "multiplicado por"|"por"
+m_division "dividido entre"|"entre"
+m_exponente "elevado a"
+m_raiz "raiz cuadrada"|"raiz"
 m_igual "igual"
 /*raiz 3 de 27*/
 
@@ -77,10 +73,11 @@ palabra [A-Za-z_]+
 
 {bucle} {printf("for: %s \n",strdup(yytext));}
 
-{else} {printf("ELSE: %s \n",strdup(yytext)); return ELSE;}
+{else} {return ELSE;}
 {else_if} {return ELSEIF;}
-{si} { printf("IF: %s \n",strdup(yytext));return IF;}
-{comparador} {/*no haría falta, poner como no terminal en bison*/}
+{si} {return IF;}
+
+
 {c_mayorigual} {return MAYORIGUAL;}
 {c_menorigual} {return MENORIGUAL;}
 {c_mayor} {return MAYOR;}
@@ -90,17 +87,20 @@ palabra [A-Za-z_]+
 {c_and} {return AND;}
 {c_or} {return OR;}
 
-{math} {/*no haría falta, poner como no terminal en bison*/}
-{m_en} {printf("=: %s \n",strdup(yytext));}
-{m_suma} {printf("+: %s \n",strdup(yytext));}
-{m_resta} {printf("-: %s \n",strdup(yytext));}
-{m_multiplicacion} {printf("*: %s \n",strdup(yytext));}
-{m_division} {printf("/: %s \n",strdup(yytext));}
-{m_exponente} {printf("^: %s \n",strdup(yytext));}
-{m_raizcuadrada} {printf("sqrt(x): %s \n",strdup(yytext));}
-{m_raiz} {printf("sqrt(x,y): %s \n",strdup(yytext));}
-{m_igual} {printf("=: %s \n",strdup(yytext));}
+
+{m_en} {return EN;}
+{m_de} {return DE;}
+{m_suma} {yylval.string = strdup(yytext);return SUMA;}
+{m_resta} {yylval.string = strdup(yytext);return RESTA;}
+{m_multiplicacion} {yylval.string = strdup(yytext);return MULT;}
+{m_division} {yylval.string = strdup(yytext);return DIV;}
+{m_exponente} {yylval.string = strdup(yytext);return EXPONT;}
+{m_raiz} {yylval.string = strdup(yytext);return RAIZ;}
+{m_igual} {yylval.string = strdup(yytext);return IGUALM;}
+
 
 {palabra} {yylval.string = strdup(yytext); return PALABRA;}
+
+
 . {};
 %%

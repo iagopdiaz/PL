@@ -1,11 +1,14 @@
+a mas b
+a menos b 
+a por b 
+a multiplicado por b
+a entre b 
+a dividido entre b
+a elevado a b
+raiz a de b
+raiz cuadrada de a 
 
-si a mayor b
-variable matriz numero a 10 10
-variable numero b
-variable letras c
-si no si A mayor A
-variable letras c finif
 
-
-
+raiz a de b en aux
+raiz cuadrada de a en aux   
 
