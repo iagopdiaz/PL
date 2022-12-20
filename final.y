@@ -14,29 +14,70 @@ char error[500];
 %token <string> VARIABLE
 %token <string> VNUMERO
 %token <string> VSTRING
-%token <string> PALABRA
+%token <string> VARRAY
+%token <string> VESTATICA
 %token <string> VDINAMICA
-%type <string> funcion contvar crearvar
+
+%token <string> NUMERO
+%token <string> PALABRA
+%type <string> funcion dimensionvar contvar numarrayvar crearvar
 %start S
 %%
 
 S : funcion {} 
 	;
 		
-funcion : VARIABLE contvar {printf("%s \n",$2);}
+funcion : VARIABLE dimensionvar {}
 	  //|IF contif
 	;
 
-contvar : VDINAMICA crearvar {$$ = $2}
-  	  |crearvar {$$ = $1}
+dimensionvar: contvar{}
+	       |VARRAY contvar numarrayvar{
+					printf("%s",$3);
+	       			}
+;
+
+contvar : VDINAMICA crearvar PALABRA{
+				char aux[100];
+				strcpy(aux, $2);
+				strcat(aux, "* ");
+				strcat(aux, $3);
+				printf("%s ",aux);
+				}
+  	  |crearvar PALABRA{
+  	  			char aux[100];
+				strcpy(aux, $1);
+				strcat(aux, $2);
+				printf("%s ",aux);
+				}
+	  |VESTATICA crearvar PALABRA{
+  	  			char aux[100];
+				strcpy(aux, $1);
+				strcat(aux, $2);
+				printf("%s ",aux);
+				}
 	;
 	
-crearavar: VNUMERO PALABRA {char  aux[20] ="";
-				strcat(aux,"int ");
-				strcat(aux,$2);
-				$$ = aux;}
-	  |VSTRING PALABRA 
+crearvar: VNUMERO {$$ = "int ";}
+	  |VSTRING {$$ = "char ";}
 	  ;
+	  
+numarrayvar: numarrayvar NUMERO {
+				char aux[100];
+				strcpy(aux, $1);
+				strcat(aux, "[");
+				strcat(aux, $2);
+				strcat(aux, "]");
+				$$ = aux;
+				}
+				
+	     |NUMERO {
+	     			char aux[100] = "[";
+				strcat(aux, $1);
+				strcat(aux, "]");
+				$$ = aux;
+				}
+	  ;	
 	   
 %%
 int main(int argc, char *argv[]) {

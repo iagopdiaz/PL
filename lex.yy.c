@@ -912,7 +912,7 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 65 "final.l"
-{printf("numero: %s \n",strdup(yytext));}
+{yylval.string = strdup(yytext); return NUMERO;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
@@ -932,17 +932,17 @@ YY_RULE_SETUP
 case 6:
 YY_RULE_SETUP
 #line 70 "final.l"
-{printf("array: %s \n",strdup(yytext));}
+{yylval.string = strdup(yytext); return VARRAY;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 71 "final.l"
-{printf("static: %s \n",strdup(yytext));}
+{yylval.string = strdup(yytext); return VESTATICA;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 72 "final.l"
-{printf("dinamic: %s \n",strdup(yytext));}
+{yylval.string = strdup(yytext); return VDINAMICA;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP

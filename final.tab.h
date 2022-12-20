@@ -57,7 +57,11 @@ extern int yydebug;
     VARIABLE = 258,                /* VARIABLE  */
     VNUMERO = 259,                 /* VNUMERO  */
     VSTRING = 260,                 /* VSTRING  */
-    PALABRA = 261                  /* PALABRA  */
+    VARRAY = 261,                  /* VARRAY  */
+    VESTATICA = 262,               /* VESTATICA  */
+    VDINAMICA = 263,               /* VDINAMICA  */
+    NUMERO = 264,                  /* NUMERO  */
+    PALABRA = 265                  /* PALABRA  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -69,7 +73,11 @@ extern int yydebug;
 #define VARIABLE 258
 #define VNUMERO 259
 #define VSTRING 260
-#define PALABRA 261
+#define VARRAY 261
+#define VESTATICA 262
+#define VDINAMICA 263
+#define NUMERO 264
+#define PALABRA 265
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -79,7 +87,7 @@ union YYSTYPE
 
 	char * string;
 
-#line 83 "final.tab.h"
+#line 91 "final.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

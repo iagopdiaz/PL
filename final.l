@@ -62,13 +62,13 @@ palabra [A-Za-z_]+
 
 %%
 {espacios} {}
-{numero} {printf("numero: %s \n",strdup(yytext));}
+{numero} {yylval.string = strdup(yytext); return NUMERO;}
 
 {variable} {yylval.string = strdup(yytext); return VARIABLE;}
 {v_numero} {yylval.string = strdup(yytext); return VNUMERO;}
 {v_letras} {yylval.string = strdup(yytext); return VSTRING;}
-{v_matriz} {printf("array: %s \n",strdup(yytext));}
-{v_estatica} {printf("static: %s \n",strdup(yytext));}
+{v_matriz} {yylval.string = strdup(yytext); return VARRAY;}
+{v_estatica} {yylval.string = strdup(yytext); return VESTATICA;}
 {v_dinamica} {yylval.string = strdup(yytext); return VDINAMICA;}
 
 {bucle} {printf("for: %s \n",strdup(yytext));}
