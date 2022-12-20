@@ -3,12 +3,21 @@
 
 int main() {
 
-si: si 
-VAR: a 
->: mayor 
-VAR: b 
-VAR: a 
-int a 
+IF: si 
+ELSE: si no 
+IF: si 
+close finif 
+close finif 
+
 	if(a>b){
-	b};
+		int a [10][10];
+		int b;
+		char c;
+	} else {
+		
+	if(A>A){
+		char c;
+	};
+
+	};	
 }

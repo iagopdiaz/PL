@@ -28,6 +28,7 @@ bucle "bucle"
 /*Hacer comparaciones | "si a mayor que b"*/
 if {si}{else}{comparador}
 else "si no"
+else_if "si no si"
 si "si"
 comparador {c_mayorigual}{c_menorigual}{c_mayor}{c_menor}{c_igual}{c_distinto}{c_and}{c_or}
 c_mayorigual "mayor o igual"
@@ -76,8 +77,9 @@ palabra [A-Za-z_]+
 
 {bucle} {printf("for: %s \n",strdup(yytext));}
 
-{else} { return ELSE;}
-{si} { return IF;}
+{else} {printf("ELSE: %s \n",strdup(yytext)); return ELSE;}
+{else_if} {return ELSEIF;}
+{si} { printf("IF: %s \n",strdup(yytext));return IF;}
 {comparador} {/*no haría falta, poner como no terminal en bison*/}
 {c_mayorigual} {return MAYORIGUAL;}
 {c_menorigual} {return MENORIGUAL;}

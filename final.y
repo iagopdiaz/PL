@@ -16,7 +16,7 @@ char error[500];
 %token <string> VSTRING
 %token <string> VARRAY
 %token <string> VESTATICA ELSE IF
-%token <string> VDINAMICA MAYOR MENOR IGUAL DISTINTO MAYORIGUAL MENORIGUAL AND OR CLOSEIF
+%token <string> VDINAMICA MAYOR MENOR IGUAL DISTINTO MAYORIGUAL MENORIGUAL AND OR CLOSEIF ELSEIF
 
 %token <string> NUMERO
 %token <string> PALABRA
@@ -71,7 +71,7 @@ contenido :  VARIABLE dimensionvar {	char * auxcont;
 contif : PALABRA comparador PALABRA contenido CLOSEIF {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
-					strcpy(aux, "\tif");
+					strcpy(aux, "\n\tif");
 					strcat(aux, "(");
 					strcat(aux, $1);
 					strcat(aux, $2);
@@ -79,13 +79,13 @@ contif : PALABRA comparador PALABRA contenido CLOSEIF {
 					strcat(aux, ")");
 					strcat(aux, "{\n\t\t");
 					strcat(aux, $4);
-					strcat(aux, "\n\t};");
+					strcat(aux, "\n\t};\n");
 					$$ = aux;
-					}
+					};
 		| PALABRA comparador PALABRA contenido ELSE contenido CLOSEIF {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
-					strcpy(aux, "\tif");
+					strcpy(aux, "\n\tif");
 					strcat(aux, "(");
 					strcat(aux, $1);
 					strcat(aux, $2);
@@ -95,12 +95,30 @@ contif : PALABRA comparador PALABRA contenido CLOSEIF {
 					strcat(aux, $4);
 					strcat(aux, "\n\t} else {\n\t\t");
 					strcat(aux, $6);
-					strcat(aux, "\n\t};");
+					strcat(aux, "\n\t};\t");
 					$$ = aux;
-
-
-			}
-		| PALABRA comparador PALABRA ELSE IF contif
+					};
+	| PALABRA comparador PALABRA contenido ELSEIF PALABRA comparador PALABRA contenido CLOSEIF {
+					char * aux;
+					aux = (char*)malloc ( 500*sizeof(char) );
+					strcpy(aux, "\n\tif");
+					strcat(aux, "(");
+					strcat(aux, $1);
+					strcat(aux, $2);
+					strcat(aux, $3);
+					strcat(aux, ")");
+					strcat(aux, "{\n\t\t");
+					strcat(aux, $4);
+					strcat(aux, "\n\t} else if(");
+					strcat(aux, $6);
+					strcat(aux, $7);
+					strcat(aux, $8);
+					strcat(aux, ") {\n\t\t");
+					strcat(aux, $9);
+					strcat(aux, "\n\t};\t");
+					$$ = aux;
+					};
+	
 	;
 
 

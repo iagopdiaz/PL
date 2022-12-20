@@ -71,8 +71,9 @@ extern int yydebug;
     AND = 272,                     /* AND  */
     OR = 273,                      /* OR  */
     CLOSEIF = 274,                 /* CLOSEIF  */
-    NUMERO = 275,                  /* NUMERO  */
-    PALABRA = 276                  /* PALABRA  */
+    ELSEIF = 275,                  /* ELSEIF  */
+    NUMERO = 276,                  /* NUMERO  */
+    PALABRA = 277                  /* PALABRA  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -98,8 +99,9 @@ extern int yydebug;
 #define AND 272
 #define OR 273
 #define CLOSEIF 274
-#define NUMERO 275
-#define PALABRA 276
+#define ELSEIF 275
+#define NUMERO 276
+#define PALABRA 277
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -109,7 +111,7 @@ union YYSTYPE
 
 	char * string;
 
-#line 113 "final.tab.h"
+#line 115 "final.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
