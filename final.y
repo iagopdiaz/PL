@@ -11,6 +11,7 @@ char error[500];
 	char * string;
 }
 
+%token <string> FOR WHILE DOWHILE ENDFOR ENDWHILE ENDDOWHILE 
 %token <string> VARIABLE
 %token <string> VNUMERO
 %token <string> VSTRING
@@ -20,7 +21,7 @@ char error[500];
 
 %token <string> NUMERO
 %token <string> PALABRA
-%type <string> funcion dimensionvar contvar numarrayvar crearvar comparador contif recursivo contenido contmat operador
+%type <string> funcion dimensionvar contvar numarrayvar crearvar comparador comprecursivo contif recursivo contenido contmat operador contfor contwhile contdowhile
 %start S
 %%
 
@@ -42,67 +43,100 @@ recursivo : recursivo funcion {char * aux;
 		
 funcion :     VARIABLE dimensionvar {$$ = $2;}
      		| IF contif {$$ = $2;}
-			| contmat {$$ = $1;}
+		| contmat {$$ = $1;}
+		| FOR contfor {$$ = $2;}
+		| WHILE contwhile {$$ = $2;}
+		| DOWHILE contdowhile {$$ = $2;}
 	;
 
 //Funciones Contenido de alguna otra funcion recursiva(if, for,while), indicar cuando parar con algo STOP
-contenido :  VARIABLE dimensionvar {	char * auxcont;
-					auxcont= (char*)malloc ( 200*sizeof(char) );
-					strcpy(auxcont, $2);
-					$$ = auxcont;
-					}
-	
-     	     |  IF contif {$$ = $2;}
-     	     |contenido VARIABLE dimensionvar {
-     	     				char * auxcont;
+contenido :  VARIABLE dimensionvar {$$ = $2;}
+     	     | IF contif {$$ = $2;}
+     	     | contmat {$$ = $1;}
+     	     | FOR contfor {$$ = $2;}
+	     | WHILE contwhile {$$ = $2;}
+	     | DOWHILE contdowhile {$$ = $2;}
+	     
+     	     | contenido VARIABLE dimensionvar {
+     	     	 			char * auxcont;
 					auxcont= (char*)malloc ( 200*sizeof(char) );
 					strcpy(auxcont, $1);
-					strcat(auxcont, "\n\t\t");
+					strcat(auxcont, "\t");
 					strcat(auxcont, $3);
 					$$ = auxcont;}
      	     | contenido IF contif {
      	     				char * auxcont;
 					auxcont = (char*)malloc ( 200*sizeof(char) );
 					strcpy(auxcont, $1);
-					strcat(auxcont, "\t\n");
+					strcat(auxcont, "\t");
+					strcat(auxcont, $3);
+					
+					$$ = auxcont;}
+	     | contenido contmat {
+     	     				char * auxcont;
+					auxcont = (char*)malloc ( 200*sizeof(char) );
+					strcpy(auxcont, $1);
+					strcat(auxcont, "\t");
+					strcat(auxcont, $2);
+					$$ = auxcont;}
+	     | contenido FOR contfor {
+     	     				char * auxcont;
+					auxcont = (char*)malloc ( 200*sizeof(char) );
+					strcpy(auxcont, $1);
+					strcat(auxcont, "\t");
+					strcat(auxcont, $3);
+					$$ = auxcont;}
+	     | contenido WHILE contwhile {
+     	     				char * auxcont;
+					auxcont = (char*)malloc ( 200*sizeof(char) );
+					strcpy(auxcont, $1);
+					strcat(auxcont, "\t");
+					strcat(auxcont, $3);
+					$$ = auxcont;}
+	     | contenido DOWHILE contdowhile {
+     	     				char * auxcont;
+					auxcont = (char*)malloc ( 200*sizeof(char) );
+					strcpy(auxcont, $1);
+					strcat(auxcont, "\t");
 					strcat(auxcont, $3);
 					$$ = auxcont;}
 	;
 	
-contif : PALABRA comparador PALABRA contenido CLOSEIF {
+	
+////////////////////////////////////Parte Condiciones///////////////////////////
+	
+contif : comprecursivo contenido CLOSEIF {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
-					strcpy(aux, "\n\tif");
+					strcpy(aux, "\tif");
 					strcat(aux, "(");
 					strcat(aux, $1);
-					strcat(aux, $2);
-					strcat(aux, $3);
 					strcat(aux, ")");
-					strcat(aux, "{\n\t\t");
-					strcat(aux, $4);
-					strcat(aux, "\n\t};\n");
+					strcat(aux, "{\n\t");
+					strcat(aux, $2);
+					strcat(aux, "\t};\n");
 					$$ = aux;
-					};
+					}/*
 		| PALABRA comparador PALABRA contenido ELSE contenido CLOSEIF {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
-					strcpy(aux, "\n\tif");
+					strcpy(aux, "\tif");
 					strcat(aux, "(");
 					strcat(aux, $1);
 					strcat(aux, $2);
 					strcat(aux, $3);
 					strcat(aux, ")");
-					strcat(aux, "{\n\t\t");
+					strcat(aux, "{\n");
 					strcat(aux, $4);
 					strcat(aux, "\n\t} else {\n\t\t");
 					strcat(aux, $6);
-					strcat(aux, "\n\t};\t");
+					strcat(aux, "\t};\n");
 					$$ = aux;
-					};
+					}
 	| PALABRA comparador PALABRA contenido ELSEIF PALABRA comparador PALABRA contenido CLOSEIF {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
-					strcpy(aux, "\n\tif");
+					strcpy(aux, "\tif");
 					strcat(aux, "(");
 					strcat(aux, $1);
 					strcat(aux, $2);
@@ -116,12 +150,36 @@ contif : PALABRA comparador PALABRA contenido CLOSEIF {
 					strcat(aux, $8);
 					strcat(aux, ") {\n\t\t");
 					strcat(aux, $9);
-					strcat(aux, "\n\t};\t");
+					strcat(aux, "\t};\n");
 					$$ = aux;
-					};
+					};*/
 	
 	;
 
+
+comprecursivo: comprecursivo AND comprecursivo{
+					char * auxcont;
+					auxcont= (char*)malloc ( 200*sizeof(char) );
+					strcpy(auxcont, $1);
+					strcat(auxcont, " && ");
+					strcat(auxcont, $3);
+					$$ = auxcont;}
+	       |comprecursivo OR comprecursivo{
+					char * auxcont;
+					auxcont= (char*)malloc ( 200*sizeof(char) );
+					strcpy(auxcont, $1);
+					strcat(auxcont, " || ");
+					strcat(auxcont, $3);
+					$$ = auxcont;}
+	       |PALABRA comparador PALABRA {
+	       			char * aux;
+					aux = (char*)malloc ( 100*sizeof(char) );
+					strcpy(aux, $1);
+					strcat(aux, $2);
+					strcat(aux, $3);
+					$$ = aux;
+					}
+	     ;
 
 comparador:  MAYOR {$$=">";}
 		   | MENOR {$$="<";}
@@ -133,19 +191,24 @@ comparador:  MAYOR {$$=">";}
 		   | MENORIGUAL {$$="<=";}
 	;
 
-dimensionvar: contvar {		char * aux;
-					aux = (char*)malloc ( 100*sizeof(char) );
-					strcpy(aux, $1);
-					strcat(aux, ";");
-					$$ = aux;}
+////////////////////////////////Parte Variables/////////////////////////////////
+
+dimensionvar: contvar {		char * auxdim;
+					auxdim = (char*)malloc ( 100*sizeof(char) );
+					strcpy(auxdim, "\t");
+					strcat(auxdim, $1);
+					strcat(auxdim, ";\n");
+					$$ = auxdim;
+					}
 	       |VARRAY contvar numarrayvar{
-					char * aux;
-					aux = (char*)malloc ( 200*sizeof(char) );
-					strcpy(aux, $2);
-					strcat(aux, " ");
-					strcat(aux, $3);
-					strcat(aux, ";");
-					$$ = aux;
+					char * auxdim;
+					auxdim = (char*)malloc ( 200*sizeof(char) );
+					strcpy(auxdim, "\t");
+					strcat(auxdim, $2);
+					strcat(auxdim, " ");
+					strcat(auxdim, $3);
+					strcat(auxdim, ";\n");
+					$$ = auxdim;
 	       			}
 ;
 
@@ -198,11 +261,12 @@ numarrayvar: numarrayvar NUMERO {
 				}
 	  ;	
 
+///////////////////////////////////////Parte Matematicas//////////////////777
 //a mas b en aux   //se guarda en aux -> aux = a + b
 //a mas b // se guarda en a  -> a += b
 contmat : PALABRA operador PALABRA {
 					char * aux;
-					aux = (char*)malloc ( 500*sizeof(char) );
+					aux = (char*)malloc ( 100*sizeof(char) );
 					strcpy(aux, "\t");
 					if(strcmp($2, "pow")==0 || strcmp($2, "sqrt")==0){	
 						strcat(aux, $2);
@@ -222,7 +286,7 @@ contmat : PALABRA operador PALABRA {
 		
 		| operador PALABRA DE PALABRA {
 					char * aux;
-					aux = (char*)malloc ( 500*sizeof(char) );
+					aux = (char*)malloc ( 100*sizeof(char) );
 					strcpy(aux, "\t");
 					/*strcat(aux, $1);
 					strcat(aux, " = ");*/
@@ -236,7 +300,7 @@ contmat : PALABRA operador PALABRA {
 				};
 		| operador PALABRA DE PALABRA EN PALABRA {
 					char * aux;
-					aux = (char*)malloc ( 500*sizeof(char) );
+					aux = (char*)malloc ( 100*sizeof(char) );
 					strcpy(aux, "\t");
 					strcat(aux, $6);
 					strcat(aux, " = ");
@@ -250,7 +314,7 @@ contmat : PALABRA operador PALABRA {
 				};
 		| operador DE PALABRA {
 					char * aux;
-					aux = (char*)malloc ( 500*sizeof(char) );
+					aux = (char*)malloc ( 100*sizeof(char) );
 					strcpy(aux, "\t");
 					strcat(aux, $1);
 					strcat(aux, "(");
@@ -260,7 +324,7 @@ contmat : PALABRA operador PALABRA {
 				};
 		| operador DE PALABRA EN PALABRA {
 					char * aux;
-					aux = (char*)malloc ( 500*sizeof(char) );
+					aux = (char*)malloc ( 100*sizeof(char) );
 					strcpy(aux, "\t");
 					strcat(aux, $5);
 					strcat(aux, " = ");
@@ -281,7 +345,62 @@ operador:	 SUMA {$$="+";}
 	;
 
 
-	   
+////////////////////////////////Parte Bucles//////////////////////////////////
+ contfor: NUMERO contenido ENDFOR {	
+ 					char * aux;
+					aux = (char*)malloc ( 500*sizeof(char) );
+					strcpy(aux, "\tfor(int i = 0;i < ");
+					strcat(aux, $1);
+					strcat(aux, ";i++){\n\t ");
+					strcat(aux, $2);
+					strcat(aux, "\t};\n");
+					$$ = aux;
+					}
+ 	  |NUMERO NUMERO contenido ENDFOR {
+ 	  				char * aux;
+					aux = (char*)malloc ( 500*sizeof(char) );
+					strcpy(aux, "\tfor(int i = ");
+					strcat(aux, $1);
+					strcat(aux, ";i < ");
+					strcat(aux, $2);
+					strcat(aux, ";i++){\n\t ");
+					strcat(aux, $3);
+					strcat(aux, "\t};\n");
+					$$ = aux;
+					}
+ 	  
+ 	  ;
+ 
+ 
+ contwhile: PALABRA comparador PALABRA contenido ENDWHILE {
+					char * aux;
+					aux = (char*)malloc ( 500*sizeof(char) );
+					strcpy(aux, "\twhile(");
+					strcat(aux, $1);
+					strcat(aux, $2);
+					strcat(aux, $3);
+					strcat(aux, ")");
+					strcat(aux, "{\n\t");
+					strcat(aux, $4);
+					strcat(aux, "\t};\n");
+					$$ = aux;
+					};
+ 
+ 
+ contdowhile: PALABRA comparador PALABRA contenido ENDDOWHILE {
+					char * aux;
+					aux = (char*)malloc ( 500*sizeof(char) );
+					strcpy(aux, "\tdo{\n\t");
+					strcat(aux, $4);
+					strcat(aux, "\t}");
+					strcat(aux, "while(");
+					strcat(aux, $1);
+					strcat(aux, $2);
+					strcat(aux, $3);
+					strcat(aux, ")\n");
+					$$ = aux;
+					};;
+ 
 %%
 int main(int argc, char *argv[]) {
 extern FILE *yyin;

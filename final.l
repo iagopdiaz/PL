@@ -4,7 +4,6 @@
 %}
 %option yylineno
 espacios [ \n\t]+
-closeIf "finif"
 
 
 numero [0-9]+
@@ -24,9 +23,15 @@ v_dinamica "dinamica"
 
 /*Hacer un bucle | "bucle 5 10" va de 5 a 10 | "bucle 10" va de 0 a 10*/
 bucle "bucle"
+endfor "finfor"
+do_while "hacer mientras"
+enddowhile "findowhile"
+while "mientras"
+endwhile "finwhile"
 
 /*Hacer comparaciones | "si a mayor que b"*/
 if {si}{else}{comparador}
+closeIf "finif"
 else "si no"
 else_if "si no si"
 si "si"
@@ -61,7 +66,6 @@ palabra [A-Za-z_]+
 
 %%
 {espacios} {}
-{closeIf} {printf("close %s \n",strdup(yytext)); return CLOSEIF;}
 {numero} {yylval.string = strdup(yytext); return NUMERO;}
 
 {variable} {return VARIABLE;}
@@ -71,11 +75,17 @@ palabra [A-Za-z_]+
 {v_estatica} {yylval.string = strdup(yytext); return VESTATICA;}
 {v_dinamica} {yylval.string = strdup(yytext); return VDINAMICA;}
 
-{bucle} {printf("for: %s \n",strdup(yytext));}
+{bucle} {return FOR;}
+{do_while} {return DOWHILE;}
+{while} {return WHILE;}
+{endfor} {return ENDFOR;}
+{endwhile} {return ENDWHILE;}
+{enddowhile} {return ENDDOWHILE;}
 
 {else} {return ELSE;}
 {else_if} {return ELSEIF;}
 {si} {return IF;}
+{closeIf} {return CLOSEIF;}
 
 
 {c_mayorigual} {return MAYORIGUAL;}

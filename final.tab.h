@@ -54,35 +54,41 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    VARIABLE = 258,                /* VARIABLE  */
-    VNUMERO = 259,                 /* VNUMERO  */
-    VSTRING = 260,                 /* VSTRING  */
-    VARRAY = 261,                  /* VARRAY  */
-    SUMA = 262,                    /* SUMA  */
-    RESTA = 263,                   /* RESTA  */
-    MULT = 264,                    /* MULT  */
-    DIV = 265,                     /* DIV  */
-    EXPONT = 266,                  /* EXPONT  */
-    RAIZ = 267,                    /* RAIZ  */
-    IGUALM = 268,                  /* IGUALM  */
-    EN = 269,                      /* EN  */
-    DE = 270,                      /* DE  */
-    VESTATICA = 271,               /* VESTATICA  */
-    ELSE = 272,                    /* ELSE  */
-    IF = 273,                      /* IF  */
-    VDINAMICA = 274,               /* VDINAMICA  */
-    MAYOR = 275,                   /* MAYOR  */
-    MENOR = 276,                   /* MENOR  */
-    IGUAL = 277,                   /* IGUAL  */
-    DISTINTO = 278,                /* DISTINTO  */
-    MAYORIGUAL = 279,              /* MAYORIGUAL  */
-    MENORIGUAL = 280,              /* MENORIGUAL  */
-    AND = 281,                     /* AND  */
-    OR = 282,                      /* OR  */
-    CLOSEIF = 283,                 /* CLOSEIF  */
-    ELSEIF = 284,                  /* ELSEIF  */
-    NUMERO = 285,                  /* NUMERO  */
-    PALABRA = 286                  /* PALABRA  */
+    FOR = 258,                     /* FOR  */
+    WHILE = 259,                   /* WHILE  */
+    DOWHILE = 260,                 /* DOWHILE  */
+    ENDFOR = 261,                  /* ENDFOR  */
+    ENDWHILE = 262,                /* ENDWHILE  */
+    ENDDOWHILE = 263,              /* ENDDOWHILE  */
+    VARIABLE = 264,                /* VARIABLE  */
+    VNUMERO = 265,                 /* VNUMERO  */
+    VSTRING = 266,                 /* VSTRING  */
+    VARRAY = 267,                  /* VARRAY  */
+    SUMA = 268,                    /* SUMA  */
+    RESTA = 269,                   /* RESTA  */
+    MULT = 270,                    /* MULT  */
+    DIV = 271,                     /* DIV  */
+    EXPONT = 272,                  /* EXPONT  */
+    RAIZ = 273,                    /* RAIZ  */
+    IGUALM = 274,                  /* IGUALM  */
+    EN = 275,                      /* EN  */
+    DE = 276,                      /* DE  */
+    VESTATICA = 277,               /* VESTATICA  */
+    ELSE = 278,                    /* ELSE  */
+    IF = 279,                      /* IF  */
+    VDINAMICA = 280,               /* VDINAMICA  */
+    MAYOR = 281,                   /* MAYOR  */
+    MENOR = 282,                   /* MENOR  */
+    IGUAL = 283,                   /* IGUAL  */
+    DISTINTO = 284,                /* DISTINTO  */
+    MAYORIGUAL = 285,              /* MAYORIGUAL  */
+    MENORIGUAL = 286,              /* MENORIGUAL  */
+    AND = 287,                     /* AND  */
+    OR = 288,                      /* OR  */
+    CLOSEIF = 289,                 /* CLOSEIF  */
+    ELSEIF = 290,                  /* ELSEIF  */
+    NUMERO = 291,                  /* NUMERO  */
+    PALABRA = 292                  /* PALABRA  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -91,35 +97,41 @@ extern int yydebug;
 #define YYEOF 0
 #define YYerror 256
 #define YYUNDEF 257
-#define VARIABLE 258
-#define VNUMERO 259
-#define VSTRING 260
-#define VARRAY 261
-#define SUMA 262
-#define RESTA 263
-#define MULT 264
-#define DIV 265
-#define EXPONT 266
-#define RAIZ 267
-#define IGUALM 268
-#define EN 269
-#define DE 270
-#define VESTATICA 271
-#define ELSE 272
-#define IF 273
-#define VDINAMICA 274
-#define MAYOR 275
-#define MENOR 276
-#define IGUAL 277
-#define DISTINTO 278
-#define MAYORIGUAL 279
-#define MENORIGUAL 280
-#define AND 281
-#define OR 282
-#define CLOSEIF 283
-#define ELSEIF 284
-#define NUMERO 285
-#define PALABRA 286
+#define FOR 258
+#define WHILE 259
+#define DOWHILE 260
+#define ENDFOR 261
+#define ENDWHILE 262
+#define ENDDOWHILE 263
+#define VARIABLE 264
+#define VNUMERO 265
+#define VSTRING 266
+#define VARRAY 267
+#define SUMA 268
+#define RESTA 269
+#define MULT 270
+#define DIV 271
+#define EXPONT 272
+#define RAIZ 273
+#define IGUALM 274
+#define EN 275
+#define DE 276
+#define VESTATICA 277
+#define ELSE 278
+#define IF 279
+#define VDINAMICA 280
+#define MAYOR 281
+#define MENOR 282
+#define IGUAL 283
+#define DISTINTO 284
+#define MAYORIGUAL 285
+#define MENORIGUAL 286
+#define AND 287
+#define OR 288
+#define CLOSEIF 289
+#define ELSEIF 290
+#define NUMERO 291
+#define PALABRA 292
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -129,7 +141,7 @@ union YYSTYPE
 
 	char * string;
 
-#line 133 "final.tab.h"
+#line 145 "final.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

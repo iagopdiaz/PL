@@ -1,14 +1,2 @@
-a mas b
-a menos b 
-a por b 
-a multiplicado por b
-a entre b 
-a dividido entre b
-a elevado a b
-raiz a de b
-raiz cuadrada de a 
-
-
-raiz a de b en aux
-raiz cuadrada de a en aux   
-
+si a mayor b o x menor c variable numero a finif
+bucle 1 10 variable matriz numero b 10 10 finfor
