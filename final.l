@@ -57,7 +57,7 @@ m_suma "mas"|"sumar"
 m_resta "menos"|"restar"
 m_multiplicacion "multiplicar"|"por"
 m_division "dividir"|"entre"
-m_exponente "elevado a"
+m_exponente "elevar"
 m_raiz "raiz cuadrada"|"raiz"
 m_igual "igual"
 /*raiz 3 de 27*/

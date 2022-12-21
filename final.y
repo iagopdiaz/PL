@@ -21,7 +21,7 @@ char error[500];
 
 %token <string> NUMERO
 %token <string> PALABRA
-%type <string>  dimensionvar contvar numarrayvar crearvar comparador  parametro comprecursivo contif  contenido contmat recConmat operador contfor contwhile contdowhile typevar
+%type <string>  dimensionvar contvar numarrayvar crearvar comparador parametro comprecursivo contif  contenido contmat recConmat operador contfor contwhile contdowhile typevar
 %start S
 %%
 
@@ -51,13 +51,15 @@ contenido :    VARIABLE dimensionvar {$$ = $2;}
 					strcat(auxcont, $3);
 					
 					$$ = auxcont;}
-	     | contenido contmat {
+		 | contenido contmat {
      	     		char * auxcont;
 					auxcont = (char*)malloc ( 200*sizeof(char) );
 					strcpy(auxcont, $1);
 					strcat(auxcont, "\t");
 					strcat(auxcont, $2);
+					
 					$$ = auxcont;}
+	     	
 	     | contenido FOR contfor {
      	     				char * auxcont;
 					auxcont = (char*)malloc ( 200*sizeof(char) );
@@ -370,12 +372,13 @@ numarrayvar: numarrayvar NUMERO {
 
 ///////////////////////////////////////Parte Matematicas/////////////////
 
+
 contmat : operador parametro operador recConmat {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
 					strcpy(aux, "\t");
-					if(strcmp($3, "pow")==0 || strcmp($3, "sqrt")==0){	
-						strcat(aux, $3);
+					if(strcmp($1, "pow")==0 || strcmp($1, "sqrt")==0){	
+						strcpy(aux, $1);
 						strcat(aux, "(");
 						strcat(aux, $2);
 						strcat(aux, ",");
@@ -383,18 +386,29 @@ contmat : operador parametro operador recConmat {
 						strcat(aux, ");\n");
 					} else {
 						strcat(aux, $2);
+						strcat(aux, " ");
 						strcat(aux, $3);
+						strcat(aux, " ");
 						strcat(aux, $4);
+					
 						strcat(aux, ";\n");
 					}
 					$$ = aux;
-				};
-		
-		| operador parametro DE parametro STOP {
+				}
+		| contmat EN PALABRA STOP {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
 					strcpy(aux, "\t");
+					strcpy(aux, $3);
+					strcat(aux, " = ");
 					strcat(aux, $1);
+					$$ = aux;
+				};
+		/*raiz 2 de 20*/
+		| operador parametro DE parametro STOP {
+					char * aux;
+					aux = (char*)malloc ( 100*sizeof(char) );
+					strcpy(aux, $1);
 					strcat(aux, "(");
 					strcat(aux, $2);
 					strcat(aux, ",");
@@ -402,11 +416,15 @@ contmat : operador parametro operador recConmat {
 					strcat(aux, ");\n");
 					$$ = aux;
 				};
+		| operador parametro DE parametro {
+				sprintf(error, "Error, Falta cerrar la operación con un '.'\n");
+                yyerror(error);
+                YYABORT;
+		}
 		| operador parametro DE parametro EN PALABRA STOP {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
-					strcpy(aux, "\t");
-					strcat(aux, $6);
+					strcpy(aux, $6);
 					strcat(aux, " = ");
 					strcat(aux, $1);
 					strcat(aux, "(");
@@ -416,21 +434,29 @@ contmat : operador parametro operador recConmat {
 					strcat(aux, ");\n");
 					$$ = aux;
 				};
+		| operador parametro DE parametro EN PALABRA {
+				sprintf(error, "Error, Falta cerrar la operación con un '.'\n");
+                yyerror(error);
+                YYABORT;
+		}
 		|  operador DE parametro STOP {
 				char * aux;
 				aux = (char*)malloc ( 100*sizeof(char) );
-				strcpy(aux, "\t");
-				strcat(aux, $1);
+				strcpy(aux, $1);
 				strcat(aux, "(");
 				strcat(aux, $3);
 				strcat(aux, ");\n");
 				$$ = aux;
 			};
+		|  operador DE parametro {
+				sprintf(error, "Error, Falta cerrar la operación con un '.'\n");
+                yyerror(error);
+                YYABORT;
+		}
 		|  operador DE parametro EN PALABRA STOP {
 				char * aux;
 				aux = (char*)malloc ( 100*sizeof(char) );
-				strcpy(aux, "\t");
-				strcat(aux, $5);
+				strcpy(aux, $5);
 				strcat(aux, " = ");
 				strcat(aux, $1);
 				strcat(aux, "(");
@@ -438,6 +464,11 @@ contmat : operador parametro operador recConmat {
 				strcat(aux, ");\n");
 				$$ = aux;
 			};
+		|  operador DE parametro EN PALABRA {
+				sprintf(error, "Error, Falta cerrar la operación con un '.'\n");
+                yyerror(error);
+                YYABORT;
+		}
 	
 
 	
@@ -460,13 +491,20 @@ recConmat:    parametro operador recConmat {
 				strcat(aux, $3);
 				$$ = aux;
 			};
-			| parametro STOP{
+			| parametro STOP {
 				char * aux;
 				aux = (char*)malloc ( 500*sizeof(char) );
 				strcpy(aux, $1);
 				$$ = aux;
-			};
-		
+			}
+			| parametro  {
+				char * aux;
+				aux = (char*)malloc ( 500*sizeof(char) );
+				strcpy(aux, $1);
+				$$ = aux;
+			}
+	
+			| contmat { $$ = $1;}
 
 		   ;
 
