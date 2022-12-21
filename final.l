@@ -19,6 +19,9 @@ memoria_var {v_estatica}{v_dinamica}
 v_numero "numero"|"NUMERO"
 v_letras "letras"|"LETRAS"
 v_matriz "matriz"|"MATRIZ"
+v_true "Verdadero"
+v_false "Falso"
+v_bool "booleano"|"BOOLEANO"
 v_estatica "estatica"|"ESTATICA"
 v_dinamica "dinamica"|"DINAMICA"
 
@@ -74,6 +77,9 @@ palabra [A-Za-z_]+
 {v_numero} {yylval.string = strdup(yytext); return VNUMERO;}
 {v_letras} {yylval.string = strdup(yytext); return VSTRING;}
 {v_matriz} {yylval.string = strdup(yytext); return VARRAY;}
+{v_true} {yylval.string = strdup(yytext); return VTRUE;}
+{v_false} {yylval.string = strdup(yytext); return VFALSE;}
+{v_bool} {yylval.string = strdup(yytext); return VBOOL;}
 {v_estatica} {yylval.string = strdup(yytext); return VESTATICA;}
 {v_dinamica} {yylval.string = strdup(yytext); return VDINAMICA;}
 

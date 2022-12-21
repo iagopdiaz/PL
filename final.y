@@ -13,15 +13,15 @@ char error[500];
 
 %token <string> FOR WHILE DOWHILE ENDFOR ENDWHILE ENDDOWHILE 
 %token <string> VARIABLE
-%token <string> VNUMERO
-%token <string> VSTRING STOP
+%token <string> VNUMERO VBOOL VSTRING VTRUE VFALSE
+%token <string> STOP
 %token <string> VARRAY SUMA RESTA MULT DIV EXPONT RAIZ IGUALM DE
 %token <string> VESTATICA ELSE IF
 %token <string> VDINAMICA MAYOR MENOR IGUAL DISTINTO MAYORIGUAL MENORIGUAL AND OR CLOSEIF ELSEIF
 
 %token <string> NUMERO
 %token <string> PALABRA
-%type <string> funcion dimensionvar contvar numarrayvar crearvar comparador contlcontif parametro comprecursivo contif recursivo contenido contmat recConmat operador contfor contwhile contdowhile
+%type <string> funcion dimensionvar contvar numarrayvar crearvar comparador contlcontif parametro comprecursivo contif recursivo contenido contmat recConmat operador contfor contwhile contdowhile typevar
 %start S
 %%
 
@@ -29,7 +29,7 @@ S : recursivo {printf("%s",$1);}
 	;
 
 recursivo : recursivo funcion {char * aux;
-				aux = (char*)malloc ( 100*sizeof(char) );
+				aux = (char*)malloc ( 1000*sizeof(char) );
 				strcpy(aux, $1);
 				strcat(aux, $2);
 				$$ = aux;
@@ -163,42 +163,28 @@ contif : comprecursivo contlcontif {
 	;
 
 
-comprecursivo: comprecursivo AND comprecursivo{
-					char * auxcont;
-					auxcont= (char*)malloc ( 200*sizeof(char) );
+comprecursivo: comprecursivo comparador PALABRA{
+				char * auxcont;
+				auxcont= (char*)malloc( 100*sizeof(char) );
+				if ((strcmp($2,"||") == 0) ||(strcmp($2,"&&") == 0)){
 					strcpy(auxcont, $1);
-					strcat(auxcont, " && ");
-					strcat(auxcont, $3);
-					$$ = auxcont;}
-	       |comprecursivo OR comprecursivo{
-					char * auxcont;
-					auxcont= (char*)malloc ( 200*sizeof(char) );
+					strcat(auxcont, " ");
+					strcat(auxcont, $2);
+					strcat(auxcont, " ");
+					strcat(auxcont, $3);	
+				}else{
 					strcpy(auxcont, $1);
-					strcat(auxcont, " || ");
-					strcat(auxcont, $3);
-					$$ = auxcont;}
-	       |comprecursivo AND PALABRA{
-					char * auxcont;
-					auxcont= (char*)malloc ( 200*sizeof(char) );
-					strcpy(auxcont, $1);
-					strcat(auxcont, " && ");
-					strcat(auxcont, $3);
-					$$ = auxcont;}
-	       |comprecursivo OR PALABRA{
-					char * auxcont;
-					auxcont= (char*)malloc ( 200*sizeof(char) );
-					strcpy(auxcont, $1);
-					strcat(auxcont, " || ");
-					strcat(auxcont, $3);
-					$$ = auxcont;}
-	       |PALABRA comparador PALABRA {
-	       			char * aux;
-					aux = (char*)malloc ( 100*sizeof(char) );
-					strcpy(aux, $1);
-					strcat(aux, $2);
-					strcat(aux, $3);
-					$$ = aux;
-					}
+					strcat(auxcont, $2);
+					strcat(auxcont, $3);				
+				}
+				$$ = auxcont;
+				}
+	        | PALABRA {
+	       		char * aux;
+				aux = (char*)malloc ( 20*sizeof(char) );
+				strcpy(aux, $1);
+				$$ = aux;
+	      }
 	     ;
 
 comparador:  MAYOR {$$=">";}
@@ -240,26 +226,159 @@ contvar : VDINAMICA crearvar PALABRA{
 				strcat(auxvar, $3);
 				$$ = auxvar;
 				}
-  	  |crearvar PALABRA{
+  	  | crearvar PALABRA{
   	  			char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
 				strcpy(auxvar, $1);
 				strcat(auxvar, $2);
 				$$ = auxvar;
 				}
-	  |VESTATICA crearvar PALABRA{
+	  | VESTATICA crearvar PALABRA{
   	  			char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
 				strcpy(auxvar, $1);
 				strcat(auxvar, $2);
 				$$ = auxvar;
+				}
+				
+	   ////////////////PARA INICIALIZAR CON X VALOR/////////////////////////
+	  | VDINAMICA crearvar PALABRA IGUALM typevar{
+  	  			char * auxvar;
+				auxvar = (char*)malloc ( 100*sizeof(char) );
+				char * auxvar2;
+				auxvar2 = (char*)malloc ( 100*sizeof(char) );
+				char * control;
+				char * partes;
+				
+				strcpy(auxvar, $2); //Variable salida
+				strcpy(auxvar2, $5);  //Variable con control de tipo
+				partes = strtok($5, "-"); //Variable con el valor del tipo
+				control = memchr(auxvar2, '-', strlen(auxvar2));
+				control = strtok(control, "-");
+				
+				if (strcmp(control,auxvar) == 0){
+					strcat(auxvar, $3);
+					strcat(auxvar, "=");
+					strcat(auxvar, $5);
+					$$ = auxvar;
+				}else{
+					sprintf(error, "Encontrado tipo: %s . Se esperaba tipo: %s", control, auxvar); 
+					yyerror(error);
+					YYABORT;
+				}
+				}
+  	  | crearvar PALABRA IGUALM typevar{
+  	  			char * auxvar;
+				auxvar = (char*)malloc ( 100*sizeof(char) );
+				char * auxvar2;
+				auxvar2 = (char*)malloc ( 100*sizeof(char) );
+				char * control;
+				char * partes;
+				
+				strcpy(auxvar, $1); //Variable salida
+				strcpy(auxvar2, $4);  //Variable con control de tipo
+				partes = strtok($4, "-"); //Variable con el valor del tipo
+				control = memchr(auxvar2, '-', strlen(auxvar2));
+				control = strtok(control, "-");
+				
+				if (strcmp(control,auxvar) == 0){
+					strcat(auxvar, $2);
+					strcat(auxvar, "=");
+					strcat(auxvar, $4);
+					$$ = auxvar;
+				}else{
+					sprintf(error, "Encontrado tipo: %s . Se esperaba tipo: %s", control, auxvar); 
+					yyerror(error);
+					YYABORT;
+				}
+				
+				
+			}
+	  | VESTATICA crearvar PALABRA IGUALM typevar{
+  	  			char * auxvar;
+				auxvar = (char*)malloc ( 100*sizeof(char) );
+				char * auxvar2;
+				auxvar2 = (char*)malloc ( 100*sizeof(char) );
+				char * control;
+				char * partes;
+				
+				strcpy(auxvar, $2); //Variable salida
+				strcpy(auxvar2, $5);  //Variable con control de tipo
+				partes = strtok($5, "-"); //Variable con el valor del tipo
+				control = memchr(auxvar2, '-', strlen(auxvar2));
+				control = strtok(control, "-");
+				
+				if (strcmp(control,auxvar) == 0){
+					strcat(auxvar, $3);
+					strcat(auxvar, "=");
+					strcat(auxvar, $5);
+					$$ = auxvar;
+				}else{
+					sprintf(error, "Encontrado tipo: %s . Se esperaba tipo: %s", control, auxvar); 
+					yyerror(error);
+					YYABORT;
+				}
+				}
+				
+	/////////////////////////////ERRORES FALTA DE PARAMETROS///////////////////
+	
+	///////////////////////////////SIN NOMBRE VARIABLE///////////////////////////
+	  | VDINAMICA crearvar {
+	 				sprintf(error, "Error, Falta nombre de la variable"); 
+					yyerror(error);
+					YYABORT;
+				}
+  	  | crearvar {
+	 				sprintf(error, "Error, Falta nombre de la variable"); 
+					yyerror(error);
+					YYABORT;
+				}
+	  | VESTATICA crearvar {
+	 				sprintf(error, "Error, Falta nombre de la variable"); 
+					yyerror(error);
+					YYABORT;
+				}
+				
+	///////////////////////////////SIN TIPO VARIABLE///////////////////////////
+	  | VDINAMICA PALABRA{
+	 				sprintf(error, "Error, Falta el tipo de la variable"); 
+					yyerror(error);
+					YYABORT;
+				}
+  	  | PALABRA {
+	 				sprintf(error, "Error, Falta el tipo de la variable"); 
+					yyerror(error);
+					YYABORT;
+				}
+	  | VESTATICA PALABRA{
+	 				sprintf(error, "Error, Falta el tipo de la variable"); 
+					yyerror(error);
+					YYABORT;
 				}
 	;
 	
 crearvar:  VNUMERO {$$ = "int ";}
-	  	 | VSTRING {$$ = "char ";}
+	   | VSTRING {$$ = "char ";}
+	   | VBOOL {$$ = "bool  ";}
 	  ;
 	  
+typevar: VTRUE {$$ = "true-bool ";}
+	 | VFALSE {$$ = "false-bool ";}
+	 | NUMERO {		char * auxtype;
+				auxtype = (char*)malloc ( 50*sizeof(char) );
+				strcpy(auxtype, $1);
+				strcat(auxtype, "-int ");
+				$$ = auxtype;
+				}
+	 | PALABRA {		char * auxtype;
+				auxtype = (char*)malloc ( 50*sizeof(char) );
+				strcpy(auxtype, $1);
+				strcat(auxtype, "-char ");
+				$$ = auxtype;
+				}				
+
+	;
+	
 numarrayvar: numarrayvar NUMERO {
 				char * auxnum;
 				auxnum = (char*)malloc ( 100*sizeof(char) );
@@ -279,7 +398,7 @@ numarrayvar: numarrayvar NUMERO {
 				strcat(auxnum, "]");
 				$$ = auxnum;
 				}
-	  ;	
+	  ;
 
 ///////////////////////////////////////Parte Matematicas/////////////////
 
