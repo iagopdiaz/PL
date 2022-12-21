@@ -6,20 +6,21 @@
 espacios [ \n\t]+
 
 
+
 numero [0-9]+
 
 /*Hacer una variable | "variable numero a"
 Por defecto estaticas salvo que se indique "variable" "dinamica"
 tipo var y memoria var son no terminales por lo que no haria falta pasarlos a bison*/
 var {variable}{tipo_var}{memoria_var}
-variable "variable"
+variable "variable"|"VARIABLE"
 tipo_var {v_numero}{v_letras}{v_matriz}
 memoria_var {v_estatica}{v_dinamica}
-v_numero "numero"
-v_letras "letras"
-v_matriz "matriz"
-v_estatica "estatica"
-v_dinamica "dinamica"
+v_numero "numero"|"NUMERO"
+v_letras "letras"|"LETRAS"
+v_matriz "matriz"|"MATRIZ"
+v_estatica "estatica"|"ESTATICA"
+v_dinamica "dinamica"|"DINAMICA"
 
 /*Hacer un bucle | "bucle 5 10" va de 5 a 10 | "bucle 10" va de 0 a 10*/
 bucle "bucle"
@@ -46,7 +47,7 @@ c_and "y"
 c_or "o"
 
 /*Funciones matemáticas*/
-m_en "en"
+stop "."
 m_de "de"
 m_suma "mas"
 m_resta "menos"
@@ -66,6 +67,7 @@ palabra [A-Za-z_]+
 
 %%
 {espacios} {}
+{stop} {return STOP;}
 {numero} {yylval.string = strdup(yytext); return NUMERO;}
 
 {variable} {return VARIABLE;}
@@ -98,7 +100,6 @@ palabra [A-Za-z_]+
 {c_or} {return OR;}
 
 
-{m_en} {return EN;}
 {m_de} {return DE;}
 {m_suma} {yylval.string = strdup(yytext);return SUMA;}
 {m_resta} {yylval.string = strdup(yytext);return RESTA;}

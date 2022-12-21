@@ -14,14 +14,14 @@ char error[500];
 %token <string> FOR WHILE DOWHILE ENDFOR ENDWHILE ENDDOWHILE 
 %token <string> VARIABLE
 %token <string> VNUMERO
-%token <string> VSTRING
-%token <string> VARRAY SUMA RESTA MULT DIV EXPONT RAIZ IGUALM EN DE
+%token <string> VSTRING STOP
+%token <string> VARRAY SUMA RESTA MULT DIV EXPONT RAIZ IGUALM DE
 %token <string> VESTATICA ELSE IF
 %token <string> VDINAMICA MAYOR MENOR IGUAL DISTINTO MAYORIGUAL MENORIGUAL AND OR CLOSEIF ELSEIF
 
 %token <string> NUMERO
 %token <string> PALABRA
-%type <string> funcion dimensionvar contvar numarrayvar crearvar comparador comprecursivo contif recursivo contenido contmat operador contfor contwhile contdowhile
+%type <string> funcion dimensionvar contvar numarrayvar crearvar comparador parametro comprecursivo contif recursivo contenido contmat recConmat operador contfor contwhile contdowhile
 %start S
 %%
 
@@ -43,10 +43,10 @@ recursivo : recursivo funcion {char * aux;
 		
 funcion :     VARIABLE dimensionvar {$$ = $2;}
      		| IF contif {$$ = $2;}
-		| contmat {$$ = $1;}
-		| FOR contfor {$$ = $2;}
-		| WHILE contwhile {$$ = $2;}
-		| DOWHILE contdowhile {$$ = $2;}
+			| contmat {$$ = $1;}
+			| FOR contfor {$$ = $2;}
+			| WHILE contwhile {$$ = $2;}
+			| DOWHILE contdowhile {$$ = $2;}
 	;
 
 //Funciones Contenido de alguna otra funcion recursiva(if, for,while), indicar cuando parar con algo STOP
@@ -54,8 +54,8 @@ contenido :  VARIABLE dimensionvar {$$ = $2;}
      	     | IF contif {$$ = $2;}
      	     | contmat {$$ = $1;}
      	     | FOR contfor {$$ = $2;}
-	     | WHILE contwhile {$$ = $2;}
-	     | DOWHILE contdowhile {$$ = $2;}
+	    	 | WHILE contwhile {$$ = $2;}
+	     	 | DOWHILE contdowhile {$$ = $2;}
 	     
      	     | contenido VARIABLE dimensionvar {
      	     	 			char * auxcont;
@@ -73,7 +73,7 @@ contenido :  VARIABLE dimensionvar {$$ = $2;}
 					
 					$$ = auxcont;}
 	     | contenido contmat {
-     	     				char * auxcont;
+     	     		char * auxcont;
 					auxcont = (char*)malloc ( 200*sizeof(char) );
 					strcpy(auxcont, $1);
 					strcat(auxcont, "\t");
@@ -103,7 +103,7 @@ contenido :  VARIABLE dimensionvar {$$ = $2;}
 	;
 	
 	
-////////////////////////////////////Parte Condiciones///////////////////////////
+////////////////////////////////////Parte Condiciones//////////////////////////
 	
 contif : comprecursivo contenido CLOSEIF {
 					char * aux;
@@ -269,10 +269,9 @@ numarrayvar: numarrayvar NUMERO {
 				}
 	  ;	
 
-///////////////////////////////////////Parte Matematicas//////////////////777
-//a mas b en aux   //se guarda en aux -> aux = a + b
-//a mas b // se guarda en a  -> a += b
-contmat : PALABRA operador PALABRA {
+///////////////////////////////////////Parte Matematicas/////////////////
+
+contmat : parametro operador recConmat {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
 					strcpy(aux, "\t");
@@ -292,12 +291,10 @@ contmat : PALABRA operador PALABRA {
 					$$ = aux;
 				};
 		
-		| operador PALABRA DE PALABRA {
+		| operador parametro DE parametro STOP {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
 					strcpy(aux, "\t");
-					/*strcat(aux, $1);
-					strcat(aux, " = ");*/
 					strcat(aux, $1);
 					strcat(aux, "(");
 					strcat(aux, $2);
@@ -306,51 +303,60 @@ contmat : PALABRA operador PALABRA {
 					strcat(aux, ");\n");
 					$$ = aux;
 				};
-		| operador PALABRA DE PALABRA EN PALABRA {
+		|  operador DE parametro STOP {
+				char * aux;
+				aux = (char*)malloc ( 100*sizeof(char) );
+				strcpy(aux, "\t");
+				strcat(aux, $1);
+				strcat(aux, "(");
+				strcat(aux, $3);
+				strcat(aux, ");\n");
+				$$ = aux;
+			};
+		
+		| PALABRA IGUALM contmat {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
 					strcpy(aux, "\t");
-					strcat(aux, $6);
+					strcat(aux, $1);
 					strcat(aux, " = ");
-					strcat(aux, $1);
-					strcat(aux, "(");
-					strcat(aux, $2);
-					strcat(aux, ",");
-					strcat(aux, $4);
-					strcat(aux, ");\n");
-					$$ = aux;
-				};
-		| operador DE PALABRA {
-					char * aux;
-					aux = (char*)malloc ( 100*sizeof(char) );
-					strcpy(aux, "\t");
-					strcat(aux, $1);
-					strcat(aux, "(");
 					strcat(aux, $3);
-					strcat(aux, ");\n");
 					$$ = aux;
 				};
-		| operador DE PALABRA EN PALABRA {
-					char * aux;
-					aux = (char*)malloc ( 100*sizeof(char) );
-					strcpy(aux, "\t");
-					strcat(aux, $5);
-					strcat(aux, " = ");
-					strcat(aux, $1);
-					strcat(aux, "(");
-					strcat(aux, $3);
-					strcat(aux, ");\n");
-					$$ = aux;
-				};
+
+	
+
+
 
 operador:	 SUMA {$$="+";}
 		   | RESTA {$$="-";}
 		   | MULT {$$="*";}
 		   | DIV {$$="/";}
-		   | IGUALM {$$="=";}
 		   | EXPONT {$$="pow";}
 		   | RAIZ {$$="sqrt";}
 	;
+
+recConmat:    parametro operador recConmat {
+				char * aux;
+				aux = (char*)malloc ( 500*sizeof(char) );
+				strcpy(aux, $1);
+				strcat(aux, $2);
+				strcat(aux, $3);
+				$$ = aux;
+			};
+			| parametro STOP{
+				char * aux;
+				aux = (char*)malloc ( 500*sizeof(char) );
+				strcpy(aux, $1);
+				$$ = aux;
+			};
+		
+
+		   ;
+
+parametro :   PALABRA {$$=$1;}
+		    | NUMERO {$$=$1;}
+			;
 
 
 ////////////////////////////////Parte Bucles//////////////////////////////////

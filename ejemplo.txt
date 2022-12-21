@@ -1,2 +1,8 @@
-si a mayor b o x menor c variable numero a finif
-bucle 1 10 variable matriz numero b 10 10 finfor
+aux igual a mas b.
+aux igual a menos b. 
+aux igual a por b .
+aux igual a multiplicado por b. 
+aux igual a entre b .
+aux igual a dividido entre b. 
+aux igual a elevado a b .
+aux igual raiz a de b .

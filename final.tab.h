@@ -63,15 +63,15 @@ extern int yydebug;
     VARIABLE = 264,                /* VARIABLE  */
     VNUMERO = 265,                 /* VNUMERO  */
     VSTRING = 266,                 /* VSTRING  */
-    VARRAY = 267,                  /* VARRAY  */
-    SUMA = 268,                    /* SUMA  */
-    RESTA = 269,                   /* RESTA  */
-    MULT = 270,                    /* MULT  */
-    DIV = 271,                     /* DIV  */
-    EXPONT = 272,                  /* EXPONT  */
-    RAIZ = 273,                    /* RAIZ  */
-    IGUALM = 274,                  /* IGUALM  */
-    EN = 275,                      /* EN  */
+    STOP = 267,                    /* STOP  */
+    VARRAY = 268,                  /* VARRAY  */
+    SUMA = 269,                    /* SUMA  */
+    RESTA = 270,                   /* RESTA  */
+    MULT = 271,                    /* MULT  */
+    DIV = 272,                     /* DIV  */
+    EXPONT = 273,                  /* EXPONT  */
+    RAIZ = 274,                    /* RAIZ  */
+    IGUALM = 275,                  /* IGUALM  */
     DE = 276,                      /* DE  */
     VESTATICA = 277,               /* VESTATICA  */
     ELSE = 278,                    /* ELSE  */
@@ -106,15 +106,15 @@ extern int yydebug;
 #define VARIABLE 264
 #define VNUMERO 265
 #define VSTRING 266
-#define VARRAY 267
-#define SUMA 268
-#define RESTA 269
-#define MULT 270
-#define DIV 271
-#define EXPONT 272
-#define RAIZ 273
-#define IGUALM 274
-#define EN 275
+#define STOP 267
+#define VARRAY 268
+#define SUMA 269
+#define RESTA 270
+#define MULT 271
+#define DIV 272
+#define EXPONT 273
+#define RAIZ 274
+#define IGUALM 275
 #define DE 276
 #define VESTATICA 277
 #define ELSE 278
