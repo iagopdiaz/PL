@@ -511,6 +511,7 @@ recConmat:    parametro operador recConmat {
                 yyerror(error);
                 YYABORT;
 			}
+			| contmat {$$=$1;}
 
 		   ;
 
@@ -522,7 +523,7 @@ recConmat2 :  parametro STOP {
 				$$ = aux;
 			}
 			| parametro {
-				sprintf(error, "Error, Falta cerrar la operación con un '.'2\n");
+				sprintf(error, "Error, Falta cerrar la operación con un '.'\n");
                 yyerror(error);
                 YYABORT;	
 			}

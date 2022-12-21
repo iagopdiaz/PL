@@ -15,3 +15,8 @@ raiz a de b  .
 raiz cuadrada de 5 en aux.
 raiz cuadrada de 5 en aux.
 
+
+
+elevar 5 de 7.
+elevar 5 de 7 en ale.
+
