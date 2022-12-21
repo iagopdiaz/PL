@@ -1,6 +1,6 @@
+sumar a mas b .
+restar a menos b . 
+multiplicar a por b . 
+dividir a entre b  .
 
-si a mayor b 
-a mas b.
-si no 
-variable numero b
-finif
+raiz cuadrada de a en aux .

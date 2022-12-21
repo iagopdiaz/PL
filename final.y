@@ -15,48 +15,27 @@ char error[500];
 %token <string> VARIABLE
 %token <string> VNUMERO VBOOL VSTRING VTRUE VFALSE
 %token <string> STOP
-%token <string> VARRAY SUMA RESTA MULT DIV EXPONT RAIZ IGUALM DE
+%token <string> VARRAY SUMA RESTA MULT DIV EXPONT RAIZ IGUALM DE EN
 %token <string> VESTATICA ELSE IF
 %token <string> VDINAMICA MAYOR MENOR IGUAL DISTINTO MAYORIGUAL MENORIGUAL AND OR CLOSEIF ELSEIF
 
 %token <string> NUMERO
 %token <string> PALABRA
-%type <string> funcion dimensionvar contvar numarrayvar crearvar comparador contlcontif parametro comprecursivo contif recursivo contenido contmat recConmat operador contfor contwhile contdowhile typevar
+%type <string>  dimensionvar contvar numarrayvar crearvar comparador  parametro comprecursivo contif  contenido contmat recConmat operador contfor contwhile contdowhile typevar
 %start S
 %%
 
-S : recursivo {printf("%s",$1);} 
+S : contenido {printf("%s",$1);} 
 	;
 
-recursivo : recursivo funcion {char * aux;
-				aux = (char*)malloc ( 1000*sizeof(char) );
-				strcpy(aux, $1);
-				strcat(aux, $2);
-				$$ = aux;
-				}
-	     |funcion  {	
-	     
-				$$ = $1;
-				}
-	;
 
-		
-funcion :     VARIABLE dimensionvar {$$ = $2;}
+//Funciones Contenido de alguna otra funcion recursiva(if, for,while), indicar cuando parar con algo STOP
+contenido :    VARIABLE dimensionvar {$$ = $2;}
      		| IF contif {$$ = $2;}
 			| contmat {$$ = $1;}
 			| FOR contfor {$$ = $2;}
 			| WHILE contwhile {$$ = $2;}
 			| DOWHILE contdowhile {$$ = $2;}
-	;
-
-//Funciones Contenido de alguna otra funcion recursiva(if, for,while), indicar cuando parar con algo STOP
-contenido :  VARIABLE dimensionvar {$$ = $2;}
-     	     | IF contif {$$ = $2;}
-     	     | contmat {$$ = $1;}
-     	     | FOR contfor {$$ = $2;}
-	    	 | WHILE contwhile {$$ = $2;}
-	     	 | DOWHILE contdowhile {$$ = $2;}
-	     
      	     | contenido VARIABLE dimensionvar {
      	     	 			char * auxcont;
 					auxcont= (char*)malloc ( 200*sizeof(char) );
@@ -105,20 +84,9 @@ contenido :  VARIABLE dimensionvar {$$ = $2;}
 	
 ////////////////////////////////////Parte Condiciones//////////////////////////
 
-contlcontif :   contenido CLOSEIF {
-				char * aux;
-				aux = (char*)malloc ( 500*sizeof(char) );
-				strcat(aux, $1);
-				strcat(aux, "\t};\n");
-				$$ = aux;
-			};
-			| contenido {
-				sprintf(error, "Error, Falta cerrar el if con finif");
-				yyerror(error);
-				YYABORT;
-			};
 
-contif : comprecursivo contlcontif {
+
+contif : comprecursivo  contenido CLOSEIF {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
 					strcpy(aux, "\tif");
@@ -129,7 +97,7 @@ contif : comprecursivo contlcontif {
 			;
 					$$ = aux;
 					}
-		| comprecursivo contenido ELSE contlcontif  {
+		| comprecursivo contenido ELSE  contenido CLOSEIF  {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
 					strcpy(aux, "\tif");
@@ -143,7 +111,7 @@ contif : comprecursivo contlcontif {
 					strcat(aux, "\t};\n");
 					$$ = aux;
 					}
-	| comprecursivo contenido ELSEIF comprecursivo contlcontif {
+	| comprecursivo contenido ELSEIF comprecursivo  contenido CLOSEIF {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
 					strcpy(aux, "\tif");
@@ -241,7 +209,7 @@ contvar : VDINAMICA crearvar PALABRA{
 				$$ = auxvar;
 				}
 				
-	   ////////////////PARA INICIALIZAR CON X VALOR/////////////////////////
+	   ////////////////PARA INICIALIZAR CON X VALOR///////////////////////
 	  | VDINAMICA crearvar PALABRA IGUALM typevar{
   	  			char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
@@ -402,21 +370,21 @@ numarrayvar: numarrayvar NUMERO {
 
 ///////////////////////////////////////Parte Matematicas/////////////////
 
-contmat : parametro operador recConmat {
+contmat : operador parametro operador recConmat {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
 					strcpy(aux, "\t");
-					if(strcmp($2, "pow")==0 || strcmp($2, "sqrt")==0){	
-						strcat(aux, $2);
-						strcat(aux, "(");
-						strcat(aux, $1);
-						strcat(aux, ",");
+					if(strcmp($3, "pow")==0 || strcmp($3, "sqrt")==0){	
 						strcat(aux, $3);
+						strcat(aux, "(");
+						strcat(aux, $2);
+						strcat(aux, ",");
+						strcat(aux, $4);
 						strcat(aux, ");\n");
 					} else {
-						strcat(aux, $1);
 						strcat(aux, $2);
 						strcat(aux, $3);
+						strcat(aux, $4);
 						strcat(aux, ";\n");
 					}
 					$$ = aux;
@@ -426,6 +394,20 @@ contmat : parametro operador recConmat {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
 					strcpy(aux, "\t");
+					strcat(aux, $1);
+					strcat(aux, "(");
+					strcat(aux, $2);
+					strcat(aux, ",");
+					strcat(aux, $4);
+					strcat(aux, ");\n");
+					$$ = aux;
+				};
+		| operador parametro DE parametro EN PALABRA STOP {
+					char * aux;
+					aux = (char*)malloc ( 100*sizeof(char) );
+					strcpy(aux, "\t");
+					strcat(aux, $6);
+					strcat(aux, " = ");
 					strcat(aux, $1);
 					strcat(aux, "(");
 					strcat(aux, $2);
@@ -444,16 +426,19 @@ contmat : parametro operador recConmat {
 				strcat(aux, ");\n");
 				$$ = aux;
 			};
-		
-		| PALABRA IGUALM contmat {
-					char * aux;
-					aux = (char*)malloc ( 100*sizeof(char) );
-					strcpy(aux, "\t");
-					strcat(aux, $1);
-					strcat(aux, " = ");
-					strcat(aux, $3);
-					$$ = aux;
-				};
+		|  operador DE parametro EN PALABRA STOP {
+				char * aux;
+				aux = (char*)malloc ( 100*sizeof(char) );
+				strcpy(aux, "\t");
+				strcat(aux, $5);
+				strcat(aux, " = ");
+				strcat(aux, $1);
+				strcat(aux, "(");
+				strcat(aux, $3);
+				strcat(aux, ");\n");
+				$$ = aux;
+			};
+	
 
 	
 

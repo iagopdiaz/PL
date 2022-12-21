@@ -76,22 +76,23 @@ extern int yydebug;
     RAIZ = 277,                    /* RAIZ  */
     IGUALM = 278,                  /* IGUALM  */
     DE = 279,                      /* DE  */
-    VESTATICA = 280,               /* VESTATICA  */
-    ELSE = 281,                    /* ELSE  */
-    IF = 282,                      /* IF  */
-    VDINAMICA = 283,               /* VDINAMICA  */
-    MAYOR = 284,                   /* MAYOR  */
-    MENOR = 285,                   /* MENOR  */
-    IGUAL = 286,                   /* IGUAL  */
-    DISTINTO = 287,                /* DISTINTO  */
-    MAYORIGUAL = 288,              /* MAYORIGUAL  */
-    MENORIGUAL = 289,              /* MENORIGUAL  */
-    AND = 290,                     /* AND  */
-    OR = 291,                      /* OR  */
-    CLOSEIF = 292,                 /* CLOSEIF  */
-    ELSEIF = 293,                  /* ELSEIF  */
-    NUMERO = 294,                  /* NUMERO  */
-    PALABRA = 295                  /* PALABRA  */
+    EN = 280,                      /* EN  */
+    VESTATICA = 281,               /* VESTATICA  */
+    ELSE = 282,                    /* ELSE  */
+    IF = 283,                      /* IF  */
+    VDINAMICA = 284,               /* VDINAMICA  */
+    MAYOR = 285,                   /* MAYOR  */
+    MENOR = 286,                   /* MENOR  */
+    IGUAL = 287,                   /* IGUAL  */
+    DISTINTO = 288,                /* DISTINTO  */
+    MAYORIGUAL = 289,              /* MAYORIGUAL  */
+    MENORIGUAL = 290,              /* MENORIGUAL  */
+    AND = 291,                     /* AND  */
+    OR = 292,                      /* OR  */
+    CLOSEIF = 293,                 /* CLOSEIF  */
+    ELSEIF = 294,                  /* ELSEIF  */
+    NUMERO = 295,                  /* NUMERO  */
+    PALABRA = 296                  /* PALABRA  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -122,22 +123,23 @@ extern int yydebug;
 #define RAIZ 277
 #define IGUALM 278
 #define DE 279
-#define VESTATICA 280
-#define ELSE 281
-#define IF 282
-#define VDINAMICA 283
-#define MAYOR 284
-#define MENOR 285
-#define IGUAL 286
-#define DISTINTO 287
-#define MAYORIGUAL 288
-#define MENORIGUAL 289
-#define AND 290
-#define OR 291
-#define CLOSEIF 292
-#define ELSEIF 293
-#define NUMERO 294
-#define PALABRA 295
+#define EN 280
+#define VESTATICA 281
+#define ELSE 282
+#define IF 283
+#define VDINAMICA 284
+#define MAYOR 285
+#define MENOR 286
+#define IGUAL 287
+#define DISTINTO 288
+#define MAYORIGUAL 289
+#define MENORIGUAL 290
+#define AND 291
+#define OR 292
+#define CLOSEIF 293
+#define ELSEIF 294
+#define NUMERO 295
+#define PALABRA 296
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -147,7 +149,7 @@ union YYSTYPE
 
 	char * string;
 
-#line 151 "final.tab.h"
+#line 153 "final.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

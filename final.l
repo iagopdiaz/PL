@@ -52,10 +52,11 @@ c_or "o"
 /*Funciones matemáticas*/
 stop "."
 m_de "de"
-m_suma "mas"
-m_resta "menos"
-m_multiplicacion "multiplicado por"|"por"
-m_division "dividido entre"|"entre"
+m_en "en"
+m_suma "mas"|"sumar"
+m_resta "menos"|"restar"
+m_multiplicacion "multiplicar"|"por"
+m_division "dividir"|"entre"
 m_exponente "elevado a"
 m_raiz "raiz cuadrada"|"raiz"
 m_igual "igual"
@@ -107,6 +108,7 @@ palabra [A-Za-z_]+
 
 
 {m_de} {return DE;}
+{m_en} {return EN;}
 {m_suma} {yylval.string = strdup(yytext);return SUMA;}
 {m_resta} {yylval.string = strdup(yytext);return RESTA;}
 {m_multiplicacion} {yylval.string = strdup(yytext);return MULT;}
