@@ -383,7 +383,6 @@ contmat : operador2 parametro operador recConmat  {
 					strcpy(aux, "\t");
 				
 					aux1 = strstr($4, " ");
-					aux1 = strtok(aux1, " ");
 				
 					if(strcmp(aux1, " ")!=0) {
 						strcat(aux, aux1);
@@ -505,8 +504,6 @@ recConmat:    parametro operador recConmat {
 				strcat(aux, $1);	
 				strcat(aux, " ");
 				strcat(aux, $3);
-				
-				
 				$$ = aux;
 			}
 			| parametro EN PALABRA  {
@@ -514,7 +511,6 @@ recConmat:    parametro operador recConmat {
                 yyerror(error);
                 YYABORT;
 			}
-			| contmat {$$=$1;}
 
 		   ;
 
