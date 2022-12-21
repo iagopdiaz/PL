@@ -21,7 +21,7 @@ char error[500];
 
 %token <string> NUMERO
 %token <string> PALABRA
-%type <string> funcion dimensionvar contvar numarrayvar crearvar comparador parametro comprecursivo contif recursivo contenido contmat recConmat operador contfor contwhile contdowhile
+%type <string> funcion dimensionvar contvar numarrayvar crearvar comparador contlcontif parametro comprecursivo contif recursivo contenido contmat recConmat operador contfor contwhile contdowhile
 %start S
 %%
 
@@ -105,8 +105,20 @@ contenido :  VARIABLE dimensionvar {$$ = $2;}
 	
 ////////////////////////////////////Parte Condiciones//////////////////////////
 
+contlcontif :   contenido CLOSEIF {
+				char * aux;
+				aux = (char*)malloc ( 500*sizeof(char) );
+				strcat(aux, $1);
+				strcat(aux, "\t};\n");
+				$$ = aux;
+			};
+			| contenido {
+				sprintf(error, "Error, Falta cerrar el if con finif");
+				yyerror(error);
+				YYABORT;
+			};
 
-contif : comprecursivo contenido CLOSEIF {
+contif : comprecursivo contlcontif {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
 					strcpy(aux, "\tif");
@@ -114,11 +126,10 @@ contif : comprecursivo contenido CLOSEIF {
 					strcat(aux, $1);
 					strcat(aux, ")");
 					strcat(aux, "{\n\t");
-					strcat(aux, $2);
-					strcat(aux, "\t};\n");
+			;
 					$$ = aux;
 					}
-		| comprecursivo contenido ELSE contenido CLOSEIF {
+		| comprecursivo contenido ELSE contlcontif  {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
 					strcpy(aux, "\tif");
@@ -132,7 +143,7 @@ contif : comprecursivo contenido CLOSEIF {
 					strcat(aux, "\t};\n");
 					$$ = aux;
 					}
-	| comprecursivo contenido ELSEIF comprecursivo contenido CLOSEIF {
+	| comprecursivo contenido ELSEIF comprecursivo contlcontif {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
 					strcpy(aux, "\tif");
