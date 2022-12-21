@@ -1,8 +1,6 @@
-aux igual a mas b.
-aux igual a menos b. 
-aux igual a por b .
-aux igual a multiplicado por b. 
-aux igual a entre b .
-aux igual a dividido entre b. 
-aux igual a elevado a b .
-aux igual raiz a de b .
+
+si a mayor b 
+a mas b.
+si no 
+variable numero b
+finif

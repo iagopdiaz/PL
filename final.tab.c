@@ -553,11 +553,11 @@ static const yytype_int16 yyrline[] =
 {
        0,    28,    28,    31,    37,    44,    45,    46,    47,    48,
       49,    53,    54,    55,    56,    57,    58,    60,    67,    75,
-      82,    89,    96,   108,   120,   134,   154,   161,   168,   175,
-     182,   192,   193,   194,   195,   196,   197,   198,   199,   204,
-     211,   223,   231,   238,   247,   248,   251,   262,   274,   294,
-     306,   317,   331,   332,   333,   334,   335,   336,   339,   347,
-     357,   358,   363,   373,   389,   404
+      82,    89,    96,   109,   121,   135,   155,   162,   169,   176,
+     183,   193,   194,   195,   196,   197,   198,   199,   200,   205,
+     212,   224,   232,   239,   248,   249,   252,   263,   275,   295,
+     307,   318,   332,   333,   334,   335,   336,   337,   340,   348,
+     358,   359,   364,   374,   390,   405
 };
 #endif
 
@@ -1413,7 +1413,7 @@ yyreduce:
     break;
 
   case 23: /* contif: comprecursivo contenido CLOSEIF  */
-#line 108 "final.y"
+#line 109 "final.y"
                                          {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
@@ -1430,7 +1430,7 @@ yyreduce:
     break;
 
   case 24: /* contif: comprecursivo contenido ELSE contenido CLOSEIF  */
-#line 120 "final.y"
+#line 121 "final.y"
                                                                  {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
@@ -1449,7 +1449,7 @@ yyreduce:
     break;
 
   case 25: /* contif: comprecursivo contenido ELSEIF comprecursivo contenido CLOSEIF  */
-#line 134 "final.y"
+#line 135 "final.y"
                                                                          {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
@@ -1470,7 +1470,7 @@ yyreduce:
     break;
 
   case 26: /* comprecursivo: comprecursivo AND comprecursivo  */
-#line 154 "final.y"
+#line 155 "final.y"
                                               {
 					char * auxcont;
 					auxcont= (char*)malloc ( 200*sizeof(char) );
@@ -1482,7 +1482,7 @@ yyreduce:
     break;
 
   case 27: /* comprecursivo: comprecursivo OR comprecursivo  */
-#line 161 "final.y"
+#line 162 "final.y"
                                               {
 					char * auxcont;
 					auxcont= (char*)malloc ( 200*sizeof(char) );
@@ -1494,7 +1494,7 @@ yyreduce:
     break;
 
   case 28: /* comprecursivo: comprecursivo AND PALABRA  */
-#line 168 "final.y"
+#line 169 "final.y"
                                          {
 					char * auxcont;
 					auxcont= (char*)malloc ( 200*sizeof(char) );
@@ -1506,7 +1506,7 @@ yyreduce:
     break;
 
   case 29: /* comprecursivo: comprecursivo OR PALABRA  */
-#line 175 "final.y"
+#line 176 "final.y"
                                         {
 					char * auxcont;
 					auxcont= (char*)malloc ( 200*sizeof(char) );
@@ -1518,7 +1518,7 @@ yyreduce:
     break;
 
   case 30: /* comprecursivo: PALABRA comparador PALABRA  */
-#line 182 "final.y"
+#line 183 "final.y"
                                            {
 	       			char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
@@ -1531,55 +1531,55 @@ yyreduce:
     break;
 
   case 31: /* comparador: MAYOR  */
-#line 192 "final.y"
+#line 193 "final.y"
                    {(yyval.string)=">";}
 #line 1537 "final.tab.c"
     break;
 
   case 32: /* comparador: MENOR  */
-#line 193 "final.y"
+#line 194 "final.y"
                            {(yyval.string)="<";}
 #line 1543 "final.tab.c"
     break;
 
   case 33: /* comparador: IGUAL  */
-#line 194 "final.y"
+#line 195 "final.y"
                            {(yyval.string)="==";}
 #line 1549 "final.tab.c"
     break;
 
   case 34: /* comparador: DISTINTO  */
-#line 195 "final.y"
+#line 196 "final.y"
                               {(yyval.string)="!=";}
 #line 1555 "final.tab.c"
     break;
 
   case 35: /* comparador: AND  */
-#line 196 "final.y"
+#line 197 "final.y"
                          {(yyval.string)="&&";}
 #line 1561 "final.tab.c"
     break;
 
   case 36: /* comparador: OR  */
-#line 197 "final.y"
+#line 198 "final.y"
                         {(yyval.string)="||";}
 #line 1567 "final.tab.c"
     break;
 
   case 37: /* comparador: MAYORIGUAL  */
-#line 198 "final.y"
+#line 199 "final.y"
                                 {(yyval.string)=">=";}
 #line 1573 "final.tab.c"
     break;
 
   case 38: /* comparador: MENORIGUAL  */
-#line 199 "final.y"
+#line 200 "final.y"
                                 {(yyval.string)="<=";}
 #line 1579 "final.tab.c"
     break;
 
   case 39: /* dimensionvar: contvar  */
-#line 204 "final.y"
+#line 205 "final.y"
                       {		char * auxdim;
 					auxdim = (char*)malloc ( 100*sizeof(char) );
 					strcpy(auxdim, "\t");
@@ -1591,7 +1591,7 @@ yyreduce:
     break;
 
   case 40: /* dimensionvar: VARRAY contvar numarrayvar  */
-#line 211 "final.y"
+#line 212 "final.y"
                                           {
 					char * auxdim;
 					auxdim = (char*)malloc ( 200*sizeof(char) );
@@ -1606,7 +1606,7 @@ yyreduce:
     break;
 
   case 41: /* contvar: VDINAMICA crearvar PALABRA  */
-#line 223 "final.y"
+#line 224 "final.y"
                                     {
 				char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
@@ -1619,7 +1619,7 @@ yyreduce:
     break;
 
   case 42: /* contvar: crearvar PALABRA  */
-#line 231 "final.y"
+#line 232 "final.y"
                            {
   	  			char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
@@ -1631,7 +1631,7 @@ yyreduce:
     break;
 
   case 43: /* contvar: VESTATICA crearvar PALABRA  */
-#line 238 "final.y"
+#line 239 "final.y"
                                      {
   	  			char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
@@ -1643,19 +1643,19 @@ yyreduce:
     break;
 
   case 44: /* crearvar: VNUMERO  */
-#line 247 "final.y"
+#line 248 "final.y"
                    {(yyval.string) = "int ";}
 #line 1649 "final.tab.c"
     break;
 
   case 45: /* crearvar: VSTRING  */
-#line 248 "final.y"
+#line 249 "final.y"
                            {(yyval.string) = "char ";}
 #line 1655 "final.tab.c"
     break;
 
   case 46: /* numarrayvar: numarrayvar NUMERO  */
-#line 251 "final.y"
+#line 252 "final.y"
                                 {
 				char * auxnum;
 				auxnum = (char*)malloc ( 100*sizeof(char) );
@@ -1670,7 +1670,7 @@ yyreduce:
     break;
 
   case 47: /* numarrayvar: NUMERO  */
-#line 262 "final.y"
+#line 263 "final.y"
                      {
 	     			char * auxnum;
 				auxnum = (char*)malloc ( 100*sizeof(char) );
@@ -1683,7 +1683,7 @@ yyreduce:
     break;
 
   case 48: /* contmat: parametro operador recConmat  */
-#line 274 "final.y"
+#line 275 "final.y"
                                        {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
@@ -1707,7 +1707,7 @@ yyreduce:
     break;
 
   case 49: /* contmat: operador parametro DE parametro STOP  */
-#line 294 "final.y"
+#line 295 "final.y"
                                                        {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
@@ -1724,7 +1724,7 @@ yyreduce:
     break;
 
   case 50: /* contmat: operador DE parametro STOP  */
-#line 306 "final.y"
+#line 307 "final.y"
                                               {
 				char * aux;
 				aux = (char*)malloc ( 100*sizeof(char) );
@@ -1739,7 +1739,7 @@ yyreduce:
     break;
 
   case 51: /* contmat: PALABRA IGUALM contmat  */
-#line 317 "final.y"
+#line 318 "final.y"
                                          {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
@@ -1753,43 +1753,43 @@ yyreduce:
     break;
 
   case 52: /* operador: SUMA  */
-#line 331 "final.y"
+#line 332 "final.y"
                       {(yyval.string)="+";}
 #line 1759 "final.tab.c"
     break;
 
   case 53: /* operador: RESTA  */
-#line 332 "final.y"
+#line 333 "final.y"
                            {(yyval.string)="-";}
 #line 1765 "final.tab.c"
     break;
 
   case 54: /* operador: MULT  */
-#line 333 "final.y"
+#line 334 "final.y"
                           {(yyval.string)="*";}
 #line 1771 "final.tab.c"
     break;
 
   case 55: /* operador: DIV  */
-#line 334 "final.y"
+#line 335 "final.y"
                          {(yyval.string)="/";}
 #line 1777 "final.tab.c"
     break;
 
   case 56: /* operador: EXPONT  */
-#line 335 "final.y"
+#line 336 "final.y"
                             {(yyval.string)="pow";}
 #line 1783 "final.tab.c"
     break;
 
   case 57: /* operador: RAIZ  */
-#line 336 "final.y"
+#line 337 "final.y"
                           {(yyval.string)="sqrt";}
 #line 1789 "final.tab.c"
     break;
 
   case 58: /* recConmat: parametro operador recConmat  */
-#line 339 "final.y"
+#line 340 "final.y"
                                            {
 				char * aux;
 				aux = (char*)malloc ( 500*sizeof(char) );
@@ -1802,7 +1802,7 @@ yyreduce:
     break;
 
   case 59: /* recConmat: parametro STOP  */
-#line 347 "final.y"
+#line 348 "final.y"
                                         {
 				char * aux;
 				aux = (char*)malloc ( 500*sizeof(char) );
@@ -1813,19 +1813,19 @@ yyreduce:
     break;
 
   case 60: /* parametro: PALABRA  */
-#line 357 "final.y"
+#line 358 "final.y"
                       {(yyval.string)=(yyvsp[0].string);}
 #line 1819 "final.tab.c"
     break;
 
   case 61: /* parametro: NUMERO  */
-#line 358 "final.y"
+#line 359 "final.y"
                              {(yyval.string)=(yyvsp[0].string);}
 #line 1825 "final.tab.c"
     break;
 
   case 62: /* contfor: NUMERO contenido ENDFOR  */
-#line 363 "final.y"
+#line 364 "final.y"
                                   {	
  					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
@@ -1840,7 +1840,7 @@ yyreduce:
     break;
 
   case 63: /* contfor: NUMERO NUMERO contenido ENDFOR  */
-#line 373 "final.y"
+#line 374 "final.y"
                                           {
  	  				char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
@@ -1857,7 +1857,7 @@ yyreduce:
     break;
 
   case 64: /* contwhile: PALABRA comparador PALABRA contenido ENDWHILE  */
-#line 389 "final.y"
+#line 390 "final.y"
                                                           {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
@@ -1875,7 +1875,7 @@ yyreduce:
     break;
 
   case 65: /* contdowhile: PALABRA comparador PALABRA contenido ENDDOWHILE  */
-#line 404 "final.y"
+#line 405 "final.y"
                                                               {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
@@ -2086,7 +2086,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 418 "final.y"
+#line 419 "final.y"
 
 int main(int argc, char *argv[]) {
 extern FILE *yyin;

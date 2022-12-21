@@ -104,7 +104,8 @@ contenido :  VARIABLE dimensionvar {$$ = $2;}
 	
 	
 ////////////////////////////////////Parte Condiciones//////////////////////////
-	
+
+
 contif : comprecursivo contenido CLOSEIF {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
