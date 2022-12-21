@@ -14,14 +14,14 @@ char error[500];
 %token <string> FOR WHILE DOWHILE ENDFOR ENDWHILE ENDDOWHILE 
 %token <string> VARIABLE
 %token <string> VNUMERO VBOOL VSTRING VTRUE VFALSE
-%token <string> STOP
+%token <string> STOP ESUMA ERESTA EMULT EDIV
 %token <string> VARRAY SUMA RESTA MULT DIV EXPONT RAIZ IGUALM DE EN
 %token <string> VESTATICA ELSE IF
 %token <string> VDINAMICA MAYOR MENOR IGUAL DISTINTO MAYORIGUAL MENORIGUAL AND OR CLOSEIF ELSEIF
 
 %token <string> NUMERO
 %token <string> PALABRA
-%type <string>  dimensionvar contvar numarrayvar crearvar comparador parametro comprecursivo contif  contenido contmat recConmat operador contfor contwhile contdowhile typevar
+%type <string>  dimensionvar contvar numarrayvar crearvar recConmat2 operador2 comparador parametro comprecursivo contif  contenido contmat recConmat operador contfor contwhile contdowhile typevar
 %start S
 %%
 
@@ -373,104 +373,92 @@ numarrayvar: numarrayvar NUMERO {
 ///////////////////////////////////////Parte Matematicas/////////////////
 
 
-contmat : operador parametro operador recConmat {
+contmat : operador2 parametro operador recConmat  {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
+					char * aux1;
+					aux1 = (char*)malloc ( 100*sizeof(char) );
+					char * aux2;
+					aux2 = (char*)malloc ( 100*sizeof(char) );
 					strcpy(aux, "\t");
+				
+					aux1 = strstr($4, " ");
+					aux1 = strtok(aux1, " ");
+				
+					if(strcmp(aux1, " ")!=0) {
+						strcat(aux, aux1);
+						strcat(aux, " = ");
+					} 
 					if(strcmp($1, "pow")==0 || strcmp($1, "sqrt")==0){	
-						strcpy(aux, $1);
+						strcat(aux, $1);
 						strcat(aux, "(");
 						strcat(aux, $2);
 						strcat(aux, ",");
 						strcat(aux, $4);
 						strcat(aux, ");\n");
 					} else {
-						strcat(aux, $2);
-						strcat(aux, " ");
-						strcat(aux, $3);
-						strcat(aux, " ");
-						strcat(aux, $4);
-					
-						strcat(aux, ";\n");
+						if(strcmp($1, $3)==0) {
+							strcat(aux, $2);
+							strcat(aux, $3);
+							aux2 = strtok($4, " ");
+							strcat(aux, aux2);
+							strcat(aux, ";\n");
+						} else {
+							sprintf(error, "Error, No se esta realizando la misma operación\n");
+							yyerror(error);
+							YYABORT;
+						}
 					}
 					$$ = aux;
 				}
-		| contmat EN PALABRA STOP {
-					char * aux;
-					aux = (char*)malloc ( 100*sizeof(char) );
-					strcpy(aux, "\t");
-					strcpy(aux, $3);
-					strcat(aux, " = ");
-					strcat(aux, $1);
-					$$ = aux;
-				};
-		/*raiz 2 de 20*/
-		| operador parametro DE parametro STOP {
-					char * aux;
-					aux = (char*)malloc ( 100*sizeof(char) );
-					strcpy(aux, $1);
-					strcat(aux, "(");
-					strcat(aux, $2);
-					strcat(aux, ",");
-					strcat(aux, $4);
-					strcat(aux, ");\n");
-					$$ = aux;
-				};
-		| operador parametro DE parametro {
-				sprintf(error, "Error, Falta cerrar la operación con un '.'\n");
-                yyerror(error);
-                YYABORT;
-		}
-		| operador parametro DE parametro EN PALABRA STOP {
-					char * aux;
-					aux = (char*)malloc ( 100*sizeof(char) );
-					strcpy(aux, $6);
-					strcat(aux, " = ");
-					strcat(aux, $1);
-					strcat(aux, "(");
-					strcat(aux, $2);
-					strcat(aux, ",");
-					strcat(aux, $4);
-					strcat(aux, ");\n");
-					$$ = aux;
-				};
-		| operador parametro DE parametro EN PALABRA {
-				sprintf(error, "Error, Falta cerrar la operación con un '.'\n");
-                yyerror(error);
-                YYABORT;
-		}
-		|  operador DE parametro STOP {
+
+		| operador2 parametro DE recConmat2 {
 				char * aux;
 				aux = (char*)malloc ( 100*sizeof(char) );
-				strcpy(aux, $1);
-				strcat(aux, "(");
-				strcat(aux, $3);
-				strcat(aux, ");\n");
-				$$ = aux;
-			};
-		|  operador DE parametro {
-				sprintf(error, "Error, Falta cerrar la operación con un '.'\n");
-                yyerror(error);
-                YYABORT;
-		}
-		|  operador DE parametro EN PALABRA STOP {
-				char * aux;
-				aux = (char*)malloc ( 100*sizeof(char) );
-				strcpy(aux, $5);
-				strcat(aux, " = ");
+				char * aux1;
+				aux1 = (char*)malloc ( 100*sizeof(char) );
+				char * aux2;
+				aux2 = (char*)malloc ( 100*sizeof(char) );
+				strcpy(aux, "\t");
+
+				aux1 = strstr($4, " ");
+			
+			
+				if(strcmp(aux1, " ")!=0) {
+					strcat(aux, aux1);
+					strcat(aux, " = ");
+				} 
 				strcat(aux, $1);
 				strcat(aux, "(");
-				strcat(aux, $3);
+				strcat(aux, $2);
+				strcat(aux, ",");
+				aux2 = strtok($4, " ");
+				strcat(aux, aux2);
 				strcat(aux, ");\n");
 				$$ = aux;
-			};
-		|  operador DE parametro EN PALABRA {
-				sprintf(error, "Error, Falta cerrar la operación con un '.'\n");
-                yyerror(error);
-                YYABORT;
 		}
-	
-
+		|  operador2 DE recConmat2 {
+				char * aux;
+				aux = (char*)malloc ( 100*sizeof(char) );
+				char * aux1;
+				aux1 = (char*)malloc ( 100*sizeof(char) );
+				char * aux2;
+				aux2 = (char*)malloc ( 100*sizeof(char) );
+				strcpy(aux, "\t");
+			
+				aux1 = strstr($3, " ");
+			
+				if(strcmp(aux1, " ")!=0) {
+					strcat(aux, aux1);
+					strcat(aux, " = ");
+				} 
+				strcat(aux, $1);
+				strcat(aux, "(");
+				aux2 = strtok($3, " ");
+				strcat(aux, aux2);
+				strcat(aux, ");\n");
+				$$ = aux;
+			}
 	
 
 
@@ -479,6 +467,13 @@ operador:	 SUMA {$$="+";}
 		   | RESTA {$$="-";}
 		   | MULT {$$="*";}
 		   | DIV {$$="/";}
+		 
+	;
+
+operador2:	 ESUMA {$$="+";}
+		   | ERESTA {$$="-";}
+		   | EMULT {$$="*";}
+		   | EDIV {$$="/";}
 		   | EXPONT {$$="pow";}
 		   | RAIZ {$$="sqrt";}
 	;
@@ -489,24 +484,66 @@ recConmat:    parametro operador recConmat {
 				strcpy(aux, $1);
 				strcat(aux, $2);
 				strcat(aux, $3);
+				strcat(aux, " ");
 				$$ = aux;
 			};
 			| parametro STOP {
 				char * aux;
 				aux = (char*)malloc ( 500*sizeof(char) );
 				strcpy(aux, $1);
+				strcat(aux, " ");
 				$$ = aux;
 			}
 			| parametro  {
+				sprintf(error, "Error, Falta cerrar la operación con un '.'\n");
+                yyerror(error);
+                YYABORT;
+			}
+			| parametro EN PALABRA STOP {
 				char * aux;
-				aux = (char*)malloc ( 500*sizeof(char) );
-				strcpy(aux, $1);
+				aux = (char*)malloc ( 100*sizeof(char) );
+				strcat(aux, $1);	
+				strcat(aux, " ");
+				strcat(aux, $3);
+				
+				
 				$$ = aux;
 			}
-	
-			| contmat { $$ = $1;}
+			| parametro EN PALABRA  {
+				sprintf(error, "Error, Falta cerrar la operación con un '.' \n");
+                yyerror(error);
+                YYABORT;
+			}
+			| contmat {$$=$1;}
 
 		   ;
+
+recConmat2 :  parametro STOP {
+				char * aux;
+				aux = (char*)malloc ( 100*sizeof(char) );
+				strcpy(aux,$1);
+				strcat(aux, " ");	
+				$$ = aux;
+			}
+			| parametro {
+				sprintf(error, "Error, Falta cerrar la operación con un '.'2\n");
+                yyerror(error);
+                YYABORT;	
+			}
+			| parametro EN PALABRA STOP {
+				char * aux;
+				aux = (char*)malloc ( 100*sizeof(char) );
+				strcpy(aux,$1);
+				strcat(aux, " ");	
+				strcat(aux, $3);
+				$$ = aux;
+			}
+			| parametro EN PALABRA  {
+				sprintf(error, "Error, Falta cerrar la operación con un '.' 1\n");
+                yyerror(error);
+                YYABORT;
+			}
+			| contmat {$$=$1;}
 
 parametro :   PALABRA {$$=$1;}
 		    | NUMERO {$$=$1;}

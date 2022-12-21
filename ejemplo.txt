@@ -1,21 +1,9 @@
 
 
 
-restar a menos b mas elevar a de b.
-multiplicar 4 por 8 .
-dividir a entre b .
 
 
-elevar a de b.
-raiz a de b.
-raiz cuadrada de a .
 
-sumar 3 mas 4 en aux .
-restar a menos b en aux .
-multiplicar a por b en aux.
-dividir a entre b en aux.
-
-
-elevar a de b en aux.
-raiz a de b en aux.
-raiz cuadrada de a en aux.
+raiz a de b en aux .
+raiz cuadrada de 5 en aux.
+raiz cuadrada de 5 en aux.

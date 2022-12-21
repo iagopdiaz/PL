@@ -5,8 +5,6 @@
 %option yylineno
 espacios [ \n\t]+
 
-
-
 numero [0-9]+
 
 /*Hacer una variable | "variable numero a"
@@ -53,10 +51,14 @@ c_or "o"
 stop "."
 m_de "de"
 m_en "en"
-m_suma "mas"|"sumar"
-m_resta "menos"|"restar"
-m_multiplicacion "multiplicar"|"por"
-m_division "dividir"|"entre"
+m_suma "mas"
+m_resta "menos"
+m_multiplicacion "por"
+m_division "entre"
+e_suma "sumar"
+e_resta "restar"
+e_multiplicacion "multiplicar"
+e_division "dividir"
 m_exponente "elevar"
 m_raiz "raiz cuadrada"|"raiz"
 m_igual "igual"
@@ -113,6 +115,10 @@ palabra [A-Za-z_]+
 {m_resta} {yylval.string = strdup(yytext);return RESTA;}
 {m_multiplicacion} {yylval.string = strdup(yytext);return MULT;}
 {m_division} {yylval.string = strdup(yytext);return DIV;}
+{e_suma} {yylval.string = strdup(yytext);return ESUMA;}
+{e_resta} {yylval.string = strdup(yytext);return ERESTA;}
+{e_multiplicacion} {yylval.string = strdup(yytext);return EMULT;}
+{e_division} {yylval.string = strdup(yytext);return EDIV;}
 {m_exponente} {yylval.string = strdup(yytext);return EXPONT;}
 {m_raiz} {yylval.string = strdup(yytext);return RAIZ;}
 {m_igual} {yylval.string = strdup(yytext);return IGUALM;}
