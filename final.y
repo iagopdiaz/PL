@@ -14,18 +14,40 @@ char error[500];
 %token <string> FOR WHILE DOWHILE ENDFOR ENDWHILE ENDDOWHILE 
 %token <string> VARIABLE
 %token <string> VNUMERO VBOOL VSTRING VTRUE VFALSE
-%token <string> STOP ESUMA ERESTA EMULT EDIV
+%token <string> STOP ESUMA ERESTA EMULT EDIV SIMBOLOS
 %token <string> VARRAY SUMA RESTA MULT DIV EXPONT RAIZ IGUALM DE EN
 %token <string> VESTATICA ELSE IF
 %token <string> VDINAMICA MAYOR MENOR IGUAL DISTINTO MAYORIGUAL MENORIGUAL AND OR CLOSEIF ELSEIF
 
-%token <string> NUMERO
+%token <string> NUMERO PRINTF TEXTO FINTEXTO INICIOP FINP
 %token <string> PALABRA
-%type <string>  dimensionvar contvar numarrayvar crearvar recConmat2 operador2 comparador parametro comprecursivo contif  contenido contmat recConmat operador contfor contwhile contdowhile typevar
+%type <string>  dimensionvar contvar contprint printrec tipoprint numarrayvar crearvar recConmat2 operador2 comparador parametro  comprecursivo contif  contenido contmat recConmat operador contfor contwhile contdowhile typevar
 %start S
 %%
 
-S : contenido {printf("%s",$1);} 
+S : INICIOP contenido FINP {
+			printf("#include <stdio.h>\n#include <math.h>\n\nint main() {\n\n");
+			printf("%s",$2);
+			printf("\n}\n");
+			}
+	| INICIOP contenido{
+		sprintf(error, "No se ha encontrado 'fin programa'"); 
+		yyerror(error);
+		YYABORT;
+
+	}
+	| contenido FINP{
+		sprintf(error, "No se ha encontrado 'inicio programa'"); 
+		yyerror(error);
+		YYABORT;
+
+	}
+	| contenido {
+		sprintf(error, "No se ha encontrado 'inicio y fin programa'"); 
+		yyerror(error);
+		YYABORT;
+
+	}
 	;
 
 
@@ -33,56 +55,119 @@ S : contenido {printf("%s",$1);}
 contenido :    VARIABLE dimensionvar {$$ = $2;}
      		| IF contif {$$ = $2;}
 			| contmat {$$ = $1;}
+			| contprint {$$ = $1;}
 			| FOR contfor {$$ = $2;}
 			| WHILE contwhile {$$ = $2;}
 			| DOWHILE contdowhile {$$ = $2;}
-     	     | contenido VARIABLE dimensionvar {
-     	     	 			char * auxcont;
-					auxcont= (char*)malloc ( 200*sizeof(char) );
+			| contenido VARIABLE dimensionvar {
+     	     	 	char * auxcont;
+					auxcont= (char*)malloc ( 500*500*sizeof(char) );
 					strcpy(auxcont, $1);
 					strcat(auxcont, "\t");
 					strcat(auxcont, $3);
 					$$ = auxcont;}
-     	     | contenido IF contif {
-     	     				char * auxcont;
-					auxcont = (char*)malloc ( 200*sizeof(char) );
+			| contenido IF contif {
+     	     		char * auxcont;
+					auxcont = (char*)malloc ( 500*500*sizeof(char) );
 					strcpy(auxcont, $1);
 					strcat(auxcont, "\t");
 					strcat(auxcont, $3);
 					
 					$$ = auxcont;}
-		 | contenido contmat {
+		 	| contenido contmat {
      	     		char * auxcont;
-					auxcont = (char*)malloc ( 200*sizeof(char) );
+					auxcont = (char*)malloc (500*500*sizeof(char) );
 					strcpy(auxcont, $1);
 					strcat(auxcont, "\t");
 					strcat(auxcont, $2);
 					
 					$$ = auxcont;}
+			| contenido contprint {
+     	     		char * auxcont;
+					auxcont = (char*)malloc (500*500*sizeof(char) );
+					strcpy(auxcont, $1);
+					strcat(auxcont, "\t");
+					strcat(auxcont, $2);
+					$$ = auxcont;}
 	     	
-	     | contenido FOR contfor {
+	    	| contenido FOR contfor {
      	     				char * auxcont;
-					auxcont = (char*)malloc ( 200*sizeof(char) );
+					auxcont = (char*)malloc ( 500*500*sizeof(char) );
 					strcpy(auxcont, $1);
 					strcat(auxcont, "\t");
 					strcat(auxcont, $3);
 					$$ = auxcont;}
-	     | contenido WHILE contwhile {
+	    	| contenido WHILE contwhile {
      	     				char * auxcont;
-					auxcont = (char*)malloc ( 200*sizeof(char) );
+					auxcont = (char*)malloc (500*500*sizeof(char) );
 					strcpy(auxcont, $1);
 					strcat(auxcont, "\t");
 					strcat(auxcont, $3);
 					$$ = auxcont;}
-	     | contenido DOWHILE contdowhile {
+	     	| contenido DOWHILE contdowhile {
      	     				char * auxcont;
-					auxcont = (char*)malloc ( 200*sizeof(char) );
+					auxcont = (char*)malloc ( 500*500*sizeof(char) );
 					strcpy(auxcont, $1);
 					strcat(auxcont, "\t");
 					strcat(auxcont, $3);
 					$$ = auxcont;}
 	;
-	
+
+
+
+////////////////////////////////////Parte Printf//////////////////////////
+
+contprint : TEXTO printrec FINTEXTO {
+				char * aux;
+				aux = (char*)malloc ( 500*sizeof(char) );
+				strcpy(aux, "printf(");
+				strcat(aux,"\"");
+				strcat(aux,$2);
+				strcat(aux,"\\n\");");
+				$$ = aux;
+			}
+			| TEXTO printrec {
+				sprintf(error, "No se ha encontrado 'fintexto'"); 
+				yyerror(error);
+				YYABORT;
+				
+			}
+
+
+
+printrec : printrec tipoprint {
+			char * auxcont;
+			auxcont = (char*)malloc (500*sizeof(char) );
+			strcpy(auxcont, $1);
+			strcat(auxcont, $2);
+			$$ = auxcont;
+		}
+		|tipoprint {$$ = $1;}
+		;
+
+
+tipoprint :   PALABRA { 
+				char * aux;
+				aux = (char*)malloc ( 500*sizeof(char) );
+				strcpy(aux, " ");
+				strcat(aux,$1);
+				$$ = aux;
+			}
+			| NUMERO { 
+				char * aux;
+				aux = (char*)malloc ( 500*sizeof(char) );
+				strcpy(aux, " ");
+				strcat(aux,$1);
+				$$ = aux;
+			}
+			| SIMBOLOS { 
+				char * aux;
+				aux = (char*)malloc ( 500*sizeof(char) );
+				strcpy(aux, " ");
+				strcat(aux,$1);
+				$$ = aux;
+			}
+
 	
 ////////////////////////////////////Parte Condiciones//////////////////////////
 
@@ -96,10 +181,12 @@ contif : comprecursivo  contenido CLOSEIF {
 					strcat(aux, $1);
 					strcat(aux, ")");
 					strcat(aux, "{\n\t");
-			;
+					strcat(aux, $2);
+					strcat(aux, "\t};\n");	
 					$$ = aux;
-					}
-		| comprecursivo contenido ELSE  contenido CLOSEIF  {
+		}
+		
+		| comprecursivo contenido ELSE contenido CLOSEIF {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
 					strcpy(aux, "\tif");
@@ -113,22 +200,24 @@ contif : comprecursivo  contenido CLOSEIF {
 					strcat(aux, "\t};\n");
 					$$ = aux;
 					}
-	| comprecursivo contenido ELSEIF comprecursivo  contenido CLOSEIF {
-					char * aux;
-					aux = (char*)malloc ( 500*sizeof(char) );
-					strcpy(aux, "\tif");
-					strcat(aux, "(");
-					strcat(aux, $1);
-					strcat(aux, ")");
-					strcat(aux, "{\n\t\t");
-					strcat(aux, $2);
-					strcat(aux, "\n\t} else if(");
-					strcat(aux, $4);
-					strcat(aux, ") {\n\t\t");
-					strcat(aux, $5);
-					strcat(aux, "\t};\n");
-					$$ = aux;
-					};
+		
+		| comprecursivo contenido ELSEIF comprecursivo contenido CLOSEIF {
+						char * aux;
+						aux = (char*)malloc ( 500*sizeof(char) );
+						strcpy(aux, "\tif");
+						strcat(aux, "(");
+						strcat(aux, $1);
+						strcat(aux, ")");
+						strcat(aux, "{\n\t\t");
+						strcat(aux, $2);
+						strcat(aux, "\n\t} else if(");
+						strcat(aux, $4);
+						strcat(aux, ") {\n\t\t");
+						strcat(aux, $5);
+						strcat(aux, "\t};\n");
+						$$ = aux;
+						}
+		
 	
 	;
 

@@ -4,8 +4,14 @@
 %}
 %option yylineno
 espacios [ \n\t]+
-
 numero [0-9]+
+simbolos [*¿?¡!@#$%^%&/=\|]+
+texto "texto"
+fintexto "fintexto"
+printf {palabra}{numero}{simbolos}
+
+iniciop "inicio programa"
+finp "fin programa"
 
 /*Hacer una variable | "variable numero a"
 Por defecto estaticas salvo que se indique "variable" "dinamica"
@@ -71,11 +77,21 @@ funcion "funcion"
 /*Palabras para variables*/
 palabra [A-Za-z_]+
 
-%%
-{espacios} {}
-{stop} {return STOP;}
-{numero} {yylval.string = strdup(yytext); return NUMERO;}
 
+%%
+
+{iniciop} {return INICIOP;}
+{finp} {return FINP;}
+{espacios} {}
+{stop} {yylval.string = strdup(yytext);return STOP;}
+{simbolos} {yylval.string = strdup(yytext);return SIMBOLOS;}
+
+
+{texto} { yylval.string = strdup(yytext); return TEXTO;}
+{printf} { yylval.string = strdup(yytext); return PRINTF;}
+{fintexto} {yylval.string = strdup(yytext); return FINTEXTO;}
+
+{numero} {yylval.string = strdup(yytext); return NUMERO;}
 {variable} {return VARIABLE;}
 {v_numero} {yylval.string = strdup(yytext); return VNUMERO;}
 {v_letras} {yylval.string = strdup(yytext); return VSTRING;}
@@ -96,7 +112,7 @@ palabra [A-Za-z_]+
 {else} {return ELSE;}
 {else_if} {return ELSEIF;}
 {si} {return IF;}
-{closeIf} {return CLOSEIF;}
+{closeIf} {yylval.string = strdup(yytext); return CLOSEIF;}
 
 
 {c_mayorigual} {return MAYORIGUAL;}
@@ -125,6 +141,7 @@ palabra [A-Za-z_]+
 
 
 {palabra} {yylval.string = strdup(yytext); return PALABRA;}
+
 
 
 . {};

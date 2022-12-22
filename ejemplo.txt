@@ -1,22 +1,7 @@
+inicio programa
 
 
-sumar 3 mas 5 en aux.
-sumar 3 mas 5 en aux.
-sumar 3 mas 5 en aux.
-sumar 3 mas 5 en aux.
-sumar 3 mas 5 .
+texto hola que tal? fintexto
 
 
-
-
-
-raiz a de b en aux .
-raiz a de b  .
-raiz cuadrada de 5 en aux.
-raiz cuadrada de 5 en aux.
-
-
-
-elevar 5 de 7.
-elevar 5 de 7 en ale.
-
+fin programa

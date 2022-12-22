@@ -11,7 +11,7 @@ flex:
 	
 compile:
 	flex $(FUENTE).l
-	bison -o $(FUENTE).tab.c $(FUENTE).y -yd -Wcounterexamples
+	bison -o $(FUENTE).tab.c $(FUENTE).y -yd 
 	gcc -o $(FUENTE) lex.yy.c $(FUENTE).tab.c -$(LIB) -ly
 
 run:
