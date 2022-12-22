@@ -3,31 +3,15 @@ inicio programa
 variable numero a 
 variable numero b
 
-si a mayor b variable numero c finif
-sumar a mas b mas c en c.
-sumar a mas b mas c .
 
-sumar 3 mas 5 en aux.
-sumar 3 mas 5 en aux.
-sumar 3 mas 5 en aux.
-sumar 3 mas 5 en aux.
-sumar 3 mas 5 .
+si a mayor b
+variable numero c  
+sumar a mas b en c .
+sumar a mas b en c .
+variable numero d
+finif
 
-
-
-
-
-raiz a de b en aux .
-raiz a de b  .
-raiz cuadrada de 5 en aux.
-raiz cuadrada de 5 en aux.
-
-
-
-elevar 5 de 7.
-elevar 5 de 7 en ale.
-
-sumar a mas b mas c menos a por 8 por 5 entre 8 mas raiz a de b .
-
+texto Estamos escribiendo fintexto
 
 fin programa
+

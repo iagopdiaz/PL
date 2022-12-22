@@ -7,6 +7,7 @@ extern int yylex();
 extern int yylineno;
 char error[500];
 char * variables;
+int * op;
 
 %}
 %union{
@@ -23,7 +24,7 @@ char * variables;
 
 %token <string> NUMERO PRINTF TEXTO FINTEXTO INICIOP FINP
 %token <string> PALABRA
-%type <string>  dimensionvar contvar contprint printrec tipoprint numarrayvar crearvar recConmat2 operador2 comparador parametro  comprecursivo contif  contenido contmat recConmat operador contfor contwhile contdowhile typevar 
+%type <string>  dimensionvar contvar contprint printrec tipoprint contmat2 numarrayvar crearvar operador2 comparador parametro  comprecursivo contif  contenido contmat recConmat operador contfor contwhile contdowhile typevar 
 %start S
 %%
 
@@ -54,9 +55,28 @@ S : INICIOP contenido FINP {
 
 
 //Funciones Contenido de alguna otra funcion recursiva(if, for,while), indicar cuando parar con algo STOP
-contenido :    VARIABLE dimensionvar {$$ = $2;}
-     		| IF contif {$$ = $2;}
-			| contmat {$$ = $1;}
+contenido :    VARIABLE dimensionvar {
+				char * auxcont;
+					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					strcpy(auxcont, "\t");
+					strcat(auxcont, $2);
+					strcat(auxcont, "\n");
+					$$ = auxcont;
+			}
+     		| IF contif {
+				char * auxcont;
+					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					strcpy(auxcont, "\t");
+					strcat(auxcont, $2);
+					$$ = auxcont;
+			}
+			| contmat2 {
+				char * auxcont;
+					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					strcpy(auxcont, "\t");
+					strcat(auxcont, $1);
+					$$ = auxcont;
+			}
 			| contprint {$$ = $1;}
 			| FOR contfor {$$ = $2;}
 			| WHILE contwhile {$$ = $2;}
@@ -64,8 +84,8 @@ contenido :    VARIABLE dimensionvar {$$ = $2;}
 			| contenido VARIABLE dimensionvar {
      	     	 	char * auxcont;
 					auxcont= (char*)malloc ( 500*500*sizeof(char) );
-					strcpy(auxcont, $1);
-					strcat(auxcont, "\t");
+					strcpy(auxcont, "\t");
+					strcat(auxcont, $1);
 					strcat(auxcont, $3);
 					$$ = auxcont;}
 			| contenido IF contif {
@@ -76,11 +96,11 @@ contenido :    VARIABLE dimensionvar {$$ = $2;}
 					strcat(auxcont, $3);
 					
 					$$ = auxcont;}
-		 	| contenido contmat {
+		 	| contenido contmat2 {
      	     		char * auxcont;
 					auxcont = (char*)malloc (500*500*sizeof(char) );
-					strcpy(auxcont, $1);
-					strcat(auxcont, "\t");
+					strcpy(auxcont, "\t");
+					strcat(auxcont, $1);
 					strcat(auxcont, $2);
 					
 					$$ = auxcont;}
@@ -88,29 +108,25 @@ contenido :    VARIABLE dimensionvar {$$ = $2;}
      	     		char * auxcont;
 					auxcont = (char*)malloc (500*500*sizeof(char) );
 					strcpy(auxcont, $1);
-					strcat(auxcont, "\t");
 					strcat(auxcont, $2);
 					$$ = auxcont;}
 	     	
 	    	| contenido FOR contfor {
-     	     				char * auxcont;
+     	     		char * auxcont;
 					auxcont = (char*)malloc ( 500*500*sizeof(char) );
 					strcpy(auxcont, $1);
-					strcat(auxcont, "\t");
 					strcat(auxcont, $3);
 					$$ = auxcont;}
 	    	| contenido WHILE contwhile {
      	     				char * auxcont;
 					auxcont = (char*)malloc (500*500*sizeof(char) );
 					strcpy(auxcont, $1);
-					strcat(auxcont, "\t");
 					strcat(auxcont, $3);
 					$$ = auxcont;}
 	     	| contenido DOWHILE contdowhile {
      	     				char * auxcont;
 					auxcont = (char*)malloc ( 500*500*sizeof(char) );
 					strcpy(auxcont, $1);
-					strcat(auxcont, "\t");
 					strcat(auxcont, $3);
 					$$ = auxcont;}
 	;
@@ -122,7 +138,8 @@ contenido :    VARIABLE dimensionvar {$$ = $2;}
 contprint : TEXTO printrec FINTEXTO {
 				char * aux;
 				aux = (char*)malloc ( 500*sizeof(char) );
-				strcpy(aux, "printf(");
+				strcpy(aux, "\t");
+				strcat(aux, "printf(");
 				strcat(aux,"\"");
 				strcat(aux,$2);
 				strcat(aux,"\\n\");");
@@ -178,11 +195,11 @@ tipoprint :   PALABRA {
 contif : comprecursivo  contenido CLOSEIF {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
-					strcpy(aux, "\tif");
+					strcpy(aux, "if");
 					strcat(aux, "(");
 					strcat(aux, $1);
 					strcat(aux, ")");
-					strcat(aux, "{\n\t");
+					strcat(aux, "{\n");
 					strcat(aux, $2);
 					strcat(aux, "\t};\n");	
 					$$ = aux;
@@ -255,17 +272,17 @@ comparador:  MAYOR {$$=">";}
 
 ////////////////////////////////Parte Variables/////////////////////////////////
 
-dimensionvar: contvar {		char * auxdim;
+dimensionvar: contvar {		
+					char * auxdim;
 					auxdim = (char*)malloc ( 100*sizeof(char) );
-					strcpy(auxdim, "\t");
-					strcat(auxdim, $1);
+					strcpy(auxdim, $1);
 					strcat(auxdim, ";\n");
 					$$ = auxdim;
 					}
 	       |VARRAY contvar numarrayvar{
 					char * auxdim;
 					auxdim = (char*)malloc ( 200*sizeof(char) );
-					strcpy(auxdim, "\t");
+					strcpy(auxdim, "");
 					strcat(auxdim, $2);
 					strcat(auxdim, " ");
 					strcat(auxdim, $3);
@@ -508,25 +525,30 @@ numarrayvar: numarrayvar NUMERO {
 
 ///////////////////////////////////////Parte Matematicas/////////////////
 
+contmat2 : 	  contmat STOP {
+					char * aux;
+					aux = (char*)malloc ( 100*sizeof(char) );
+					strcpy(aux, "");
+					strcat(aux, $1);
+					$$ = aux;
+			}
+		   |  contmat EN PALABRA STOP {
+					char * aux;
+					aux = (char*)malloc ( 100*sizeof(char) );
+					strcpy(aux, "");
+					strcat(aux, $3);
+					strcat(aux, " = "); 
+					strcat(aux, $1);
+					$$ = aux;
+
+		   }
 
 contmat : operador2 parametro operador recConmat  {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
-					char * aux1;
-					aux1 = (char*)malloc ( 100*sizeof(char) );
-					char * aux2;
-					aux2 = (char*)malloc ( 100*sizeof(char) );
-					strcpy(aux, "\t");
 
-					aux1 = strstr($4, " ");
-					
-				
-					if(strcmp(aux1, " ")!=0) {
-						strcat(aux, aux1);
-						strcat(aux, " = ");
-					} 
 					if(strcmp($1, "pow")==0 || strcmp($1, "sqrt")==0){	
-						strcat(aux, $1);
+						strcpy(aux, $1);
 						strcat(aux, "(");
 						strcat(aux, $2);
 						strcat(aux, ",");
@@ -534,10 +556,9 @@ contmat : operador2 parametro operador recConmat  {
 						strcat(aux, ");\n");
 					} else {
 						if(strcmp($1, $3)==0) {
-							strcat(aux, $2);
+							strcpy(aux, $2);
 							strcat(aux, $3);
-							aux2 = strtok($4, " ");
-							strcat(aux, aux2);
+							strcat(aux, $4);
 							strcat(aux, ";\n");
 						} else {
 							sprintf(error, "Error, No se esta realizando la misma operación\n");
@@ -545,41 +566,32 @@ contmat : operador2 parametro operador recConmat  {
 							YYABORT;
 						}
 					}
+					*op = 0;
 					$$ = aux;
 				}
-
-		| operador2 parametro DE recConmat2 {
-				char * aux;
+		
+		| operador2 parametro DE recConmat {
+			char * aux;
 				aux = (char*)malloc ( 100*sizeof(char) );
-				char * aux1;
-				aux1 = (char*)malloc ( 100*sizeof(char) );
-				char * aux2;
-				aux2 = (char*)malloc ( 100*sizeof(char) );
-				
-				aux1 = strstr($4, " ");
 			
-			
-				if(strcmp(aux1, " ")!=0) {
-					strcat(aux, aux1);
-					strcat(aux, " = ");
-				} 
-				strcat(aux, $1);
-				strcat(aux, "(");
+				strcpy(aux, $1);
 				strcat(aux, $2);
+				strcat(aux, "(");
+				strcat(aux, $3);
 				strcat(aux, ",");
-				aux2 = strtok($4, " ");
-				strcat(aux, aux2);
-				strcat(aux, ");\n");
+				strcat(aux, $4);
+				strcat(aux, ");");
+				*op = 0;
 				$$ = aux;
 		}
-		|  operador2 DE recConmat2 {
+		|  operador2 DE recConmat {
 				char * aux;
 				aux = (char*)malloc ( 100*sizeof(char) );
 				char * aux1;
 				aux1 = (char*)malloc ( 100*sizeof(char) );
 				char * aux2;
 				aux2 = (char*)malloc ( 100*sizeof(char) );
-				strcpy(aux, "\t");
+				strcpy(aux, "");
 			
 				aux1 = strstr($3, " ");
 			
@@ -592,6 +604,7 @@ contmat : operador2 parametro operador recConmat  {
 				aux2 = strtok($3, " ");
 				strcat(aux, aux2);
 				strcat(aux, ");\n");
+				*op = 0;
 				$$ = aux;
 			}
 	
@@ -613,75 +626,65 @@ operador2:	 ESUMA {$$="+";}
 		   | RAIZ {$$="sqrt";}
 	;
 
-recConmat:    parametro operador recConmat {
+recConmat:     recConmat operador parametro {
 				char * aux;
 				aux = (char*)malloc ( 500*sizeof(char) );
 				strcpy(aux, $1);
 				strcat(aux, $2);
 				strcat(aux, $3);
 				$$ = aux;
-			};
-			| parametro STOP {
+			}
+			| recConmat operador {
+				*op += 1;
+				if(*op > 0) {
+					sprintf(error, "Se estan escribiendo operadores consecutivos\n");
+					yyerror(error);
+					YYABORT;
+
+				}
 				char * aux;
 				aux = (char*)malloc ( 500*sizeof(char) );
 				strcpy(aux, $1);
-				strcat(aux, " ");
+				strcat(aux, $2);
 				$$ = aux;
 			}
-			| parametro  {
-				sprintf(error, "Error, Falta cerrar la operación con un '.'\n");
-                yyerror(error);
-                YYABORT;
-			}
-			| parametro EN PALABRA STOP {
+
+			| recConmat operador2 parametro DE parametro {
 				char * aux;
 				aux = (char*)malloc ( 100*sizeof(char) );
-				strcat(aux, $1);	
-				strcat(aux, " ");
+			
+				strcpy(aux, $1);
+				strcat(aux, $2);
+				strcat(aux, "(");
 				strcat(aux, $3);
+				strcat(aux, ",");
+				strcat(aux, $5);
+				strcat(aux, ")");
 				$$ = aux;
-			}
-			| parametro EN PALABRA  {
-				sprintf(error, "Error, Falta cerrar la operación con un '.' \n");
-                yyerror(error);
-                YYABORT;
-			}
-			| contmat {
-				char * aux;
-				aux = (char*)malloc ( 500*sizeof(char) );
-				strcat(aux, $1);
-				strcat(aux, " ");
-				$$=aux;
+
 			}
 
-		   ;
-
-recConmat2 :  parametro STOP {
+			|  operador2 parametro DE parametro {
 				char * aux;
 				aux = (char*)malloc ( 100*sizeof(char) );
-				strcpy(aux,$1);
-				strcat(aux, " ");	
+			
+				strcpy(aux, $1);
+				strcat(aux, "(");
+				strcat(aux, $2);
+				strcat(aux, ",");
+				strcat(aux, $4);
+				strcat(aux, ")");
 				$$ = aux;
+
 			}
 			| parametro {
-				sprintf(error, "Error, Falta cerrar la operación con un '.'\n");
-                yyerror(error);
-                YYABORT;	
-			}
-			| parametro EN PALABRA STOP {
+				*op -= 1;
 				char * aux;
-				aux = (char*)malloc ( 100*sizeof(char) );
-				strcpy(aux,$1);
-				strcat(aux, " ");	
-				strcat(aux, $3);
+				aux = (char*)malloc ( 500*sizeof(char) );
+				strcpy(aux, $1);
 				$$ = aux;
 			}
-			| parametro EN PALABRA  {
-				sprintf(error, "Error, Falta cerrar la operación con un '.' 1\n");
-                yyerror(error);
-                YYABORT;
-			}
-			| contmat {$$=$1;}
+
 		;
 
 parametro :   PALABRA {
@@ -698,7 +701,7 @@ parametro :   PALABRA {
 					strcat(variables, auxp);		
 					$$ = $1;
 				}else{
-					sprintf(error, "Variable '%s' no esta creada", 							$1); 
+					sprintf(error, "Variable '%s' no esta creada", $1); 
 					yyerror(error);
 					YYABORT;				
 				}
@@ -711,9 +714,9 @@ parametro :   PALABRA {
  contfor: NUMERO contenido ENDFOR {	
  					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
-					strcpy(aux, "\tfor(int i = 0;i < ");
+					strcpy(aux, "for(int i = 0;i < ");
 					strcat(aux, $1);
-					strcat(aux, ";i++){\n\t ");
+					strcat(aux, ";i++){\n ");
 					strcat(aux, $2);
 					strcat(aux, "\t};\n");
 					$$ = aux;
@@ -770,6 +773,8 @@ extern FILE *yyin;
 	switch (argc) {
 		case 1: yyin=stdin;
 			variables = (char*)malloc ( 1000*1000*sizeof(char) );
+			op = (int*)malloc ( 100*sizeof(char) );
+			*op = 0;
 			yyparse();
 			break;
 		case 2: yyin = fopen(argv[1], "r");
