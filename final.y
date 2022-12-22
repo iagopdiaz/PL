@@ -6,6 +6,8 @@ void yyerror (char const *);
 extern int yylex();
 extern int yylineno;
 char error[500];
+char * variables;
+
 %}
 %union{
 	char * string;
@@ -21,7 +23,7 @@ char error[500];
 
 %token <string> NUMERO PRINTF TEXTO FINTEXTO INICIOP FINP
 %token <string> PALABRA
-%type <string>  dimensionvar contvar contprint printrec tipoprint numarrayvar crearvar recConmat2 operador2 comparador parametro  comprecursivo contif  contenido contmat recConmat operador contfor contwhile contdowhile typevar
+%type <string>  dimensionvar contvar contprint printrec tipoprint numarrayvar crearvar recConmat2 operador2 comparador parametro  comprecursivo contif  contenido contmat recConmat operador contfor contwhile contdowhile typevar 
 %start S
 %%
 
@@ -131,7 +133,7 @@ contprint : TEXTO printrec FINTEXTO {
 				yyerror(error);
 				YYABORT;
 				
-			}
+			};
 
 
 
@@ -166,7 +168,7 @@ tipoprint :   PALABRA {
 				strcpy(aux, " ");
 				strcat(aux,$1);
 				$$ = aux;
-			}
+			};
 
 	
 ////////////////////////////////////Parte Condiciones//////////////////////////
@@ -222,7 +224,7 @@ contif : comprecursivo  contenido CLOSEIF {
 	;
 
 
-comprecursivo: comprecursivo comparador PALABRA{
+comprecursivo: comprecursivo comparador parametro{
 				char * auxcont;
 				auxcont= (char*)malloc( 100*sizeof(char) );
 				if ((strcmp($2,"||") == 0) ||(strcmp($2,"&&") == 0)){
@@ -238,12 +240,7 @@ comprecursivo: comprecursivo comparador PALABRA{
 				}
 				$$ = auxcont;
 				}
-	        | PALABRA {
-	       		char * aux;
-				aux = (char*)malloc ( 20*sizeof(char) );
-				strcpy(aux, $1);
-				$$ = aux;
-	      }
+	        | parametro{$$ = $1;}
 	     ;
 
 comparador:  MAYOR {$$=">";}
@@ -280,25 +277,75 @@ dimensionvar: contvar {		char * auxdim;
 contvar : VDINAMICA crearvar PALABRA{
 				char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
-				strcpy(auxvar, $2);
-				strcat(auxvar, "* ");
+				char * esvariable;
+				
+				strcpy(auxvar, "-");
 				strcat(auxvar, $3);
-				$$ = auxvar;
+				strcat(auxvar, "-");
+				esvariable = strstr(variables, auxvar);				
+				
+				if(esvariable == NULL){
+					strcat(variables, auxvar);
+					
+					strcpy(auxvar, $2);
+					strcat(auxvar, "* ");
+					strcat(auxvar, $3);
+					
+					$$ = auxvar;
+				}else{
+					sprintf(error, "Variable '%s' ya creada", 							$3); 
+					yyerror(error);
+					YYABORT;				
 				}
+				
+			}
   	  | crearvar PALABRA{
-  	  			char * auxvar;
+  	 			char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
-				strcpy(auxvar, $1);
+				char * esvariable;
+				
+				strcpy(auxvar, "-");
 				strcat(auxvar, $2);
-				$$ = auxvar;
+				strcat(auxvar, "-");
+				esvariable = strstr(variables, auxvar);				
+				
+				if(esvariable == NULL){
+					strcat(variables, auxvar);
+					
+					strcpy(auxvar, $1);
+					strcat(auxvar, $2);
+					
+					$$ = auxvar;
+				}else{
+					sprintf(error, "Variable '%s' ya creada", 							$2); 
+					yyerror(error);
+					YYABORT;				
 				}
+  	  			
+			}
 	  | VESTATICA crearvar PALABRA{
   	  			char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
-				strcpy(auxvar, $1);
-				strcat(auxvar, $2);
-				$$ = auxvar;
+				char * esvariable;
+				
+				strcpy(auxvar, "-");
+				strcat(auxvar, $3);
+				strcat(auxvar, "-");
+				esvariable = strstr(variables, auxvar);				
+				
+				if(esvariable == NULL){
+					strcat(variables, auxvar);
+					
+					strcpy(auxvar, $2);
+					strcat(auxvar, $3);
+					
+					$$ = auxvar;
+				}else{
+					sprintf(error, "Variable '%s' ya creada", 							$3); 
+					yyerror(error);
+					YYABORT;				
 				}
+			}
 				
 	   ////////////////PARA INICIALIZAR CON X VALOR///////////////////////
 	  | VDINAMICA crearvar PALABRA IGUALM typevar{
@@ -630,8 +677,27 @@ recConmat2 :  parametro STOP {
                 YYABORT;
 			}
 			| contmat {$$=$1;}
+		;
 
-parametro :   PALABRA {$$=$1;}
+parametro :   PALABRA {
+				char * auxp;
+				auxp = (char*)malloc ( 100*sizeof(char) );
+				char * esvariable;
+				
+				strcpy(auxp, "-");
+				strcat(auxp, $1);
+				strcat(auxp, "-");
+				esvariable = strstr(variables, auxp);				
+				
+				if(esvariable != NULL){
+					strcat(variables, auxp);		
+					$$ = $1;
+				}else{
+					sprintf(error, "Variable '%s' no esta creada", 							$1); 
+					yyerror(error);
+					YYABORT;				
+				}
+			}
 		    | NUMERO {$$=$1;}
 			;
 
@@ -698,9 +764,8 @@ extern FILE *yyin;
 
 	switch (argc) {
 		case 1: yyin=stdin;
-			printf("#include <stdio.h>\n#include <math.h>\n\nint main() {\n\n");
+			variables = (char*)malloc ( 1000*1000*sizeof(char) );
 			yyparse();
-			printf("\n}\n");
 			break;
 		case 2: yyin = fopen(argv[1], "r");
 			if (yyin == NULL) {

@@ -1,7 +1,9 @@
 inicio programa
 
+variable numero a 
+variable numero b
 
-texto hola que tal? fintexto
-
+si a mayor b variable numero c finif
+sumar a mas b mas c en c.
 
 fin programa
