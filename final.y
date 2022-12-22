@@ -30,7 +30,7 @@ char * variables;
 S : INICIOP contenido FINP {
 			printf("#include <stdio.h>\n#include <math.h>\n\nint main() {\n\n");
 			printf("%s",$2);
-			printf("\n}\n");
+			printf("\n\n};\n");
 			}
 	| INICIOP contenido{
 		sprintf(error, "No se ha encontrado 'fin programa'"); 
@@ -517,8 +517,9 @@ contmat : operador2 parametro operador recConmat  {
 					char * aux2;
 					aux2 = (char*)malloc ( 100*sizeof(char) );
 					strcpy(aux, "\t");
-				
+
 					aux1 = strstr($4, " ");
+					
 				
 					if(strcmp(aux1, " ")!=0) {
 						strcat(aux, aux1);
@@ -554,8 +555,7 @@ contmat : operador2 parametro operador recConmat  {
 				aux1 = (char*)malloc ( 100*sizeof(char) );
 				char * aux2;
 				aux2 = (char*)malloc ( 100*sizeof(char) );
-				strcpy(aux, "\t");
-
+				
 				aux1 = strstr($4, " ");
 			
 			
@@ -619,7 +619,6 @@ recConmat:    parametro operador recConmat {
 				strcpy(aux, $1);
 				strcat(aux, $2);
 				strcat(aux, $3);
-				strcat(aux, " ");
 				$$ = aux;
 			};
 			| parametro STOP {
@@ -647,7 +646,13 @@ recConmat:    parametro operador recConmat {
                 yyerror(error);
                 YYABORT;
 			}
-			| contmat {$$=$1;}
+			| contmat {
+				char * aux;
+				aux = (char*)malloc ( 500*sizeof(char) );
+				strcat(aux, $1);
+				strcat(aux, " ");
+				$$=aux;
+			}
 
 		   ;
 
