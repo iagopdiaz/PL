@@ -78,7 +78,7 @@ extern int yylineno;
 char error[500];
 char * variables;
 int * op;
-
+int * tabulaciones;
 
 #line 84 "final.tab.c"
 
@@ -508,9 +508,9 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  47
+#define YYFINAL  48
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   431
+#define YYLAST   454
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  52
@@ -519,7 +519,7 @@ union yyalloc
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  88
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  143
+#define YYNSTATES  140
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   306
@@ -573,15 +573,15 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    31,    31,    36,    42,    48,    58,    66,    73,    80,
-      81,    82,    83,    84,    91,    99,   107,   114,   120,   126,
-     138,   148,   157,   164,   168,   175,   182,   195,   208,   223,
-     244,   260,   263,   264,   265,   266,   267,   268,   269,   270,
-     275,   282,   294,   319,   343,   368,   393,   420,   449,   454,
-     459,   466,   471,   476,   483,   484,   485,   488,   489,   490,
-     496,   505,   516,   528,   535,   546,   573,   587,   614,   615,
-     616,   617,   621,   622,   623,   624,   625,   626,   629,   637,
-     652,   667,   680,   690,   709,   714,   724,   740,   755
+       0,    31,    31,    36,    42,    48,    58,    67,    77,    86,
+      95,   105,   115,   125,   135,   148,   158,   169,   180,   191,
+     208,   217,   226,   233,   237,   244,   251,   264,   280,   301,
+     328,   344,   350,   351,   352,   353,   354,   355,   356,   357,
+     362,   369,   381,   406,   430,   455,   480,   507,   536,   541,
+     546,   553,   558,   563,   570,   571,   572,   575,   576,   577,
+     583,   592,   603,   615,   622,   633,   660,   674,   700,   701,
+     702,   703,   707,   708,   709,   710,   711,   712,   715,   723,
+     738,   753,   766,   777,   796,   800,   814,   834,   850
 };
 #endif
 
@@ -618,7 +618,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-53)
+#define YYPACT_NINF (-111)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -632,21 +632,20 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-     123,   -39,   -42,   -35,    11,   -53,   -53,   -53,   -53,   -53,
-     -53,   -37,    -2,   375,    20,     8,   -53,   -53,   -11,   145,
-     201,   -53,   389,   -53,   389,   -53,   -53,   -53,   -53,    26,
-      56,    70,   -53,   -53,   -53,   -23,   -53,   -53,   -53,   142,
-     -53,   -53,   -53,   -53,    69,   -53,    83,   -53,   -39,   -42,
-     -35,    11,   -37,   -53,   -53,   -53,   -53,   -21,   274,   394,
-     375,   233,   -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,
-     -12,    -7,    14,   -53,     5,   -53,    13,    48,   182,   -37,
-     -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,    78,   -37,
-     388,   -53,   -53,   -53,   -53,   -53,   274,   274,   252,   -53,
-     375,   375,   -53,    39,    66,    80,   122,   375,   -53,   -37,
-     -53,   -53,    82,   -37,   -37,   388,   388,   -53,   279,   305,
-     -53,   122,   122,   -53,   -53,   -53,   -53,   -53,   324,   142,
-     -37,   -53,    89,   -53,   -53,   -53,   -53,   -53,   356,   -53,
-     -37,   -53,   -53
+     180,   -32,   -32,   -32,     4,  -111,  -111,  -111,  -111,  -111,
+    -111,   -32,   -11,   407,    22,   126,  -111,  -111,    -9,    57,
+    -111,  -111,   199,   -32,  -111,   199,  -111,  -111,   199,  -111,
+    -111,  -111,  -111,    16,    20,    32,  -111,  -111,  -111,   -22,
+    -111,   199,  -111,  -111,  -111,    70,  -111,   145,  -111,   -32,
+     -32,   -32,     4,   -32,  -111,  -111,  -111,  -111,    -2,    58,
+     157,  -111,  -111,  -111,  -111,  -111,  -111,  -111,  -111,   258,
+     -32,   199,   285,   311,   -12,  -111,     2,  -111,     9,    40,
+     239,  -111,  -111,  -111,  -111,  -111,  -111,  -111,  -111,    63,
+     -32,   419,  -111,  -111,  -111,  -111,  -111,    58,    58,  -111,
+    -111,   330,  -111,  -111,  -111,    36,    54,    59,    43,   407,
+    -111,   -32,  -111,    66,   -32,   -32,   419,   419,  -111,  -111,
+      43,    43,  -111,  -111,  -111,  -111,  -111,   356,   199,   -32,
+    -111,    71,  -111,  -111,  -111,   375,  -111,   -32,  -111,  -111
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -656,35 +655,34 @@ static const yytype_int8 yydefact[] =
 {
        0,     0,     0,     0,     0,    72,    73,    74,    75,    76,
       77,     0,     0,     0,     0,     5,     9,     8,     0,     0,
-       0,    10,     0,    11,     0,    12,    54,    56,    55,     0,
-       0,     0,    52,     6,    40,    49,    84,    83,     7,     0,
-      31,    26,    25,    24,    21,    23,     3,     1,     0,     0,
-       0,     0,     0,     4,    16,    15,    63,     0,     0,     0,
-       0,     0,    32,    33,    34,    35,    38,    39,    36,    37,
-       0,     0,     0,    53,    50,    51,    48,    43,     0,     0,
-      20,    22,     2,    17,    18,    19,    13,    14,     0,     0,
-      67,    82,    68,    69,    70,    71,     0,     0,     0,    85,
-       0,     0,    62,    41,    44,    42,     0,     0,    27,     0,
-      30,    64,     0,    79,     0,    66,    65,    86,     0,     0,
-      61,     0,     0,    57,    58,    59,    60,    46,     0,     0,
-       0,    78,     0,    87,    88,    47,    45,    28,     0,    81,
-       0,    29,    80
+      84,    83,     0,    31,    10,     0,    31,    11,     0,    12,
+      54,    56,    55,     0,     0,     0,    52,     6,    40,    49,
+       7,     0,    26,    25,    24,    21,    23,     3,     1,     0,
+       0,     0,     0,     0,     4,    16,    15,    63,     0,     0,
+       0,    32,    33,    34,    35,    38,    39,    36,    37,     0,
+       0,     0,     0,     0,     0,    53,    50,    51,    48,    43,
+       0,    20,    22,     2,    17,    18,    19,    13,    14,     0,
+       0,    67,    82,    68,    69,    70,    71,     0,     0,    85,
+      30,     0,    87,    88,    62,    41,    44,    42,     0,     0,
+      27,     0,    64,     0,    79,     0,    66,    65,    86,    61,
+       0,     0,    57,    58,    59,    60,    46,     0,     0,     0,
+      78,     0,    47,    45,    28,     0,    81,     0,    29,    80
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -53,   -53,   -10,   -15,   -53,    54,    72,    22,   -17,    86,
-     100,    21,   -52,   -53,   -13,   -53,    75,   -43,   -22,   -18,
-      90,    94,    98
+    -111,  -111,    -5,   -10,  -111,    47,    48,     1,  -111,    53,
+      73,   -33,  -110,  -111,    -8,  -111,    50,   -18,   -52,    -1,
+      62,    72,    56
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,    14,    15,    16,    44,    45,    38,    39,    79,    33,
-      34,    35,   127,   103,    17,    18,   113,    19,    90,    40,
-      21,    23,    25
+       0,    14,    15,    16,    45,    46,    40,    22,    70,    37,
+      38,    39,   126,   105,    17,    18,   114,    19,    91,    26,
+      24,    27,    29
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -692,98 +690,102 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      54,    59,    55,    46,    56,    70,    20,    71,    36,    22,
-      61,    48,    49,    50,    37,    89,    24,    51,    41,    57,
-      47,    26,    27,    28,     5,     6,     7,     8,    77,    78,
-      88,    54,    29,    55,     9,    10,    26,    27,    28,   100,
-      91,    52,    30,    42,   101,    31,    54,   114,    55,    43,
-      98,    74,    76,    89,    89,    12,   104,    30,    53,   102,
-      31,   110,    32,    54,   105,    55,    26,    27,    28,   135,
-     136,   112,   114,   114,   115,   116,   106,    32,    91,    91,
-      26,    27,    28,    54,   120,    55,    48,    49,    50,    41,
-     118,   119,    51,   111,   121,   131,   132,   128,    81,     5,
-       6,     7,     8,    54,    54,    55,    55,    73,   122,     9,
-      10,   130,   139,    54,    42,    55,    52,    80,   140,   138,
-      43,    75,   142,    54,    87,    55,     1,     2,     3,    72,
-      12,   129,     4,    82,    97,   123,   124,    86,    83,     5,
-       6,     7,     8,    84,     0,     1,     2,     3,    85,     9,
-      10,     4,     0,     0,     0,     0,    11,     0,     5,     6,
-       7,     8,     0,     0,     0,     0,     0,   125,     9,    10,
-      12,     0,    13,   126,    58,    11,     0,    62,    63,    64,
-      65,    66,    67,    68,    69,    48,    49,    50,     0,    12,
-      36,    51,     0,     0,     0,     0,    37,     0,     5,     6,
-       7,     8,     0,     0,     1,     2,     3,     0,     9,    10,
-       4,     0,     0,     0,   107,    52,     0,     5,     6,     7,
-       8,     0,     0,     0,     0,   108,   109,     9,    10,    12,
-       0,     0,     0,     0,    11,     0,    48,    49,    50,    99,
-       0,     0,    51,     0,     0,     0,    60,     0,    12,     5,
-       6,     7,     8,     0,     0,    48,    49,    50,   117,     9,
-      10,    51,     0,     0,     0,     0,    52,     0,     5,     6,
-       7,     8,     0,     0,     0,     0,     0,     0,     9,    10,
-      12,     0,    48,    49,    50,    52,   133,     0,    51,     0,
-       5,     6,     7,     8,     0,     5,     6,     7,     8,    12,
-       9,    10,     0,     0,     0,     9,    10,     0,    48,    49,
-      50,     0,    52,   134,    51,     0,     0,     0,     0,    36,
-       0,     5,     6,     7,     8,    37,    12,    48,    49,    50,
-       0,     9,    10,    51,     0,     0,     0,     0,    52,     0,
-       5,     6,     7,     8,     0,     0,     0,     0,     0,     0,
-       9,    10,    12,     0,     0,     0,     0,    52,     0,    48,
-      49,    50,     0,     0,     0,    51,     0,   137,     0,     0,
-       0,    12,     5,     6,     7,     8,     0,     0,     1,     2,
-       3,     0,     9,    10,     4,     0,     0,     0,     0,    52,
-       0,     5,     6,     7,     8,     0,     0,     0,     0,   141,
-       0,     9,    10,    12,     5,     6,     7,     8,    11,     0,
-      92,    93,    94,    95,     9,    10,    92,    93,    94,    95,
-       0,     0,    12,    96,    62,    63,    64,    65,    66,    67,
-      68,    69
+      23,    76,    78,    25,    28,    55,    57,    56,    47,    42,
+     132,   133,    41,    20,    30,    31,    32,    69,    60,    21,
+      72,    58,    48,    73,    71,    33,    30,    31,    32,    79,
+      30,    31,    32,   104,    43,    34,    80,    55,    35,    56,
+      44,    90,    30,    31,    32,   116,   117,    34,    23,    89,
+      35,    25,    28,   106,    41,    36,   122,   123,    92,    55,
+     107,    56,    55,    55,    56,    56,   101,    36,   108,   100,
+      55,    75,    56,   115,     5,     6,     7,     8,   112,    90,
+      90,   119,   120,    77,     9,    10,    59,   121,   124,   113,
+      42,    55,    82,    56,   125,   129,    92,    92,   115,   115,
+     137,    88,    20,    20,   127,    87,    74,    86,    21,    21,
+      98,    84,   128,   130,   131,    43,     0,    55,    81,    56,
+       0,    44,    85,   135,     0,    55,     0,    56,   136,    49,
+      50,    51,     0,     0,     0,    52,   139,     0,     0,     0,
+       0,     0,     5,     6,     7,     8,     0,     0,    49,    50,
+      51,     0,     9,    10,    52,     0,     0,     0,     0,    53,
+       0,     5,     6,     7,     8,     0,     0,     0,     0,     0,
+       0,     9,    10,    12,     0,     0,    54,     0,    53,    93,
+      94,    95,    96,     1,     2,     3,    97,     0,     0,     4,
+       0,     0,    12,     0,     0,    83,     5,     6,     7,     8,
+       0,     0,     1,     2,     3,     0,     9,    10,     4,     0,
+       0,     0,     0,    11,     0,     5,     6,     7,     8,     0,
+       0,     0,     0,     0,     0,     9,    10,    12,     0,    13,
+       0,     0,    11,     0,    61,    62,    63,    64,    65,    66,
+      67,    68,    49,    50,    51,     0,    12,     0,    52,     0,
+       0,     0,     0,     0,     0,     5,     6,     7,     8,     0,
+       0,    49,    50,    51,    99,     9,    10,    52,     0,     0,
+       0,   109,    53,     0,     5,     6,     7,     8,     0,     0,
+       0,     0,   110,   111,     9,    10,    12,     0,    49,    50,
+      51,    53,   102,     0,    52,     0,     0,     0,     0,     0,
+       0,     5,     6,     7,     8,    12,     0,     0,     0,     0,
+       0,     9,    10,     0,    49,    50,    51,     0,    53,   103,
+      52,     0,     0,     0,     0,     0,     0,     5,     6,     7,
+       8,     0,    12,    49,    50,    51,   118,     9,    10,    52,
+       0,     0,     0,     0,    53,     0,     5,     6,     7,     8,
+       0,     0,     0,     0,     0,     0,     9,    10,    12,    49,
+      50,    51,     0,    53,     0,    52,     0,     0,     0,     0,
+       0,     0,     5,     6,     7,     8,     0,    12,    49,    50,
+      51,     0,     9,    10,    52,     0,     0,     0,     0,    53,
+       0,     5,     6,     7,     8,     0,     0,     0,     0,   134,
+       0,     9,    10,    12,     0,     0,     0,     0,    53,     0,
+       1,     2,     3,     0,     0,     0,     4,     0,   138,     0,
+       0,     0,    12,     5,     6,     7,     8,     0,     0,     0,
+       0,     0,     0,     9,    10,     5,     6,     7,     8,     0,
+      11,    93,    94,    95,    96,     9,    10,     0,     0,     0,
+       0,     0,     0,     0,    12
 };
 
 static const yytype_int16 yycheck[] =
 {
-      15,    19,    15,    13,    15,    22,    45,    24,    45,    51,
-      20,     3,     4,     5,    51,    58,    51,     9,    20,    30,
-       0,    10,    11,    12,    16,    17,    18,    19,    51,    39,
-      51,    46,    21,    46,    26,    27,    10,    11,    12,    51,
-      58,    33,    31,    45,    51,    34,    61,    90,    61,    51,
-      60,    30,    31,    96,    97,    47,    51,    31,    50,    45,
-      34,    79,    51,    78,    51,    78,    10,    11,    12,   121,
-     122,    89,   115,   116,    96,    97,    28,    51,    96,    97,
-      10,    11,    12,    98,    45,    98,     3,     4,     5,    20,
-     100,   101,     9,    15,    28,   113,   114,   107,    44,    16,
-      17,    18,    19,   118,   119,   118,   119,    51,    28,    26,
-      27,    29,   130,   128,    45,   128,    33,    48,    29,   129,
-      51,    51,   140,   138,    52,   138,     3,     4,     5,    29,
-      47,   109,     9,    50,    59,    13,    14,    51,    48,    16,
-      17,    18,    19,    49,    -1,     3,     4,     5,    50,    26,
-      27,     9,    -1,    -1,    -1,    -1,    33,    -1,    16,    17,
-      18,    19,    -1,    -1,    -1,    -1,    -1,    45,    26,    27,
-      47,    -1,    49,    51,    29,    33,    -1,    35,    36,    37,
-      38,    39,    40,    41,    42,     3,     4,     5,    -1,    47,
-      45,     9,    -1,    -1,    -1,    -1,    51,    -1,    16,    17,
-      18,    19,    -1,    -1,     3,     4,     5,    -1,    26,    27,
-       9,    -1,    -1,    -1,    32,    33,    -1,    16,    17,    18,
-      19,    -1,    -1,    -1,    -1,    43,    44,    26,    27,    47,
-      -1,    -1,    -1,    -1,    33,    -1,     3,     4,     5,     6,
-      -1,    -1,     9,    -1,    -1,    -1,    45,    -1,    47,    16,
-      17,    18,    19,    -1,    -1,     3,     4,     5,     6,    26,
-      27,     9,    -1,    -1,    -1,    -1,    33,    -1,    16,    17,
-      18,    19,    -1,    -1,    -1,    -1,    -1,    -1,    26,    27,
-      47,    -1,     3,     4,     5,    33,     7,    -1,     9,    -1,
-      16,    17,    18,    19,    -1,    16,    17,    18,    19,    47,
-      26,    27,    -1,    -1,    -1,    26,    27,    -1,     3,     4,
-       5,    -1,    33,     8,     9,    -1,    -1,    -1,    -1,    45,
-      -1,    16,    17,    18,    19,    51,    47,     3,     4,     5,
-      -1,    26,    27,     9,    -1,    -1,    -1,    -1,    33,    -1,
-      16,    17,    18,    19,    -1,    -1,    -1,    -1,    -1,    -1,
-      26,    27,    47,    -1,    -1,    -1,    -1,    33,    -1,     3,
-       4,     5,    -1,    -1,    -1,     9,    -1,    43,    -1,    -1,
-      -1,    47,    16,    17,    18,    19,    -1,    -1,     3,     4,
+       1,    34,    35,     2,     3,    15,    15,    15,    13,    20,
+     120,   121,    11,    45,    10,    11,    12,    22,    19,    51,
+      25,    30,     0,    28,    23,    21,    10,    11,    12,    51,
+      10,    11,    12,    45,    45,    31,    41,    47,    34,    47,
+      51,    59,    10,    11,    12,    97,    98,    31,    49,    51,
+      34,    50,    51,    51,    53,    51,    13,    14,    59,    69,
+      51,    69,    72,    73,    72,    73,    71,    51,    28,    70,
+      80,    51,    80,    91,    16,    17,    18,    19,    15,    97,
+      98,    45,    28,    51,    26,    27,    29,    28,    45,    90,
+      20,   101,    45,   101,    51,    29,    97,    98,   116,   117,
+      29,    53,    45,    45,   109,    52,    33,    51,    51,    51,
+      60,    49,   111,   114,   115,    45,    -1,   127,    48,   127,
+      -1,    51,    50,   128,    -1,   135,    -1,   135,   129,     3,
+       4,     5,    -1,    -1,    -1,     9,   137,    -1,    -1,    -1,
+      -1,    -1,    16,    17,    18,    19,    -1,    -1,     3,     4,
+       5,    -1,    26,    27,     9,    -1,    -1,    -1,    -1,    33,
+      -1,    16,    17,    18,    19,    -1,    -1,    -1,    -1,    -1,
+      -1,    26,    27,    47,    -1,    -1,    50,    -1,    33,    22,
+      23,    24,    25,     3,     4,     5,    29,    -1,    -1,     9,
+      -1,    -1,    47,    -1,    -1,    50,    16,    17,    18,    19,
+      -1,    -1,     3,     4,     5,    -1,    26,    27,     9,    -1,
+      -1,    -1,    -1,    33,    -1,    16,    17,    18,    19,    -1,
+      -1,    -1,    -1,    -1,    -1,    26,    27,    47,    -1,    49,
+      -1,    -1,    33,    -1,    35,    36,    37,    38,    39,    40,
+      41,    42,     3,     4,     5,    -1,    47,    -1,     9,    -1,
+      -1,    -1,    -1,    -1,    -1,    16,    17,    18,    19,    -1,
+      -1,     3,     4,     5,     6,    26,    27,     9,    -1,    -1,
+      -1,    32,    33,    -1,    16,    17,    18,    19,    -1,    -1,
+      -1,    -1,    43,    44,    26,    27,    47,    -1,     3,     4,
+       5,    33,     7,    -1,     9,    -1,    -1,    -1,    -1,    -1,
+      -1,    16,    17,    18,    19,    47,    -1,    -1,    -1,    -1,
+      -1,    26,    27,    -1,     3,     4,     5,    -1,    33,     8,
+       9,    -1,    -1,    -1,    -1,    -1,    -1,    16,    17,    18,
+      19,    -1,    47,     3,     4,     5,     6,    26,    27,     9,
+      -1,    -1,    -1,    -1,    33,    -1,    16,    17,    18,    19,
+      -1,    -1,    -1,    -1,    -1,    -1,    26,    27,    47,     3,
+       4,     5,    -1,    33,    -1,     9,    -1,    -1,    -1,    -1,
+      -1,    -1,    16,    17,    18,    19,    -1,    47,     3,     4,
        5,    -1,    26,    27,     9,    -1,    -1,    -1,    -1,    33,
       -1,    16,    17,    18,    19,    -1,    -1,    -1,    -1,    43,
-      -1,    26,    27,    47,    16,    17,    18,    19,    33,    -1,
-      22,    23,    24,    25,    26,    27,    22,    23,    24,    25,
-      -1,    -1,    47,    29,    35,    36,    37,    38,    39,    40,
-      41,    42
+      -1,    26,    27,    47,    -1,    -1,    -1,    -1,    33,    -1,
+       3,     4,     5,    -1,    -1,    -1,     9,    -1,    43,    -1,
+      -1,    -1,    47,    16,    17,    18,    19,    -1,    -1,    -1,
+      -1,    -1,    -1,    26,    27,    16,    17,    18,    19,    -1,
+      33,    22,    23,    24,    25,    26,    27,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    47
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -792,19 +794,18 @@ static const yytype_int8 yystos[] =
 {
        0,     3,     4,     5,     9,    16,    17,    18,    19,    26,
       27,    33,    47,    49,    53,    54,    55,    66,    67,    69,
-      45,    72,    51,    73,    51,    74,    10,    11,    12,    21,
-      31,    34,    51,    61,    62,    63,    45,    51,    58,    59,
-      71,    20,    45,    51,    56,    57,    54,     0,     3,     4,
-       5,     9,    33,    50,    55,    66,    15,    30,    29,    71,
-      45,    54,    35,    36,    37,    38,    39,    40,    41,    42,
-      60,    60,    62,    51,    63,    51,    63,    51,    54,    60,
-      48,    57,    50,    72,    73,    74,    61,    58,    51,    69,
-      70,    71,    22,    23,    24,    25,    29,    68,    54,     6,
-      51,    51,    45,    65,    51,    51,    28,    32,    43,    44,
-      71,    15,    71,    68,    69,    70,    70,     6,    54,    54,
-      45,    28,    28,    13,    14,    45,    51,    64,    54,    59,
-      29,    71,    71,     7,     8,    64,    64,    43,    54,    71,
-      29,    43,    71
+      45,    51,    59,    71,    72,    59,    71,    73,    59,    74,
+      10,    11,    12,    21,    31,    34,    51,    61,    62,    63,
+      58,    59,    20,    45,    51,    56,    57,    54,     0,     3,
+       4,     5,     9,    33,    50,    55,    66,    15,    30,    29,
+      71,    35,    36,    37,    38,    39,    40,    41,    42,    54,
+      60,    59,    54,    54,    62,    51,    63,    51,    63,    51,
+      54,    48,    57,    50,    72,    73,    74,    61,    58,    51,
+      69,    70,    71,    22,    23,    24,    25,    29,    68,     6,
+      71,    54,     7,     8,    45,    65,    51,    51,    28,    32,
+      43,    44,    15,    71,    68,    69,    70,    70,     6,    45,
+      28,    28,    13,    14,    45,    51,    64,    54,    59,    29,
+      71,    71,    64,    64,    43,    54,    71,    29,    43,    71
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
@@ -832,7 +833,7 @@ static const yytype_int8 yyr2[] =
        2,     2,     1,     2,     1,     1,     1,     1,     1,     1,
        1,     2,     1,     2,     4,     4,     4,     3,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     3,     2,
-       5,     4,     1,     1,     1,     3,     4,     5,     5
+       5,     4,     1,     1,     1,     3,     4,     3,     3
 };
 
 
@@ -1302,7 +1303,7 @@ yyreduce:
 			printf("%s",(yyvsp[-1].string));
 			printf("\n\n};\n");
 			}
-#line 1306 "final.tab.c"
+#line 1307 "final.tab.c"
     break;
 
   case 3: /* S: INICIOP contenido  */
@@ -1313,7 +1314,7 @@ yyreduce:
 		YYABORT;
 
 	}
-#line 1317 "final.tab.c"
+#line 1318 "final.tab.c"
     break;
 
   case 4: /* S: contenido FINP  */
@@ -1324,7 +1325,7 @@ yyreduce:
 		YYABORT;
 
 	}
-#line 1328 "final.tab.c"
+#line 1329 "final.tab.c"
     break;
 
   case 5: /* S: contenido  */
@@ -1335,180 +1336,249 @@ yyreduce:
 		YYABORT;
 
 	}
-#line 1339 "final.tab.c"
+#line 1340 "final.tab.c"
     break;
 
   case 6: /* contenido: VARIABLE dimensionvar  */
 #line 58 "final.y"
                                      {
 				char * auxcont;
-					auxcont = (char*)malloc ( 500*500*sizeof(char) );
-					strcpy(auxcont, "\t");
+					auxcont = (char*)malloc ( 500*500*sizeof(char) );		
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, (yyvsp[0].string));
-					strcat(auxcont, "\n");
 					(yyval.string) = auxcont;
 			}
-#line 1352 "final.tab.c"
+#line 1354 "final.tab.c"
     break;
 
   case 7: /* contenido: IF contif  */
-#line 66 "final.y"
+#line 67 "final.y"
                             {
 				char * auxcont;
 					auxcont = (char*)malloc ( 500*500*sizeof(char) );
-					strcpy(auxcont, "\t");
+					*tabulaciones -=1;
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, (yyvsp[0].string));
 					(yyval.string) = auxcont;
 			}
-#line 1364 "final.tab.c"
+#line 1369 "final.tab.c"
     break;
 
   case 8: /* contenido: contmat2  */
-#line 73 "final.y"
-                                   {
+#line 77 "final.y"
+                           {
 				char * auxcont;
 					auxcont = (char*)malloc ( 500*500*sizeof(char) );
-					strcpy(auxcont, "\t");
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, (yyvsp[0].string));
 					(yyval.string) = auxcont;
 			}
-#line 1376 "final.tab.c"
+#line 1383 "final.tab.c"
     break;
 
   case 9: /* contenido: contprint  */
-#line 80 "final.y"
-                                    {(yyval.string) = (yyvsp[0].string);}
-#line 1382 "final.tab.c"
+#line 86 "final.y"
+                             {
+				char * auxcont;
+					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
+					strcat(auxcont, (yyvsp[0].string));
+					(yyval.string) = auxcont;
+					}
+#line 1397 "final.tab.c"
     break;
 
   case 10: /* contenido: FOR contfor  */
-#line 81 "final.y"
-                                      {(yyval.string) = (yyvsp[0].string);}
-#line 1388 "final.tab.c"
-    break;
-
-  case 11: /* contenido: WHILE contwhile  */
-#line 82 "final.y"
-                                          {(yyval.string) = (yyvsp[0].string);}
-#line 1394 "final.tab.c"
-    break;
-
-  case 12: /* contenido: DOWHILE contdowhile  */
-#line 83 "final.y"
-                                              {(yyval.string) = (yyvsp[0].string);}
-#line 1400 "final.tab.c"
-    break;
-
-  case 13: /* contenido: contenido VARIABLE dimensionvar  */
-#line 84 "final.y"
-                                                          {
-     	     	 	char * auxcont;
-					auxcont= (char*)malloc ( 500*500*sizeof(char) );
-					strcpy(auxcont, "\t");
-					strcat(auxcont, (yyvsp[-2].string));
+#line 95 "final.y"
+                               {
+				char * auxcont;
+					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					*tabulaciones -=1;
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, (yyvsp[0].string));
-					(yyval.string) = auxcont;}
+					(yyval.string) = auxcont;
+					}
 #line 1412 "final.tab.c"
     break;
 
-  case 14: /* contenido: contenido IF contif  */
-#line 91 "final.y"
-                                              {
-     	     		char * auxcont;
+  case 11: /* contenido: WHILE contwhile  */
+#line 105 "final.y"
+                                   {
+				char * auxcont;
 					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					*tabulaciones -=1;
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
+					strcat(auxcont, (yyvsp[0].string));
+					(yyval.string) = auxcont;
+					}
+#line 1427 "final.tab.c"
+    break;
+
+  case 12: /* contenido: DOWHILE contdowhile  */
+#line 115 "final.y"
+                                       {
+				char * auxcont;
+					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					*tabulaciones -=1;
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
+					strcat(auxcont, (yyvsp[0].string));
+					(yyval.string) = auxcont;
+					}
+#line 1442 "final.tab.c"
+    break;
+
+  case 13: /* contenido: contenido VARIABLE dimensionvar  */
+#line 125 "final.y"
+                                                   {
+     	     	 	char * auxcont;
+					auxcont= (char*)malloc ( 500*500*sizeof(char) );
 					strcpy(auxcont, (yyvsp[-2].string));
-					strcat(auxcont, "\t");
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
+					strcat(auxcont, (yyvsp[0].string));
+					(yyval.string) = auxcont;
+					}
+#line 1457 "final.tab.c"
+    break;
+
+  case 14: /* contenido: contenido IF contif  */
+#line 135 "final.y"
+                                       {
+     	     	 	char * auxcont;
+					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					*tabulaciones -=1;
+					printf("%d\n",*tabulaciones);
+					strcpy(auxcont, (yyvsp[-2].string));
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, (yyvsp[0].string));
 					
-					(yyval.string) = auxcont;}
-#line 1425 "final.tab.c"
+					(yyval.string) = auxcont;
+					}
+#line 1475 "final.tab.c"
     break;
 
   case 15: /* contenido: contenido contmat2  */
-#line 99 "final.y"
-                                             {
-     	     		char * auxcont;
-					auxcont = (char*)malloc (500*500*sizeof(char) );
-					strcpy(auxcont, "\t");
-					strcat(auxcont, (yyvsp[-1].string));
-					strcat(auxcont, (yyvsp[0].string));
-					
-					(yyval.string) = auxcont;}
-#line 1438 "final.tab.c"
-    break;
-
-  case 16: /* contenido: contenido contprint  */
-#line 107 "final.y"
-                                              {
+#line 148 "final.y"
+                                       {
      	     		char * auxcont;
 					auxcont = (char*)malloc (500*500*sizeof(char) );
 					strcpy(auxcont, (yyvsp[-1].string));
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, (yyvsp[0].string));
+					
 					(yyval.string) = auxcont;}
-#line 1449 "final.tab.c"
+#line 1490 "final.tab.c"
+    break;
+
+  case 16: /* contenido: contenido contprint  */
+#line 158 "final.y"
+                                       {
+     	     		char * auxcont;
+					auxcont = (char*)malloc (500*500*sizeof(char) );
+					strcpy(auxcont, (yyvsp[-1].string));
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
+					strcat(auxcont, (yyvsp[0].string));
+					(yyval.string) = auxcont;
+					}
+#line 1505 "final.tab.c"
     break;
 
   case 17: /* contenido: contenido FOR contfor  */
-#line 114 "final.y"
-                                        {
+#line 169 "final.y"
+                                         {
      	     		char * auxcont;
 					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					*tabulaciones -=1;
 					strcpy(auxcont, (yyvsp[-2].string));
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, (yyvsp[0].string));
-					(yyval.string) = auxcont;}
-#line 1460 "final.tab.c"
+					(yyval.string) = auxcont;
+					}
+#line 1521 "final.tab.c"
     break;
 
   case 18: /* contenido: contenido WHILE contwhile  */
-#line 120 "final.y"
-                                            {
+#line 180 "final.y"
+                                             {
      	     				char * auxcont;
 					auxcont = (char*)malloc (500*500*sizeof(char) );
+					*tabulaciones -=1;
 					strcpy(auxcont, (yyvsp[-2].string));
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, (yyvsp[0].string));
-					(yyval.string) = auxcont;}
-#line 1471 "final.tab.c"
+					(yyval.string) = auxcont;
+					}
+#line 1537 "final.tab.c"
     break;
 
   case 19: /* contenido: contenido DOWHILE contdowhile  */
-#line 126 "final.y"
-                                                {
+#line 191 "final.y"
+                                                 {
      	     				char * auxcont;
 					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					*tabulaciones -=1;
 					strcpy(auxcont, (yyvsp[-2].string));
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, (yyvsp[0].string));
-					(yyval.string) = auxcont;}
-#line 1482 "final.tab.c"
+					(yyval.string) = auxcont;
+					}
+#line 1553 "final.tab.c"
     break;
 
   case 20: /* contprint: TEXTO printrec FINTEXTO  */
-#line 138 "final.y"
+#line 208 "final.y"
                                     {
 				char * aux;
 				aux = (char*)malloc ( 500*sizeof(char) );
-				strcpy(aux, "\t");
 				strcat(aux, "printf(");
 				strcat(aux,"\"");
 				strcat(aux,(yyvsp[-1].string));
 				strcat(aux,"\\n\");");
 				(yyval.string) = aux;
 			}
-#line 1497 "final.tab.c"
+#line 1567 "final.tab.c"
     break;
 
   case 21: /* contprint: TEXTO printrec  */
-#line 148 "final.y"
+#line 217 "final.y"
                                          {
 				sprintf(error, "No se ha encontrado 'fintexto'"); 
 				yyerror(error);
 				YYABORT;
 				
 			}
-#line 1508 "final.tab.c"
+#line 1578 "final.tab.c"
     break;
 
   case 22: /* printrec: printrec tipoprint  */
-#line 157 "final.y"
+#line 226 "final.y"
                               {
 			char * auxcont;
 			auxcont = (char*)malloc (500*sizeof(char) );
@@ -1516,17 +1586,17 @@ yyreduce:
 			strcat(auxcont, (yyvsp[0].string));
 			(yyval.string) = auxcont;
 		}
-#line 1520 "final.tab.c"
+#line 1590 "final.tab.c"
     break;
 
   case 23: /* printrec: tipoprint  */
-#line 164 "final.y"
+#line 233 "final.y"
                            {(yyval.string) = (yyvsp[0].string);}
-#line 1526 "final.tab.c"
+#line 1596 "final.tab.c"
     break;
 
   case 24: /* tipoprint: PALABRA  */
-#line 168 "final.y"
+#line 237 "final.y"
                       { 
 				char * aux;
 				aux = (char*)malloc ( 500*sizeof(char) );
@@ -1534,11 +1604,11 @@ yyreduce:
 				strcat(aux,(yyvsp[0].string));
 				(yyval.string) = aux;
 			}
-#line 1538 "final.tab.c"
+#line 1608 "final.tab.c"
     break;
 
   case 25: /* tipoprint: NUMERO  */
-#line 175 "final.y"
+#line 244 "final.y"
                                  { 
 				char * aux;
 				aux = (char*)malloc ( 500*sizeof(char) );
@@ -1546,11 +1616,11 @@ yyreduce:
 				strcat(aux,(yyvsp[0].string));
 				(yyval.string) = aux;
 			}
-#line 1550 "final.tab.c"
+#line 1620 "final.tab.c"
     break;
 
   case 26: /* tipoprint: SIMBOLOS  */
-#line 182 "final.y"
+#line 251 "final.y"
                                    { 
 				char * aux;
 				aux = (char*)malloc ( 500*sizeof(char) );
@@ -1558,11 +1628,11 @@ yyreduce:
 				strcat(aux,(yyvsp[0].string));
 				(yyval.string) = aux;
 			}
-#line 1562 "final.tab.c"
+#line 1632 "final.tab.c"
     break;
 
   case 27: /* contif: comprecursivo contenido CLOSEIF  */
-#line 195 "final.y"
+#line 264 "final.y"
                                           {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
@@ -1572,54 +1642,69 @@ yyreduce:
 					strcat(aux, ")");
 					strcat(aux, "{\n");
 					strcat(aux, (yyvsp[-1].string));
-					strcat(aux, "\t};\n");	
+					for (int i = 0; i < *tabulaciones-1; i++){
+						strcat(aux, "\t");
+					}
+					strcat(aux, "};\n");	
 					(yyval.string) = aux;
 		}
-#line 1579 "final.tab.c"
+#line 1652 "final.tab.c"
     break;
 
   case 28: /* contif: comprecursivo contenido ELSE contenido CLOSEIF  */
-#line 208 "final.y"
+#line 280 "final.y"
                                                                  {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
-					strcpy(aux, "\tif");
+					strcpy(aux, "if");
 					strcat(aux, "(");
 					strcat(aux, (yyvsp[-4].string));
 					strcat(aux, ")");
 					strcat(aux, "{\n");
 					strcat(aux, (yyvsp[-3].string));
-					strcat(aux, "\n\t} else {\n\t\t");
+					for (int i = 0; i < *tabulaciones-1; i++){
+						strcat(aux, "\t");
+					}
+					strcat(aux, "} else {\n");
 					strcat(aux, (yyvsp[-1].string));
-					strcat(aux, "\t};\n");
+					for (int i = 0; i < *tabulaciones-1; i++){
+						strcat(aux, "\t");
+					}
+					strcat(aux, "};\n");
 					(yyval.string) = aux;
 					}
-#line 1598 "final.tab.c"
+#line 1677 "final.tab.c"
     break;
 
   case 29: /* contif: comprecursivo contenido ELSEIF comprecursivo contenido CLOSEIF  */
-#line 223 "final.y"
+#line 301 "final.y"
                                                                                  {
 						char * aux;
 						aux = (char*)malloc ( 500*sizeof(char) );
-						strcpy(aux, "\tif");
+						strcpy(aux, "if");
 						strcat(aux, "(");
 						strcat(aux, (yyvsp[-5].string));
 						strcat(aux, ")");
-						strcat(aux, "{\n\t\t");
+						strcat(aux, "{\n");
 						strcat(aux, (yyvsp[-4].string));
-						strcat(aux, "\n\t} else if(");
+						for (int i = 0; i < *tabulaciones-1; i++){
+							strcat(aux, "\t");
+						}
+						strcat(aux, "} else if(");
 						strcat(aux, (yyvsp[-2].string));
-						strcat(aux, ") {\n\t\t");
+						strcat(aux, ") {\n");
 						strcat(aux, (yyvsp[-1].string));
-						strcat(aux, "\t};\n");
+						for (int i = 0; i < *tabulaciones-1; i++){
+							strcat(aux, "\t");
+						}
+						strcat(aux, "};\n");
 						(yyval.string) = aux;
 						}
-#line 1619 "final.tab.c"
+#line 1704 "final.tab.c"
     break;
 
   case 30: /* comprecursivo: comprecursivo comparador parametro  */
-#line 244 "final.y"
+#line 328 "final.y"
                                                  {
 				char * auxcont;
 				auxcont= (char*)malloc( 100*sizeof(char) );
@@ -1636,65 +1721,68 @@ yyreduce:
 				}
 				(yyval.string) = auxcont;
 				}
-#line 1640 "final.tab.c"
+#line 1725 "final.tab.c"
     break;
 
   case 31: /* comprecursivo: parametro  */
-#line 260 "final.y"
-                           {(yyval.string) = (yyvsp[0].string);}
-#line 1646 "final.tab.c"
+#line 344 "final.y"
+                           {
+	        		*tabulaciones +=1;	
+	        		(yyval.string) = (yyvsp[0].string);
+	        	    }
+#line 1734 "final.tab.c"
     break;
 
   case 32: /* comparador: MAYOR  */
-#line 263 "final.y"
+#line 350 "final.y"
                    {(yyval.string)=">";}
-#line 1652 "final.tab.c"
+#line 1740 "final.tab.c"
     break;
 
   case 33: /* comparador: MENOR  */
-#line 264 "final.y"
+#line 351 "final.y"
                            {(yyval.string)="<";}
-#line 1658 "final.tab.c"
+#line 1746 "final.tab.c"
     break;
 
   case 34: /* comparador: IGUAL  */
-#line 265 "final.y"
+#line 352 "final.y"
                            {(yyval.string)="==";}
-#line 1664 "final.tab.c"
+#line 1752 "final.tab.c"
     break;
 
   case 35: /* comparador: DISTINTO  */
-#line 266 "final.y"
+#line 353 "final.y"
                               {(yyval.string)="!=";}
-#line 1670 "final.tab.c"
+#line 1758 "final.tab.c"
     break;
 
   case 36: /* comparador: AND  */
-#line 267 "final.y"
+#line 354 "final.y"
                          {(yyval.string)="&&";}
-#line 1676 "final.tab.c"
+#line 1764 "final.tab.c"
     break;
 
   case 37: /* comparador: OR  */
-#line 268 "final.y"
+#line 355 "final.y"
                         {(yyval.string)="||";}
-#line 1682 "final.tab.c"
+#line 1770 "final.tab.c"
     break;
 
   case 38: /* comparador: MAYORIGUAL  */
-#line 269 "final.y"
+#line 356 "final.y"
                                 {(yyval.string)=">=";}
-#line 1688 "final.tab.c"
+#line 1776 "final.tab.c"
     break;
 
   case 39: /* comparador: MENORIGUAL  */
-#line 270 "final.y"
+#line 357 "final.y"
                                 {(yyval.string)="<=";}
-#line 1694 "final.tab.c"
+#line 1782 "final.tab.c"
     break;
 
   case 40: /* dimensionvar: contvar  */
-#line 275 "final.y"
+#line 362 "final.y"
                       {		
 					char * auxdim;
 					auxdim = (char*)malloc ( 100*sizeof(char) );
@@ -1702,11 +1790,11 @@ yyreduce:
 					strcat(auxdim, ";\n");
 					(yyval.string) = auxdim;
 					}
-#line 1706 "final.tab.c"
+#line 1794 "final.tab.c"
     break;
 
   case 41: /* dimensionvar: VARRAY contvar numarrayvar  */
-#line 282 "final.y"
+#line 369 "final.y"
                                           {
 					char * auxdim;
 					auxdim = (char*)malloc ( 200*sizeof(char) );
@@ -1717,11 +1805,11 @@ yyreduce:
 					strcat(auxdim, ";\n");
 					(yyval.string) = auxdim;
 	       			}
-#line 1721 "final.tab.c"
+#line 1809 "final.tab.c"
     break;
 
   case 42: /* contvar: VDINAMICA crearvar PALABRA  */
-#line 294 "final.y"
+#line 381 "final.y"
                                     {
 				char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
@@ -1747,11 +1835,11 @@ yyreduce:
 				}
 				
 			}
-#line 1751 "final.tab.c"
+#line 1839 "final.tab.c"
     break;
 
   case 43: /* contvar: crearvar PALABRA  */
-#line 319 "final.y"
+#line 406 "final.y"
                             {
   	 			char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
@@ -1776,11 +1864,11 @@ yyreduce:
 				}
   	  			
 			}
-#line 1780 "final.tab.c"
+#line 1868 "final.tab.c"
     break;
 
   case 44: /* contvar: VESTATICA crearvar PALABRA  */
-#line 343 "final.y"
+#line 430 "final.y"
                                       {
   	  			char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
@@ -1804,11 +1892,11 @@ yyreduce:
 					YYABORT;				
 				}
 			}
-#line 1808 "final.tab.c"
+#line 1896 "final.tab.c"
     break;
 
   case 45: /* contvar: VDINAMICA crearvar PALABRA IGUALM typevar  */
-#line 368 "final.y"
+#line 455 "final.y"
                                                      {
   	  			char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
@@ -1834,11 +1922,11 @@ yyreduce:
 					YYABORT;
 				}
 				}
-#line 1838 "final.tab.c"
+#line 1926 "final.tab.c"
     break;
 
   case 46: /* contvar: crearvar PALABRA IGUALM typevar  */
-#line 393 "final.y"
+#line 480 "final.y"
                                            {
   	  			char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
@@ -1866,11 +1954,11 @@ yyreduce:
 				
 				
 			}
-#line 1870 "final.tab.c"
+#line 1958 "final.tab.c"
     break;
 
   case 47: /* contvar: VESTATICA crearvar PALABRA IGUALM typevar  */
-#line 420 "final.y"
+#line 507 "final.y"
                                                      {
   	  			char * auxvar;
 				auxvar = (char*)malloc ( 100*sizeof(char) );
@@ -1896,123 +1984,123 @@ yyreduce:
 					YYABORT;
 				}
 				}
-#line 1900 "final.tab.c"
+#line 1988 "final.tab.c"
     break;
 
   case 48: /* contvar: VDINAMICA crearvar  */
-#line 449 "final.y"
+#line 536 "final.y"
                                {
 	 				sprintf(error, "Error, Falta nombre de la variable"); 
 					yyerror(error);
 					YYABORT;
 				}
-#line 1910 "final.tab.c"
+#line 1998 "final.tab.c"
     break;
 
   case 49: /* contvar: crearvar  */
-#line 454 "final.y"
+#line 541 "final.y"
                      {
 	 				sprintf(error, "Error, Falta nombre de la variable"); 
 					yyerror(error);
 					YYABORT;
 				}
-#line 1920 "final.tab.c"
+#line 2008 "final.tab.c"
     break;
 
   case 50: /* contvar: VESTATICA crearvar  */
-#line 459 "final.y"
+#line 546 "final.y"
                                {
 	 				sprintf(error, "Error, Falta nombre de la variable"); 
 					yyerror(error);
 					YYABORT;
 				}
-#line 1930 "final.tab.c"
+#line 2018 "final.tab.c"
     break;
 
   case 51: /* contvar: VDINAMICA PALABRA  */
-#line 466 "final.y"
+#line 553 "final.y"
                              {
 	 				sprintf(error, "Error, Falta el tipo de la variable"); 
 					yyerror(error);
 					YYABORT;
 				}
-#line 1940 "final.tab.c"
+#line 2028 "final.tab.c"
     break;
 
   case 52: /* contvar: PALABRA  */
-#line 471 "final.y"
+#line 558 "final.y"
                     {
 	 				sprintf(error, "Error, Falta el tipo de la variable"); 
 					yyerror(error);
 					YYABORT;
 				}
-#line 1950 "final.tab.c"
+#line 2038 "final.tab.c"
     break;
 
   case 53: /* contvar: VESTATICA PALABRA  */
-#line 476 "final.y"
+#line 563 "final.y"
                              {
 	 				sprintf(error, "Error, Falta el tipo de la variable"); 
 					yyerror(error);
 					YYABORT;
 				}
-#line 1960 "final.tab.c"
+#line 2048 "final.tab.c"
     break;
 
   case 54: /* crearvar: VNUMERO  */
-#line 483 "final.y"
+#line 570 "final.y"
                    {(yyval.string) = "int ";}
-#line 1966 "final.tab.c"
+#line 2054 "final.tab.c"
     break;
 
   case 55: /* crearvar: VSTRING  */
-#line 484 "final.y"
+#line 571 "final.y"
                      {(yyval.string) = "char ";}
-#line 1972 "final.tab.c"
+#line 2060 "final.tab.c"
     break;
 
   case 56: /* crearvar: VBOOL  */
-#line 485 "final.y"
+#line 572 "final.y"
                    {(yyval.string) = "bool  ";}
-#line 1978 "final.tab.c"
+#line 2066 "final.tab.c"
     break;
 
   case 57: /* typevar: VTRUE  */
-#line 488 "final.y"
+#line 575 "final.y"
                {(yyval.string) = "true-bool ";}
-#line 1984 "final.tab.c"
+#line 2072 "final.tab.c"
     break;
 
   case 58: /* typevar: VFALSE  */
-#line 489 "final.y"
+#line 576 "final.y"
                   {(yyval.string) = "false-bool ";}
-#line 1990 "final.tab.c"
+#line 2078 "final.tab.c"
     break;
 
   case 59: /* typevar: NUMERO  */
-#line 490 "final.y"
+#line 577 "final.y"
                   {		char * auxtype;
 				auxtype = (char*)malloc ( 50*sizeof(char) );
 				strcpy(auxtype, (yyvsp[0].string));
 				strcat(auxtype, "-int ");
 				(yyval.string) = auxtype;
 				}
-#line 2001 "final.tab.c"
+#line 2089 "final.tab.c"
     break;
 
   case 60: /* typevar: PALABRA  */
-#line 496 "final.y"
+#line 583 "final.y"
                    {		char * auxtype;
 				auxtype = (char*)malloc ( 50*sizeof(char) );
 				strcpy(auxtype, (yyvsp[0].string));
 				strcat(auxtype, "-char ");
 				(yyval.string) = auxtype;
 				}
-#line 2012 "final.tab.c"
+#line 2100 "final.tab.c"
     break;
 
   case 61: /* numarrayvar: numarrayvar NUMERO  */
-#line 505 "final.y"
+#line 592 "final.y"
                                 {
 				char * auxnum;
 				auxnum = (char*)malloc ( 100*sizeof(char) );
@@ -2023,11 +2111,11 @@ yyreduce:
 				strcat(auxnum, "]");
 				(yyval.string) = auxnum;
 				}
-#line 2027 "final.tab.c"
+#line 2115 "final.tab.c"
     break;
 
   case 62: /* numarrayvar: NUMERO  */
-#line 516 "final.y"
+#line 603 "final.y"
                      {
 	     			char * auxnum;
 				auxnum = (char*)malloc ( 100*sizeof(char) );
@@ -2036,11 +2124,11 @@ yyreduce:
 				strcat(auxnum, "]");
 				(yyval.string) = auxnum;
 				}
-#line 2040 "final.tab.c"
+#line 2128 "final.tab.c"
     break;
 
   case 63: /* contmat2: contmat STOP  */
-#line 528 "final.y"
+#line 615 "final.y"
                                {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
@@ -2048,11 +2136,11 @@ yyreduce:
 					strcat(aux, (yyvsp[-1].string));
 					(yyval.string) = aux;
 			}
-#line 2052 "final.tab.c"
+#line 2140 "final.tab.c"
     break;
 
   case 64: /* contmat2: contmat EN PALABRA STOP  */
-#line 535 "final.y"
+#line 622 "final.y"
                                               {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
@@ -2063,11 +2151,11 @@ yyreduce:
 					(yyval.string) = aux;
 
 		   }
-#line 2067 "final.tab.c"
+#line 2155 "final.tab.c"
     break;
 
   case 65: /* contmat: operador2 parametro operador recConmat  */
-#line 546 "final.y"
+#line 633 "final.y"
                                                   {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
@@ -2094,11 +2182,11 @@ yyreduce:
 					*op = 0;
 					(yyval.string) = aux;
 				}
-#line 2098 "final.tab.c"
+#line 2186 "final.tab.c"
     break;
 
   case 66: /* contmat: operador2 parametro DE recConmat  */
-#line 573 "final.y"
+#line 660 "final.y"
                                                    {
 			char * aux;
 				aux = (char*)malloc ( 100*sizeof(char) );
@@ -2113,11 +2201,11 @@ yyreduce:
 				*op = 0;
 				(yyval.string) = aux;
 		}
-#line 2117 "final.tab.c"
+#line 2205 "final.tab.c"
     break;
 
   case 67: /* contmat: operador2 DE recConmat  */
-#line 587 "final.y"
+#line 674 "final.y"
                                           {
 				char * aux;
 				aux = (char*)malloc ( 100*sizeof(char) );
@@ -2141,71 +2229,71 @@ yyreduce:
 				*op = 0;
 				(yyval.string) = aux;
 			}
-#line 2145 "final.tab.c"
+#line 2233 "final.tab.c"
     break;
 
   case 68: /* operador: SUMA  */
-#line 614 "final.y"
+#line 700 "final.y"
                       {(yyval.string)="+";}
-#line 2151 "final.tab.c"
+#line 2239 "final.tab.c"
     break;
 
   case 69: /* operador: RESTA  */
-#line 615 "final.y"
+#line 701 "final.y"
                            {(yyval.string)="-";}
-#line 2157 "final.tab.c"
+#line 2245 "final.tab.c"
     break;
 
   case 70: /* operador: MULT  */
-#line 616 "final.y"
+#line 702 "final.y"
                           {(yyval.string)="*";}
-#line 2163 "final.tab.c"
+#line 2251 "final.tab.c"
     break;
 
   case 71: /* operador: DIV  */
-#line 617 "final.y"
+#line 703 "final.y"
                          {(yyval.string)="/";}
-#line 2169 "final.tab.c"
+#line 2257 "final.tab.c"
     break;
 
   case 72: /* operador2: ESUMA  */
-#line 621 "final.y"
+#line 707 "final.y"
                        {(yyval.string)="+";}
-#line 2175 "final.tab.c"
+#line 2263 "final.tab.c"
     break;
 
   case 73: /* operador2: ERESTA  */
-#line 622 "final.y"
+#line 708 "final.y"
                             {(yyval.string)="-";}
-#line 2181 "final.tab.c"
+#line 2269 "final.tab.c"
     break;
 
   case 74: /* operador2: EMULT  */
-#line 623 "final.y"
+#line 709 "final.y"
                            {(yyval.string)="*";}
-#line 2187 "final.tab.c"
+#line 2275 "final.tab.c"
     break;
 
   case 75: /* operador2: EDIV  */
-#line 624 "final.y"
+#line 710 "final.y"
                           {(yyval.string)="/";}
-#line 2193 "final.tab.c"
+#line 2281 "final.tab.c"
     break;
 
   case 76: /* operador2: EXPONT  */
-#line 625 "final.y"
+#line 711 "final.y"
                             {(yyval.string)="pow";}
-#line 2199 "final.tab.c"
+#line 2287 "final.tab.c"
     break;
 
   case 77: /* operador2: RAIZ  */
-#line 626 "final.y"
+#line 712 "final.y"
                           {(yyval.string)="sqrt";}
-#line 2205 "final.tab.c"
+#line 2293 "final.tab.c"
     break;
 
   case 78: /* recConmat: recConmat operador parametro  */
-#line 629 "final.y"
+#line 715 "final.y"
                                             {
 				char * aux;
 				aux = (char*)malloc ( 500*sizeof(char) );
@@ -2214,11 +2302,11 @@ yyreduce:
 				strcat(aux, (yyvsp[0].string));
 				(yyval.string) = aux;
 			}
-#line 2218 "final.tab.c"
+#line 2306 "final.tab.c"
     break;
 
   case 79: /* recConmat: recConmat operador  */
-#line 637 "final.y"
+#line 723 "final.y"
                                              {
 				*op += 1;
 				if(*op > 0) {
@@ -2233,11 +2321,11 @@ yyreduce:
 				strcat(aux, (yyvsp[0].string));
 				(yyval.string) = aux;
 			}
-#line 2237 "final.tab.c"
+#line 2325 "final.tab.c"
     break;
 
   case 80: /* recConmat: recConmat operador2 parametro DE parametro  */
-#line 652 "final.y"
+#line 738 "final.y"
                                                                      {
 				char * aux;
 				aux = (char*)malloc ( 100*sizeof(char) );
@@ -2252,11 +2340,11 @@ yyreduce:
 				(yyval.string) = aux;
 
 			}
-#line 2256 "final.tab.c"
+#line 2344 "final.tab.c"
     break;
 
   case 81: /* recConmat: operador2 parametro DE parametro  */
-#line 667 "final.y"
+#line 753 "final.y"
                                                             {
 				char * aux;
 				aux = (char*)malloc ( 100*sizeof(char) );
@@ -2270,11 +2358,11 @@ yyreduce:
 				(yyval.string) = aux;
 
 			}
-#line 2274 "final.tab.c"
+#line 2362 "final.tab.c"
     break;
 
   case 82: /* recConmat: parametro  */
-#line 680 "final.y"
+#line 766 "final.y"
                                     {
 				*op -= 1;
 				char * aux;
@@ -2282,11 +2370,11 @@ yyreduce:
 				strcpy(aux, (yyvsp[0].string));
 				(yyval.string) = aux;
 			}
-#line 2286 "final.tab.c"
+#line 2374 "final.tab.c"
     break;
 
   case 83: /* parametro: PALABRA  */
-#line 690 "final.y"
+#line 777 "final.y"
                       {
 				char * auxp;
 				auxp = (char*)malloc ( 100*sizeof(char) );
@@ -2306,85 +2394,95 @@ yyreduce:
 					YYABORT;				
 				}
 			}
-#line 2310 "final.tab.c"
+#line 2398 "final.tab.c"
     break;
 
   case 84: /* parametro: NUMERO  */
-#line 709 "final.y"
+#line 796 "final.y"
                              {(yyval.string)=(yyvsp[0].string);}
-#line 2316 "final.tab.c"
+#line 2404 "final.tab.c"
     break;
 
-  case 85: /* contfor: NUMERO contenido ENDFOR  */
-#line 714 "final.y"
-                                  {	
+  case 85: /* contfor: comprecursivo contenido ENDFOR  */
+#line 800 "final.y"
+                                         {	
  					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
+					
 					strcpy(aux, "for(int i = 0;i < ");
 					strcat(aux, (yyvsp[-2].string));
 					strcat(aux, ";i++){\n ");
 					strcat(aux, (yyvsp[-1].string));
-					strcat(aux, "\t};\n");
+					for (int i = 0; i < *tabulaciones-1; i++){
+						strcat(aux, "\t");
+					}
+					strcat(aux, "};\n");
 					(yyval.string) = aux;
 					}
-#line 2331 "final.tab.c"
+#line 2423 "final.tab.c"
     break;
 
-  case 86: /* contfor: NUMERO NUMERO contenido ENDFOR  */
-#line 724 "final.y"
-                                          {
+  case 86: /* contfor: parametro comprecursivo contenido ENDFOR  */
+#line 814 "final.y"
+                                                    {
  	  				char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
-					strcpy(aux, "\tfor(int i = ");
+					
+					strcpy(aux, "for(int i = ");
 					strcat(aux, (yyvsp[-3].string));
 					strcat(aux, ";i < ");
 					strcat(aux, (yyvsp[-2].string));
-					strcat(aux, ";i++){\n\t ");
+					strcat(aux, ";i++){\n ");
 					strcat(aux, (yyvsp[-1].string));
-					strcat(aux, "\t};\n");
+					for (int i = 0; i < *tabulaciones-1; i++){
+						strcat(aux, "\t");
+					}
+					strcat(aux, "};\n");
 					(yyval.string) = aux;
 					}
-#line 2348 "final.tab.c"
+#line 2444 "final.tab.c"
     break;
 
-  case 87: /* contwhile: PALABRA comparador PALABRA contenido ENDWHILE  */
-#line 740 "final.y"
-                                                          {
+  case 87: /* contwhile: comprecursivo contenido ENDWHILE  */
+#line 834 "final.y"
+                                             {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
-					strcpy(aux, "\twhile(");
-					strcat(aux, (yyvsp[-4].string));
-					strcat(aux, (yyvsp[-3].string));
+					strcpy(aux, "while(");
 					strcat(aux, (yyvsp[-2].string));
 					strcat(aux, ")");
-					strcat(aux, "{\n\t");
+					strcat(aux, "{\n");
 					strcat(aux, (yyvsp[-1].string));
-					strcat(aux, "\t};\n");
+					for (int i = 0; i < *tabulaciones-1; i++){
+						strcat(aux, "\t");
+					}
+					strcat(aux, "};\n");
 					(yyval.string) = aux;
 					}
-#line 2366 "final.tab.c"
+#line 2463 "final.tab.c"
     break;
 
-  case 88: /* contdowhile: PALABRA comparador PALABRA contenido ENDDOWHILE  */
-#line 755 "final.y"
-                                                              {
+  case 88: /* contdowhile: comprecursivo contenido ENDDOWHILE  */
+#line 850 "final.y"
+                                                 {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
-					strcpy(aux, "\tdo{\n\t");
+					strcpy(aux, "do{\n");
 					strcat(aux, (yyvsp[-1].string));
-					strcat(aux, "\t}");
+					for (int i = 0; i < *tabulaciones-1; i++){
+						strcat(aux, "\t");
+					}
+					strcat(aux, "}");
 					strcat(aux, "while(");
-					strcat(aux, (yyvsp[-4].string));
-					strcat(aux, (yyvsp[-3].string));
 					strcat(aux, (yyvsp[-2].string));
-					strcat(aux, ")\n");
+					strcat(aux, ");\n");
 					(yyval.string) = aux;
 					}
-#line 2384 "final.tab.c"
+#line 2482 "final.tab.c"
     break;
 
 
-#line 2388 "final.tab.c"
+#line 2486 "final.tab.c"
 
       default: break;
     }
@@ -2577,7 +2675,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 769 "final.y"
+#line 866 "final.y"
 
 int main(int argc, char *argv[]) {
 extern FILE *yyin;
@@ -2586,7 +2684,9 @@ extern FILE *yyin;
 		case 1: yyin=stdin;
 			variables = (char*)malloc ( 1000*1000*sizeof(char) );
 			op = (int*)malloc ( 100*sizeof(char) );
+			tabulaciones = (int*)malloc ( 10*sizeof(char) );
 			*op = 0;
+			*tabulaciones = 1;
 			yyparse();
 			break;
 		case 2: yyin = fopen(argv[1], "r");

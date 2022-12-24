@@ -8,7 +8,7 @@ extern int yylineno;
 char error[500];
 char * variables;
 int * op;
-
+int * tabulaciones;
 %}
 %union{
 	char * string;
@@ -57,78 +57,148 @@ S : INICIOP contenido FINP {
 //Funciones Contenido de alguna otra funcion recursiva(if, for,while), indicar cuando parar con algo STOP
 contenido :    VARIABLE dimensionvar {
 				char * auxcont;
-					auxcont = (char*)malloc ( 500*500*sizeof(char) );
-					strcpy(auxcont, "\t");
+					auxcont = (char*)malloc ( 500*500*sizeof(char) );		
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, $2);
-					strcat(auxcont, "\n");
 					$$ = auxcont;
 			}
      		| IF contif {
 				char * auxcont;
 					auxcont = (char*)malloc ( 500*500*sizeof(char) );
-					strcpy(auxcont, "\t");
+					*tabulaciones -=1;
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, $2);
 					$$ = auxcont;
 			}
-			| contmat2 {
+		| contmat2 {
 				char * auxcont;
 					auxcont = (char*)malloc ( 500*500*sizeof(char) );
-					strcpy(auxcont, "\t");
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, $1);
 					$$ = auxcont;
 			}
-			| contprint {$$ = $1;}
-			| FOR contfor {$$ = $2;}
-			| WHILE contwhile {$$ = $2;}
-			| DOWHILE contdowhile {$$ = $2;}
-			| contenido VARIABLE dimensionvar {
+		 | contprint {
+				char * auxcont;
+					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
+					strcat(auxcont, $1);
+					$$ = auxcont;
+					}
+		 | FOR contfor {
+				char * auxcont;
+					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					*tabulaciones -=1;
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
+					strcat(auxcont, $2);
+					$$ = auxcont;
+					}
+		 | WHILE contwhile {
+				char * auxcont;
+					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					*tabulaciones -=1;
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
+					strcat(auxcont, $2);
+					$$ = auxcont;
+					}
+		 | DOWHILE contdowhile {
+				char * auxcont;
+					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					*tabulaciones -=1;
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
+					strcat(auxcont, $2);
+					$$ = auxcont;
+					}
+		 | contenido VARIABLE dimensionvar {
      	     	 	char * auxcont;
 					auxcont= (char*)malloc ( 500*500*sizeof(char) );
-					strcpy(auxcont, "\t");
-					strcat(auxcont, $1);
+					strcpy(auxcont, $1);
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, $3);
-					$$ = auxcont;}
-			| contenido IF contif {
-     	     		char * auxcont;
+					$$ = auxcont;
+					}
+		 | contenido IF contif {
+     	     	 	char * auxcont;
 					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					*tabulaciones -=1;
+					printf("%d\n",*tabulaciones);
 					strcpy(auxcont, $1);
-					strcat(auxcont, "\t");
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, $3);
 					
-					$$ = auxcont;}
-		 	| contenido contmat2 {
-     	     		char * auxcont;
-					auxcont = (char*)malloc (500*500*sizeof(char) );
-					strcpy(auxcont, "\t");
-					strcat(auxcont, $1);
-					strcat(auxcont, $2);
-					
-					$$ = auxcont;}
-			| contenido contprint {
+					$$ = auxcont;
+					}
+		  | contenido contmat2 {
      	     		char * auxcont;
 					auxcont = (char*)malloc (500*500*sizeof(char) );
 					strcpy(auxcont, $1);
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, $2);
+					
 					$$ = auxcont;}
+		 | contenido contprint {
+     	     		char * auxcont;
+					auxcont = (char*)malloc (500*500*sizeof(char) );
+					strcpy(auxcont, $1);
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
+					strcat(auxcont, $2);
+					$$ = auxcont;
+					}
 	     	
-	    	| contenido FOR contfor {
+	    	 | contenido FOR contfor {
      	     		char * auxcont;
 					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					*tabulaciones -=1;
 					strcpy(auxcont, $1);
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, $3);
-					$$ = auxcont;}
-	    	| contenido WHILE contwhile {
+					$$ = auxcont;
+					}
+	    	 | contenido WHILE contwhile {
      	     				char * auxcont;
 					auxcont = (char*)malloc (500*500*sizeof(char) );
+					*tabulaciones -=1;
 					strcpy(auxcont, $1);
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, $3);
-					$$ = auxcont;}
-	     	| contenido DOWHILE contdowhile {
+					$$ = auxcont;
+					}
+	     	 | contenido DOWHILE contdowhile {
      	     				char * auxcont;
 					auxcont = (char*)malloc ( 500*500*sizeof(char) );
+					*tabulaciones -=1;
 					strcpy(auxcont, $1);
+					for (int i = 0; i < *tabulaciones; i++){
+						strcat(auxcont, "\t");
+					}
 					strcat(auxcont, $3);
-					$$ = auxcont;}
+					$$ = auxcont;
+					}
 	;
 
 
@@ -138,7 +208,6 @@ contenido :    VARIABLE dimensionvar {
 contprint : TEXTO printrec FINTEXTO {
 				char * aux;
 				aux = (char*)malloc ( 500*sizeof(char) );
-				strcpy(aux, "\t");
 				strcat(aux, "printf(");
 				strcat(aux,"\"");
 				strcat(aux,$2);
@@ -201,39 +270,54 @@ contif : comprecursivo  contenido CLOSEIF {
 					strcat(aux, ")");
 					strcat(aux, "{\n");
 					strcat(aux, $2);
-					strcat(aux, "\t};\n");	
+					for (int i = 0; i < *tabulaciones-1; i++){
+						strcat(aux, "\t");
+					}
+					strcat(aux, "};\n");	
 					$$ = aux;
 		}
 		
 		| comprecursivo contenido ELSE contenido CLOSEIF {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
-					strcpy(aux, "\tif");
+					strcpy(aux, "if");
 					strcat(aux, "(");
 					strcat(aux, $1);
 					strcat(aux, ")");
 					strcat(aux, "{\n");
 					strcat(aux, $2);
-					strcat(aux, "\n\t} else {\n\t\t");
+					for (int i = 0; i < *tabulaciones-1; i++){
+						strcat(aux, "\t");
+					}
+					strcat(aux, "} else {\n");
 					strcat(aux, $4);
-					strcat(aux, "\t};\n");
+					for (int i = 0; i < *tabulaciones-1; i++){
+						strcat(aux, "\t");
+					}
+					strcat(aux, "};\n");
 					$$ = aux;
 					}
 		
 		| comprecursivo contenido ELSEIF comprecursivo contenido CLOSEIF {
 						char * aux;
 						aux = (char*)malloc ( 500*sizeof(char) );
-						strcpy(aux, "\tif");
+						strcpy(aux, "if");
 						strcat(aux, "(");
 						strcat(aux, $1);
 						strcat(aux, ")");
-						strcat(aux, "{\n\t\t");
+						strcat(aux, "{\n");
 						strcat(aux, $2);
-						strcat(aux, "\n\t} else if(");
+						for (int i = 0; i < *tabulaciones-1; i++){
+							strcat(aux, "\t");
+						}
+						strcat(aux, "} else if(");
 						strcat(aux, $4);
-						strcat(aux, ") {\n\t\t");
+						strcat(aux, ") {\n");
 						strcat(aux, $5);
-						strcat(aux, "\t};\n");
+						for (int i = 0; i < *tabulaciones-1; i++){
+							strcat(aux, "\t");
+						}
+						strcat(aux, "};\n");
 						$$ = aux;
 						}
 		
@@ -257,7 +341,10 @@ comprecursivo: comprecursivo comparador parametro{
 				}
 				$$ = auxcont;
 				}
-	        | parametro{$$ = $1;}
+	        | parametro{
+	        		*tabulaciones +=1;	
+	        		$$ = $1;
+	        	    }
 	     ;
 
 comparador:  MAYOR {$$=">";}
@@ -541,7 +628,7 @@ contmat2 : 	  contmat STOP {
 					strcat(aux, $1);
 					$$ = aux;
 
-		   }
+		   };
 
 contmat : operador2 parametro operador recConmat  {
 					char * aux;
@@ -607,9 +694,8 @@ contmat : operador2 parametro operador recConmat  {
 				*op = 0;
 				$$ = aux;
 			}
+		;
 	
-
-
 
 operador:	 SUMA {$$="+";}
 		   | RESTA {$$="-";}
@@ -687,6 +773,7 @@ recConmat:     recConmat operador parametro {
 
 		;
 
+ 
 parametro :   PALABRA {
 				char * auxp;
 				auxp = (char*)malloc ( 100*sizeof(char) );
@@ -709,63 +796,73 @@ parametro :   PALABRA {
 		    | NUMERO {$$=$1;}
 			;
 
-
 ////////////////////////////////Parte Bucles//////////////////////////////////
- contfor: NUMERO contenido ENDFOR {	
+ contfor: comprecursivo contenido ENDFOR {	
  					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
+					
 					strcpy(aux, "for(int i = 0;i < ");
 					strcat(aux, $1);
 					strcat(aux, ";i++){\n ");
 					strcat(aux, $2);
-					strcat(aux, "\t};\n");
+					for (int i = 0; i < *tabulaciones-1; i++){
+						strcat(aux, "\t");
+					}
+					strcat(aux, "};\n");
 					$$ = aux;
 					}
- 	  |NUMERO NUMERO contenido ENDFOR {
+ 	  |parametro comprecursivo contenido ENDFOR {
  	  				char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
-					strcpy(aux, "\tfor(int i = ");
+					
+					strcpy(aux, "for(int i = ");
 					strcat(aux, $1);
 					strcat(aux, ";i < ");
 					strcat(aux, $2);
-					strcat(aux, ";i++){\n\t ");
+					strcat(aux, ";i++){\n ");
 					strcat(aux, $3);
-					strcat(aux, "\t};\n");
+					for (int i = 0; i < *tabulaciones-1; i++){
+						strcat(aux, "\t");
+					}
+					strcat(aux, "};\n");
 					$$ = aux;
 					}
  	  
  	  ;
  
  
- contwhile: PALABRA comparador PALABRA contenido ENDWHILE {
+ contwhile: comprecursivo contenido ENDWHILE {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
-					strcpy(aux, "\twhile(");
+					strcpy(aux, "while(");
 					strcat(aux, $1);
-					strcat(aux, $2);
-					strcat(aux, $3);
 					strcat(aux, ")");
-					strcat(aux, "{\n\t");
-					strcat(aux, $4);
-					strcat(aux, "\t};\n");
+					strcat(aux, "{\n");
+					strcat(aux, $2);
+					for (int i = 0; i < *tabulaciones-1; i++){
+						strcat(aux, "\t");
+					}
+					strcat(aux, "};\n");
 					$$ = aux;
 					};
  
  
- contdowhile: PALABRA comparador PALABRA contenido ENDDOWHILE {
+ contdowhile: comprecursivo contenido ENDDOWHILE {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
-					strcpy(aux, "\tdo{\n\t");
-					strcat(aux, $4);
-					strcat(aux, "\t}");
+					strcpy(aux, "do{\n");
+					strcat(aux, $2);
+					for (int i = 0; i < *tabulaciones-1; i++){
+						strcat(aux, "\t");
+					}
+					strcat(aux, "}");
 					strcat(aux, "while(");
 					strcat(aux, $1);
-					strcat(aux, $2);
-					strcat(aux, $3);
-					strcat(aux, ")\n");
+					strcat(aux, ");\n");
 					$$ = aux;
-					};;
- 
+					};
+
+
 %%
 int main(int argc, char *argv[]) {
 extern FILE *yyin;
@@ -774,7 +871,9 @@ extern FILE *yyin;
 		case 1: yyin=stdin;
 			variables = (char*)malloc ( 1000*1000*sizeof(char) );
 			op = (int*)malloc ( 100*sizeof(char) );
+			tabulaciones = (int*)malloc ( 10*sizeof(char) );
 			*op = 0;
+			*tabulaciones = 1;
 			yyparse();
 			break;
 		case 2: yyin = fopen(argv[1], "r");

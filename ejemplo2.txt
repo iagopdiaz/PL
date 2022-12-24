@@ -1,0 +1,14 @@
+
+inicio programa
+variable numero a
+variable numero b
+
+si a mayor b 
+variable numero c 
+si b menor c
+sumar a mas c en b.
+finif
+finif
+
+fin programa
+10 y a mayor b

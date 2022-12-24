@@ -1,17 +1,22 @@
 inicio programa
 
-variable numero a 
+variable numero a
+bucle 3 10 y a menor 5
+variable numero c
+mientras 5 menor 10
+restar 2 menos 1 en c .
+finwhile
+finfor
+
 variable numero b
-
-
-si a mayor b
-variable numero c  
-sumar a mas b en c .
-sumar a mas b en c .
+si a mayor b 
 variable numero d
+si b menor c
+sumar a mas c en d.
+finif
 finif
 
-texto Estamos escribiendo fintexto
-
 fin programa
+
+
 
