@@ -569,18 +569,30 @@ contvar : VDINAMICA crearvar PALABRA{
 	
 crearvar:  VNUMERO {$$ = "int ";}
 	   | VSTRING {$$ = "char ";}
-	   | VBOOL {$$ = "bool  ";}
+	   | VBOOL {$$ = "bool ";}
 	  ;
 	  
-typevar: VTRUE {$$ = "true-bool ";}
-	 | VFALSE {$$ = "false-bool ";}
-	 | NUMERO {		char * auxtype;
+typevar: VTRUE {		
+			char * auxtype;
+				auxtype = (char*)malloc ( 50*sizeof(char) );
+				strcpy(auxtype, "true-bool ");
+				$$ = auxtype;
+				}
+	 | VFALSE {		
+	 		char * auxtype;
+				auxtype = (char*)malloc ( 50*sizeof(char) );
+				strcpy(auxtype, "false-bool ");
+				$$ = auxtype;
+				}
+	 | NUMERO {		
+	 		char * auxtype;
 				auxtype = (char*)malloc ( 50*sizeof(char) );
 				strcpy(auxtype, $1);
 				strcat(auxtype, "-int ");
 				$$ = auxtype;
 				}
-	 | PALABRA {		char * auxtype;
+	 | PALABRA {		
+			 char * auxtype;
 				auxtype = (char*)malloc ( 50*sizeof(char) );
 				strcpy(auxtype, $1);
 				strcat(auxtype, "-char ");

@@ -578,10 +578,10 @@ static const yytype_int16 yyrline[] =
      208,   217,   226,   233,   237,   244,   251,   264,   280,   301,
      328,   344,   350,   351,   352,   353,   354,   355,   356,   357,
      362,   369,   381,   406,   430,   455,   480,   507,   536,   541,
-     546,   553,   558,   563,   570,   571,   572,   575,   576,   577,
-     583,   592,   603,   615,   622,   633,   660,   674,   700,   701,
-     702,   703,   707,   708,   709,   710,   711,   712,   715,   723,
-     738,   753,   766,   777,   796,   800,   814,   834,   850
+     546,   553,   558,   563,   570,   571,   572,   575,   581,   587,
+     594,   604,   615,   627,   634,   645,   672,   686,   712,   713,
+     714,   715,   719,   720,   721,   722,   723,   724,   727,   735,
+     750,   765,   778,   789,   808,   812,   826,   846,   862
 };
 #endif
 
@@ -2061,46 +2061,58 @@ yyreduce:
 
   case 56: /* crearvar: VBOOL  */
 #line 572 "final.y"
-                   {(yyval.string) = "bool  ";}
+                   {(yyval.string) = "bool ";}
 #line 2066 "final.tab.c"
     break;
 
   case 57: /* typevar: VTRUE  */
 #line 575 "final.y"
-               {(yyval.string) = "true-bool ";}
-#line 2072 "final.tab.c"
+               {		
+			char * auxtype;
+				auxtype = (char*)malloc ( 50*sizeof(char) );
+				strcpy(auxtype, "true-bool ");
+				(yyval.string) = auxtype;
+				}
+#line 2077 "final.tab.c"
     break;
 
   case 58: /* typevar: VFALSE  */
-#line 576 "final.y"
-                  {(yyval.string) = "false-bool ";}
-#line 2078 "final.tab.c"
+#line 581 "final.y"
+                  {		
+	 		char * auxtype;
+				auxtype = (char*)malloc ( 50*sizeof(char) );
+				strcpy(auxtype, "false-bool ");
+				(yyval.string) = auxtype;
+				}
+#line 2088 "final.tab.c"
     break;
 
   case 59: /* typevar: NUMERO  */
-#line 577 "final.y"
-                  {		char * auxtype;
+#line 587 "final.y"
+                  {		
+	 		char * auxtype;
 				auxtype = (char*)malloc ( 50*sizeof(char) );
 				strcpy(auxtype, (yyvsp[0].string));
 				strcat(auxtype, "-int ");
 				(yyval.string) = auxtype;
 				}
-#line 2089 "final.tab.c"
+#line 2100 "final.tab.c"
     break;
 
   case 60: /* typevar: PALABRA  */
-#line 583 "final.y"
-                   {		char * auxtype;
+#line 594 "final.y"
+                   {		
+			 char * auxtype;
 				auxtype = (char*)malloc ( 50*sizeof(char) );
 				strcpy(auxtype, (yyvsp[0].string));
 				strcat(auxtype, "-char ");
 				(yyval.string) = auxtype;
 				}
-#line 2100 "final.tab.c"
+#line 2112 "final.tab.c"
     break;
 
   case 61: /* numarrayvar: numarrayvar NUMERO  */
-#line 592 "final.y"
+#line 604 "final.y"
                                 {
 				char * auxnum;
 				auxnum = (char*)malloc ( 100*sizeof(char) );
@@ -2111,11 +2123,11 @@ yyreduce:
 				strcat(auxnum, "]");
 				(yyval.string) = auxnum;
 				}
-#line 2115 "final.tab.c"
+#line 2127 "final.tab.c"
     break;
 
   case 62: /* numarrayvar: NUMERO  */
-#line 603 "final.y"
+#line 615 "final.y"
                      {
 	     			char * auxnum;
 				auxnum = (char*)malloc ( 100*sizeof(char) );
@@ -2124,11 +2136,11 @@ yyreduce:
 				strcat(auxnum, "]");
 				(yyval.string) = auxnum;
 				}
-#line 2128 "final.tab.c"
+#line 2140 "final.tab.c"
     break;
 
   case 63: /* contmat2: contmat STOP  */
-#line 615 "final.y"
+#line 627 "final.y"
                                {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
@@ -2136,11 +2148,11 @@ yyreduce:
 					strcat(aux, (yyvsp[-1].string));
 					(yyval.string) = aux;
 			}
-#line 2140 "final.tab.c"
+#line 2152 "final.tab.c"
     break;
 
   case 64: /* contmat2: contmat EN PALABRA STOP  */
-#line 622 "final.y"
+#line 634 "final.y"
                                               {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
@@ -2151,11 +2163,11 @@ yyreduce:
 					(yyval.string) = aux;
 
 		   }
-#line 2155 "final.tab.c"
+#line 2167 "final.tab.c"
     break;
 
   case 65: /* contmat: operador2 parametro operador recConmat  */
-#line 633 "final.y"
+#line 645 "final.y"
                                                   {
 					char * aux;
 					aux = (char*)malloc ( 100*sizeof(char) );
@@ -2182,11 +2194,11 @@ yyreduce:
 					*op = 0;
 					(yyval.string) = aux;
 				}
-#line 2186 "final.tab.c"
+#line 2198 "final.tab.c"
     break;
 
   case 66: /* contmat: operador2 parametro DE recConmat  */
-#line 660 "final.y"
+#line 672 "final.y"
                                                    {
 			char * aux;
 				aux = (char*)malloc ( 100*sizeof(char) );
@@ -2201,11 +2213,11 @@ yyreduce:
 				*op = 0;
 				(yyval.string) = aux;
 		}
-#line 2205 "final.tab.c"
+#line 2217 "final.tab.c"
     break;
 
   case 67: /* contmat: operador2 DE recConmat  */
-#line 674 "final.y"
+#line 686 "final.y"
                                           {
 				char * aux;
 				aux = (char*)malloc ( 100*sizeof(char) );
@@ -2229,71 +2241,71 @@ yyreduce:
 				*op = 0;
 				(yyval.string) = aux;
 			}
-#line 2233 "final.tab.c"
-    break;
-
-  case 68: /* operador: SUMA  */
-#line 700 "final.y"
-                      {(yyval.string)="+";}
-#line 2239 "final.tab.c"
-    break;
-
-  case 69: /* operador: RESTA  */
-#line 701 "final.y"
-                           {(yyval.string)="-";}
 #line 2245 "final.tab.c"
     break;
 
-  case 70: /* operador: MULT  */
-#line 702 "final.y"
-                          {(yyval.string)="*";}
+  case 68: /* operador: SUMA  */
+#line 712 "final.y"
+                      {(yyval.string)="+";}
 #line 2251 "final.tab.c"
     break;
 
-  case 71: /* operador: DIV  */
-#line 703 "final.y"
-                         {(yyval.string)="/";}
+  case 69: /* operador: RESTA  */
+#line 713 "final.y"
+                           {(yyval.string)="-";}
 #line 2257 "final.tab.c"
     break;
 
-  case 72: /* operador2: ESUMA  */
-#line 707 "final.y"
-                       {(yyval.string)="+";}
+  case 70: /* operador: MULT  */
+#line 714 "final.y"
+                          {(yyval.string)="*";}
 #line 2263 "final.tab.c"
     break;
 
-  case 73: /* operador2: ERESTA  */
-#line 708 "final.y"
-                            {(yyval.string)="-";}
+  case 71: /* operador: DIV  */
+#line 715 "final.y"
+                         {(yyval.string)="/";}
 #line 2269 "final.tab.c"
     break;
 
-  case 74: /* operador2: EMULT  */
-#line 709 "final.y"
-                           {(yyval.string)="*";}
+  case 72: /* operador2: ESUMA  */
+#line 719 "final.y"
+                       {(yyval.string)="+";}
 #line 2275 "final.tab.c"
     break;
 
-  case 75: /* operador2: EDIV  */
-#line 710 "final.y"
-                          {(yyval.string)="/";}
+  case 73: /* operador2: ERESTA  */
+#line 720 "final.y"
+                            {(yyval.string)="-";}
 #line 2281 "final.tab.c"
     break;
 
-  case 76: /* operador2: EXPONT  */
-#line 711 "final.y"
-                            {(yyval.string)="pow";}
+  case 74: /* operador2: EMULT  */
+#line 721 "final.y"
+                           {(yyval.string)="*";}
 #line 2287 "final.tab.c"
     break;
 
-  case 77: /* operador2: RAIZ  */
-#line 712 "final.y"
-                          {(yyval.string)="sqrt";}
+  case 75: /* operador2: EDIV  */
+#line 722 "final.y"
+                          {(yyval.string)="/";}
 #line 2293 "final.tab.c"
     break;
 
+  case 76: /* operador2: EXPONT  */
+#line 723 "final.y"
+                            {(yyval.string)="pow";}
+#line 2299 "final.tab.c"
+    break;
+
+  case 77: /* operador2: RAIZ  */
+#line 724 "final.y"
+                          {(yyval.string)="sqrt";}
+#line 2305 "final.tab.c"
+    break;
+
   case 78: /* recConmat: recConmat operador parametro  */
-#line 715 "final.y"
+#line 727 "final.y"
                                             {
 				char * aux;
 				aux = (char*)malloc ( 500*sizeof(char) );
@@ -2302,11 +2314,11 @@ yyreduce:
 				strcat(aux, (yyvsp[0].string));
 				(yyval.string) = aux;
 			}
-#line 2306 "final.tab.c"
+#line 2318 "final.tab.c"
     break;
 
   case 79: /* recConmat: recConmat operador  */
-#line 723 "final.y"
+#line 735 "final.y"
                                              {
 				*op += 1;
 				if(*op > 0) {
@@ -2321,11 +2333,11 @@ yyreduce:
 				strcat(aux, (yyvsp[0].string));
 				(yyval.string) = aux;
 			}
-#line 2325 "final.tab.c"
+#line 2337 "final.tab.c"
     break;
 
   case 80: /* recConmat: recConmat operador2 parametro DE parametro  */
-#line 738 "final.y"
+#line 750 "final.y"
                                                                      {
 				char * aux;
 				aux = (char*)malloc ( 100*sizeof(char) );
@@ -2340,11 +2352,11 @@ yyreduce:
 				(yyval.string) = aux;
 
 			}
-#line 2344 "final.tab.c"
+#line 2356 "final.tab.c"
     break;
 
   case 81: /* recConmat: operador2 parametro DE parametro  */
-#line 753 "final.y"
+#line 765 "final.y"
                                                             {
 				char * aux;
 				aux = (char*)malloc ( 100*sizeof(char) );
@@ -2358,11 +2370,11 @@ yyreduce:
 				(yyval.string) = aux;
 
 			}
-#line 2362 "final.tab.c"
+#line 2374 "final.tab.c"
     break;
 
   case 82: /* recConmat: parametro  */
-#line 766 "final.y"
+#line 778 "final.y"
                                     {
 				*op -= 1;
 				char * aux;
@@ -2370,11 +2382,11 @@ yyreduce:
 				strcpy(aux, (yyvsp[0].string));
 				(yyval.string) = aux;
 			}
-#line 2374 "final.tab.c"
+#line 2386 "final.tab.c"
     break;
 
   case 83: /* parametro: PALABRA  */
-#line 777 "final.y"
+#line 789 "final.y"
                       {
 				char * auxp;
 				auxp = (char*)malloc ( 100*sizeof(char) );
@@ -2394,17 +2406,17 @@ yyreduce:
 					YYABORT;				
 				}
 			}
-#line 2398 "final.tab.c"
+#line 2410 "final.tab.c"
     break;
 
   case 84: /* parametro: NUMERO  */
-#line 796 "final.y"
+#line 808 "final.y"
                              {(yyval.string)=(yyvsp[0].string);}
-#line 2404 "final.tab.c"
+#line 2416 "final.tab.c"
     break;
 
   case 85: /* contfor: comprecursivo contenido ENDFOR  */
-#line 800 "final.y"
+#line 812 "final.y"
                                          {	
  					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
@@ -2419,11 +2431,11 @@ yyreduce:
 					strcat(aux, "};\n");
 					(yyval.string) = aux;
 					}
-#line 2423 "final.tab.c"
+#line 2435 "final.tab.c"
     break;
 
   case 86: /* contfor: parametro comprecursivo contenido ENDFOR  */
-#line 814 "final.y"
+#line 826 "final.y"
                                                     {
  	  				char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
@@ -2440,11 +2452,11 @@ yyreduce:
 					strcat(aux, "};\n");
 					(yyval.string) = aux;
 					}
-#line 2444 "final.tab.c"
+#line 2456 "final.tab.c"
     break;
 
   case 87: /* contwhile: comprecursivo contenido ENDWHILE  */
-#line 834 "final.y"
+#line 846 "final.y"
                                              {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
@@ -2459,11 +2471,11 @@ yyreduce:
 					strcat(aux, "};\n");
 					(yyval.string) = aux;
 					}
-#line 2463 "final.tab.c"
+#line 2475 "final.tab.c"
     break;
 
   case 88: /* contdowhile: comprecursivo contenido ENDDOWHILE  */
-#line 850 "final.y"
+#line 862 "final.y"
                                                  {
 					char * aux;
 					aux = (char*)malloc ( 500*sizeof(char) );
@@ -2478,11 +2490,11 @@ yyreduce:
 					strcat(aux, ");\n");
 					(yyval.string) = aux;
 					}
-#line 2482 "final.tab.c"
+#line 2494 "final.tab.c"
     break;
 
 
-#line 2486 "final.tab.c"
+#line 2498 "final.tab.c"
 
       default: break;
     }
@@ -2675,7 +2687,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 866 "final.y"
+#line 878 "final.y"
 
 int main(int argc, char *argv[]) {
 extern FILE *yyin;
